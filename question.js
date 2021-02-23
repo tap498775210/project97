@@ -11,7 +11,7 @@ class Questions {
         let detail = [];
         for (i = 0; i < this.question.length; i++) {
             detail[i] = this.question[i].time.slice(0,9) + ' ' +
-                this.question[i].time.slice(11,19) + "    " + this.question[i].content;
+                this.question[i].time.slice(11,19) + "<br>" + this.question[i].content;
         }
         return detail;
     }
