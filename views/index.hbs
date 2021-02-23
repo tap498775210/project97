@@ -1,0 +1,15 @@
+<h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+<p>This is just a simple example of {{title}}</p>
+
+<form action="/" method="post">
+    <label for="word">Post a problem:</label><br>
+    <input type="text" id="word" name="word"><br>
+    <input type="submit" value="Submit">
+</form>
+
+<ul class="question_list">
+    {{#each something}}
+        <li>{{this}}</li>
+    {{/each}}
+</ul>
