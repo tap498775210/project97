@@ -1,7 +1,5 @@
 //this is module is intended to make all the data for the Q&A session
 class Questions {
-    length = 0;
-    
     constructor() {
         this.question = [];
     }
@@ -11,24 +9,47 @@ class Questions {
         let detail = [];
         for (i = 0; i < this.question.length; i++) {
             detail[i] = this.question[i].time.slice(0,9) + ' ' +
-                this.question[i].time.slice(11,19) + "<br>" + this.question[i].content;
+                this.question[i].time.slice(11,19) + "<br>" + this.question[i].content + '\n';
         }
         return detail;
     }
 
     get length() {//how many questions
-        return this.length;
+        return this.question.length;
     }
 
     addQuestion(newQ) {//add new questions
-        let info = { content: '', time: '', answerIndex: [] };
+        let info = { content: '', time: '', answer: [] };
         let currentTime = new Date();
         info.time = currentTime.toISOString();
         info.content += newQ;
         this.question.push(info);
-        this.length += 1;
     }
 }
 
 const aaa = new Questions();//make a new Questions object for use when the server is running
 module.exports.Questions = aaa;
+
+class QNA extends Questions {
+    constructor() {
+        super();
+    }
+
+    addAnswer(index, newA) {//add an answer to a question specified by the index
+        let currentTime = new Date();
+        let tmpstr = currentTime.toISOString()
+        let answer = tmpstr.slice(0, 10) + ' ' + tmpstr.slice(11, 19) + ' ' + newA;
+        this.question[index].answer.push(answer);
+    }
+
+    getAnsLen(index) {//get the length fo answer for a question specified by index
+        return this.question[index].answer.length;
+    }
+
+    getAnswer(index_q, index_a) {//get the answer specified by index_a for a question specified by index_q
+        return this.question[index_q].answer[index_a];
+    }
+}
+
+const bbb = new QNA();
+module.exports.QNA = bbb;
