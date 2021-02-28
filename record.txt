@@ -1,9 +1,0 @@
-I edited the view/index.hbs which is the template of the page.
-
-Also I edited the route/index.js which the rounte handle of the webpage.
-
-I added a clas in the /questions.js. This is the place to hold all the questions when the server is running.
-
-I need some help with the looking of the website.
-
-Also we need the database for this, otherwise all the questions are only in the memory.
