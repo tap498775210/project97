@@ -1,0 +1,6 @@
+To Do:
+
+Figure out how to push information from frontend to backend server and display it (for submitting questions)
+Right now we can display it in a console
+
+Connect MongoDB to fullstack application
