@@ -1,6 +1,15 @@
 To Do:
-
 Figure out how to push information from frontend to backend server and display it (for submitting questions)
 Right now we can display it in a console
+
+Added Questions.jade in api/views/ just for fun (actually may not be useful for our app...)
+removed unused "import" statement in App.js, LoginForm, NavigationBar, and Question to remove warnings
+removed unused SampleQuestion in App.js
+changed ComponentWillMount to ComponentDidMount in App.js and Question.js to remove a warning
+in Question.js:
+    added handleChange and handleSubmit to Question class
+    changed Question class's state to add the above two functions
+    in the input tag in form:
+        changed "value={this.state.value}" to "value={this.state.word}"
 
 Connect MongoDB to fullstack application
