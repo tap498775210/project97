@@ -15,7 +15,7 @@ router.post('/', async (req, res, next) => {
 
 
 
-router.get('/', async (req, res, next) {
+router.get('/', async (req, res, next) => {
     //let everything = { title: 'Qiazza', something: Question.Questions.detail };//put everything into an object
     //res.render('questions', everything);//render it
     res.status(200);
