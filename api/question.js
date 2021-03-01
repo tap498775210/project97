@@ -7,9 +7,10 @@ class Questions {
     get detail() {//get the array of the questions
         let i;
         let detail = [];
+        const last_index = this.question.length - 1;
         for (i = 0; i < this.question.length; i++) {
-            detail[i] = this.question[i].time.slice(0,9) + ' ' +
-                this.question[i].time.slice(11,19) + '\n' +this.question[i].content + '\n';
+            detail[i] = this.question[last_index - i].time.slice(0,10) + ' ' +
+                this.question[last_index - i].time.slice(11,19) + '\n' +this.question[last_index - i].content + '\n';
         }
         return detail;
     }

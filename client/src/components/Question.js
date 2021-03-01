@@ -39,18 +39,19 @@ class Question extends Component {
       },
       body: JSON.stringify({ word: this.state.word }),
     });
-      const question = await response.text();
-      console.log(`the type of question: ${typeof question}`);
-      console.log(`the type of apiResponse: ${typeof this.state.apiResponse}`);
+      console.log(response);//test
+      console.log(response.body);//test
+
+      const question = await response.json();
+      console.log(`${question[0]}`);
     console.log(question);  // Debug
-    // this.setState({apiResponse})
     this.setState({ word: "" });
     this.setState({apiResponse: question });// Empty the input box  // NOT WORKING ='(
   }
 
   callAPI() {
     fetch("http://localhost:9000/questionAPI")
-        .then(res => res.text())
+        .then(res => res.json())
         .then(res => this.setState({ apiResponse: res }));
   }
 
@@ -77,7 +78,7 @@ class Question extends Component {
         <input type='submit' value='Submit' />
         </form>
         <div>
-                {this.state.apiResponse}
+                <p>{this.state.apiResponse}</p>
         </div>
         </>
     );
