@@ -69,7 +69,10 @@ router.get('/get', (req, res) => {
       username: req.query.username
   })
   .then(user => {
+    if (user)
       res.json({_id : user._id, name: user.name, username : user.username});
+    else
+      res.json(null);
   })
   .catch(err => {
       res.status(500).json(err);
@@ -88,7 +91,10 @@ router.put('/update', (req, res) => {
       new: true
   })
   .then(user => {
+    if (user)
       res.json({_id : user._id, name: user.name, username : user.username});
+    else
+      res.json(null);
   })
   .catch(err => {
       res.status(500).json(err);

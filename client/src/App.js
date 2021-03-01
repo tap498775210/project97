@@ -66,6 +66,7 @@ class App extends Component {
   }
 
   componentWillMount() {
+      console.log("working?");
       this.callAPI();
   }
 

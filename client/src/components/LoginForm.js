@@ -7,6 +7,33 @@ import "./LoginForm.css";
 // const samplePassword = "asdf";
 // let loggedin = false;
 let display = "block";
+var test = "works";
+
+function login() {
+  fetch("/users/login",
+  {
+    method: "POST",
+    body: JSON.stringify({
+      "username": "testusername", 
+      "password": "23456"
+    }),
+    headers: {"Content-Type": "application/json"}
+  })
+    .then(res => res.json())
+    .then(res => console.log(res));
+};
+
+function get() {
+  fetch("/users/get?username=testusername3",
+  {
+    method: "GET",
+  })
+    .then(res => res.json())
+    .then(res => console.log(res));
+};
+
+login();
+get();
 
 function LoginForm() {
   const [username, setUsername] = useState("");
@@ -29,7 +56,7 @@ function LoginForm() {
     setUsername("");
     setPassword("");
   };
-
+  console.log("way");
   return (
     <div className="LoginForm" display={display}>
       <Form onSubmit={handleSubmit}>
@@ -53,8 +80,8 @@ function LoginForm() {
             onChange={updatePassword}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Login
+        <Button variant="primary" type="submit" onclick={login}>
+          {test}
         </Button>
       </Form>
     </div>

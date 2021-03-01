@@ -2,15 +2,15 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-const server = '127.0.0.1:27017';
-const database = 'db97';
-const user = 'cs97user';
-const password = 'cs97pwd';
-
-// login to database
-mongoose.connect(`mongodb://${user}:${password}@${server}/${database}`, { useNewUrlParser: true, 'useUnifiedTopology': true, 'useCreateIndex': true}, (err) =>{
-    throw err;
-});
+    const server = 'cluster0.wbhcp.mongodb.net';
+    const database = 'db97';
+    const user = 'cs97w2021';
+    const password = 'Aa02252021';
+    
+    // login to database
+    mongoose.connect(`mongodb+srv://${user}:${password}@${server}/${database}?retryWrites=true&w=majority`, { useNewUrlParser: true, 'useUnifiedTopology': true, 'useCreateIndex': true}, (err) =>{
+        throw err;
+    });
 
 // User
 let CommentSchema = new Schema({
