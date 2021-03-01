@@ -39,10 +39,13 @@ class Question extends Component {
       },
       body: JSON.stringify({ word: this.state.word }),
     });
-    const question = await response.text();
+      const question = await response.text();
+      console.log(`the type of question: ${typeof question}`);
+      console.log(`the type of apiResponse: ${typeof this.state.apiResponse}`);
     console.log(question);  // Debug
     // this.setState({apiResponse})
-    this.setState({word: ""});  // Empty the input box  // NOT WORKING ='(
+    this.setState({ word: "" });
+    this.setState({apiResponse: question });// Empty the input box  // NOT WORKING ='(
   }
 
   callAPI() {
@@ -64,13 +67,19 @@ class Question extends Component {
       //   <div className="qcontent">{props.content}</div>
       //   <div className="user">{props.user}</div>
       // </div>
-      <form onSubmit={this.handleSubmit}>
+        //show the post form submit window and questions 
+        <>
+        <form onSubmit={this.handleSubmit}>
         <label>
           Post a problem:
           <input type='text' value={this.state.word} onChange={this.handleChange} />
         </label>
         <input type='submit' value='Submit' />
-      </form>
+        </form>
+        <div>
+                {this.state.apiResponse}
+        </div>
+        </>
     );
   }
 }
