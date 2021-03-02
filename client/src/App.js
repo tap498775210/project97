@@ -1,8 +1,13 @@
+/*
+  Changed "Sample Questions?" in the sidebar to Posts
+*/
+
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
 import NavigationBar from "./components/NavigationBar";
 import Question from "./components/Question";
+//import TBA from "./components/userProfile";   // TODO?
 
 import './App.css';
 
@@ -10,48 +15,32 @@ import './App.css';
 Reference: https://reactrouter.com/web/example/sidebar
 */
 
-/*
-parameters in Question is the followings
-props: 
-  id: int
-  isSovled: bool
-  title: string
-  content: a bing string??
-  user: string
-*/
-
-// function sampleQuestion() {    // Not used
-//   // Generate a sample question
-//   return (
-//     <Question
-//       id={1}
-//       isSolved={false}
-//       title={"u-sub?"}
-//       content={"what's the purpose of u-sub and life in general"}
-//       user={"a-despriate-student"}
-//     />
-//   );
-// }
-
 // Information about rotes for router in the sidebar
-// Current routes are "/", "/samplequestion", and "/search"
+// Current routes are "/", "/questionAPI", and "/search"
 const routes = [
   {
-    path: "/",
-    exact: true,
-    sidebar: () => <div>home!</div>,
-    main: () => <LoginForm />
+    path: "/",                        // The redirection path when clicking the link in the sidebar
+    exact: true,                      // Match the exact path
+    sidebar: () => <div>home!</div>,  // It was supposed to display a text when hitting the link, 
+                                      // but not working right now. Does not seem to affect Qiazza's function afaik
+                                      // So just ignore it right now I guess?
+    main: () => <LoginForm />         // What shown on the main section when on that path
   },
   {
     path: "/questionAPI",
-    sidebar: () => <div>sample question!</div>,
+    sidebar: () => <div>posts!</div>,
     main: () => <Question />
   },
   {
     path: "/search",
     sidebar: () => <div>search!</div>,
     main: () => <h2>Search</h2>
-  }
+  },
+  // {  // TODO? user profile
+  //   path: "/profile",
+  //   sidebar: () => <div>user profile</div>,
+  //   main: () => <TBA />
+  // }
 ];
 
 class App extends Component {
@@ -101,12 +90,16 @@ class App extends Component {
                   <Link to="/">Home/Login</Link>
                 </li>
                 <li>
-                  <Link to="/questionAPI">Sample Question?</Link>
+                  <Link to="/questionAPI">Posts</Link>
                 </li>
                 <li>
                   <Link to="/search">Search</Link>{" "}
                   {/* Search function not implemented */}
                 </li>
+                {/* A link to the user profile in the sidebar. 
+                <li> 
+                  <Link to="/profile"></Link>
+                </li> */}
               </ul>
 
               <Switch>
