@@ -1,7 +1,7 @@
 //import React, { useState, Component } from "react";
 import React, { Component } from "react";
 // import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, Switch, Route } from "react-router-dom";
 //import Form from "react-bootstrap/Form";
 import "./Question.css";
 
@@ -98,8 +98,8 @@ class Question extends Component {
         <input type='submit' value='Submit' />
         </form>
         <div className='questionList'>
-          <br />
-          {this.questionList()}
+        <br />
+        {this.questionList()}
         </div>
         {/* <div>
                 <p>{this.state.apiResponse}</p>

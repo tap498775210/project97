@@ -8,6 +8,8 @@ import NavigationBar from "./components/NavigationBar";
 import Sidebar from "./components/Sidebar";
 import routes from "./routes";
 
+import Qna from "./components/qna";
+
 import './App.css';
 
 /*
@@ -65,8 +67,10 @@ class App extends Component {
                     path={route.path}
                     exact={route.exact}
                     children={<route.main />}
-                  />
+                    />
                 ))}
+
+                  <Route Route path="/q/:id" children={<Qna />} />
               </Switch>
             </div>
           </div>
