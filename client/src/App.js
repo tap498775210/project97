@@ -4,11 +4,9 @@
 
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import LoginForm from "./components/LoginForm";
-import Register from "./components/Register";
 import NavigationBar from "./components/NavigationBar";
-import Question from "./components/Question";
-//import TBA from "./components/userProfile";   // TODO?
+import Sidebar from "./components/Sidebar";
+import routes from "./routes";
 
 import './App.css';
 
@@ -16,38 +14,17 @@ import './App.css';
 Reference: https://reactrouter.com/web/example/sidebar
 */
 
-// Information about rotes for router in the sidebar
-// Current routes are "/", "/questionAPI", and "/search"
-const routes = [
-  {
-    path: "/",                        // The redirection path when clicking the link in the sidebar
-    exact: true,                      // Match the exact path
-    sidebar: () => <div>home!</div>,  // It was supposed to display a text when hitting the link, 
-                                      // but not working right now. Does not seem to affect Qiazza's function afaik
-                                      // So just ignore it right now I guess?
-    main: () => <LoginForm />         // What shown on the main section when on that path
-  },
-  {
-    path: "/register",
-    sidebar: () => <div>reg!</div>,
-    main: () => <Register />
-  },
-  {
-    path: "/questionAPI",
-    sidebar: () => <div>posts!</div>,
-    main: () => <Question />
-  },
-  {
-    path: "/search",
-    sidebar: () => <div>search!</div>,
-    main: () => <h2>Search</h2>
-  },
-  // {  // TODO? user profile
-  //   path: "/profile",
-  //   sidebar: () => <div>user profile</div>,
-  //   main: () => <TBA />
-  // }
-];
+/* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
+function openNav() {
+  document.getElementById("mySidebar").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+/* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginLeft = "0";
+} 
 
 class App extends Component {
   // constructor(props) {  // npm said the constructor is useless so it is commented out
@@ -74,56 +51,13 @@ class App extends Component {
           {/* The navigation bar on the top. Currently it is just a decoration */}
           <NavigationBar />
 
-          {/* 
-          The sidebar. More styles to be added. Currently the style and codes are mixed 
-          together and it seems to be all over the place, might need to seperate them into Sidebar.js and Sidebar.css 
-          so App.js looks cleaner
+          {/* Sidebar has been separated into Sidebar.js and Sidebar.css
+              Routes have been relocated to routes.js and included in relevant files
           */}
-          <div style={{ display: "flex" }}>
-            <div
-              style={{
-                padding: "10px",
-                // width: "40%",
-                width: "150px",
-                background: "#f0f0f0"
-              }}
-            >
-              {/* Links in the sidebar */}
-              <ul style={{ listStyleType: "none", padding: 0 }}>
-                {/* <li className="App-intro">
-                  {this.state.apiResponse}
-                </li> */}
-                <li>
-                  <Link to="/">Home/Login</Link>
-                </li>
-                <li>
-                  <Link to="/register">Register</Link>
-                </li>
-                <li>
-                  <Link to="/questionAPI">Posts</Link>
-                </li>
-                <li>
-                  <Link to="/search">Search</Link>{" "}
-                  {/* Search function not implemented */}
-                </li>
-                {/* A link to the user profile in the sidebar. 
-                <li> 
-                  <Link to="/profile"></Link>
-                </li> */}
-              </ul>
 
-              <Switch>
-                {routes.map((route, index) => (
-                  <Route
-                    key={index}
-                    path={route.path}
-                    exact={route.exact}
-                    cildren={<route.sidebar />}
-                  />
-                ))}
-              </Switch>
-            </div>
-            <div style={{ flex: 1, padding: "10px" }}>
+          <div class="site">
+            <Sidebar class="sidebar" />
+            <div class="main-body">
               <Switch>
                 {routes.map((route, index) => (
                   <Route
@@ -136,6 +70,7 @@ class App extends Component {
               </Switch>
             </div>
           </div>
+
         </Router>
       </React.Fragment>
 

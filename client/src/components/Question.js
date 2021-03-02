@@ -21,7 +21,7 @@ class Question extends Component {
     this.setState({word: event.target.value});
   }
   handleSubmit = async (event) => {
-    event.preventDefault();     // Prevent reflesh the page when clicking "submit" button
+    event.preventDefault();     // Prevent refresh the page when clicking "submit" button
     const response = await fetch("http://localhost:9000/questionAPI", {
       method: 'POST',
       headers: {
@@ -53,7 +53,7 @@ class Question extends Component {
   // Generate a list of questions
   // It seems to execute whenever we type a character in the input box
   questionList() {
-    const questions = Array.from(this.state.apiResponse);   // Generate a javascript array from aipResponse
+    const questions = Array.from(this.state.apiResponse);   // Generate a javascript array from apiResponse
                                                             // Otherwise it won't let me use map
     console.log("is questions an array: " + Array.isArray(questions));
     const listItems = questions.map((question, index) =>
@@ -72,7 +72,7 @@ class Question extends Component {
   questionToLink(question, id) {
     const link = "/q/" + id.toString();
     return(
-      <li key={id.toString()}>
+      <li key={id.toString()} class="post"> 
         <Link to={link}>{question}</Link>
       </li>
     );
@@ -89,9 +89,10 @@ class Question extends Component {
       // </div>
         //show the post form submit window and questions 
         <>
+        <h1>Post a Question</h1>
         <form onSubmit={this.handleSubmit}>
         <label>
-          Post a problem:
+          Subject:
           <input type='text' value={this.state.word} onChange={this.handleChange} />
         </label>
         <input type='submit' value='Submit' />

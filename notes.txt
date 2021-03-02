@@ -2,6 +2,14 @@ To Do:
 Figure out how to push information from frontend to backend server and display it (for submitting questions)
 Right now we can display it in a console
 
+Darwin:
+removed unused files in main folder
+created Sidebar.js and Sidebar.css for cleaner App.js and to make it easier to modify just the Sidebar
+moved routes array into routes.js and imported into relevant files
+updated sidebar css to stretch full width of page
+fixed sidebar links not displaying test message when clicked
+
+
 Added Questions.jade in api/views/ just for fun (actually may not be useful for our app...)
 removed unused "import" statement in App.js, LoginForm, NavigationBar, and Question to remove warnings
 removed unused SampleQuestion in App.js
