@@ -24,10 +24,10 @@ router.post('/create', (req, res) => {
       });
 });
 
-// update course
+// update course by id
 router.put('/update', (req, res) => {
   // no req.body -> error
-  if(!req.query._id) {
+  if(!req.query.name) {
     return res.status(400).send('Request body missing');
   }
   // return newly created obj

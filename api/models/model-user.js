@@ -33,16 +33,15 @@ let UserSchema = new Schema({
 
 // run before deleting user
 UserSchema.pre('findByIdAndDelete', function(next) {
-    // reset user for all comments created by this user
-    this.model('Comment').deleteMany({ user: this._id }, { user: null }, next);
-    // reset user for all posts created by this user
-    this.model('Post').updateMany({ user: this._id }, { user: null }, next);
+    // delete all comments created by this user
+    this.model('Comment').deleteMany({ user: this._id }, next);
+    // delete all posts created by this user
+    this.model('Post').deleteMany({ user: this._id }, next);
 });
 
 // hash password
 UserSchema.pre('save', function(next) {
     var user = this;
-
     // only hash the password if it has been modified (or is new)
     if (!user.isModified('password')) return next();
 
@@ -66,7 +65,7 @@ UserSchema.pre('findOneAndUpdate', function(next) {
     // generate a salt
     bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
         if (err) return next(err);
-
+        
         // hash the password using our new salt
         user._update.password = bcrypt.hashSync(user._update.password, salt);
         next();

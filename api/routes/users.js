@@ -6,6 +6,7 @@ var express = require('express');
 var router = express.Router();
 
 // create a new user
+// success: return (id, name, username)
 router.post('/register', (req, res) => {
   // req.body -> bad request
   if(!req.body) {
@@ -27,6 +28,7 @@ router.post('/register', (req, res) => {
 });
 
 // login
+// success: return (id, name, username)
 router.post('/login', (req, res) => {
   // no req.body -> error
   if(!req.body) {
@@ -59,15 +61,14 @@ router.post('/login', (req, res) => {
   });
 });
 
-// GET (id, name, username)
+// GET user by id 
+// return (id, name, username)
 router.get('/get', (req, res) => {
-  if(!req.query.username) {
-      return res.status(400).send("Missing URL parameter: username");
+  if(!req.query._id) {
+    return res.status(400).send('Missing URL parameter: id');
   }
   // find user with matching username
-  UserModel.findOne({
-      username: req.query.username
-  })
+  UserModel.findById(req.query._id, req.body, {new : true})
   .then(user => {
     if (user)
       res.json({_id : user._id, name: user.name, username : user.username});
@@ -79,17 +80,17 @@ router.get('/get', (req, res) => {
   });
 });
 
-// UPDATE user (return id, name, username)
+// UPDATE user by id
+// return (id, name, username)
 router.put('/update', (req, res) => {
-  if(!req.query.username) {
-      return res.status(400).send("Missing URL parameter: username");
+  if(!req.query._id) {
+    return res.status(400).send('Missing URL parameter: id');
   }
-  // find user with matching username
-  UserModel.findOneAndUpdate({
-      username: req.query.username
-  }, req.body, {
-      new: true
-  })
+  if(!req.body || JSON.stringify(req.body) == "{}") {
+    return res.status(400).send('Missing request body');
+  }
+  // return newly created obj
+  UserModel.findByIdAndUpdate(req.query._id, req.body, {new : true})
   .then(user => {
     if (user)
       res.json({_id : user._id, name: user.name, username : user.username});
@@ -101,15 +102,13 @@ router.put('/update', (req, res) => {
   });
 });
 
-// DELETE user (return all info)
+// DELETE user by id (return all info)
 router.delete('/delete', (req, res) => {
-  if(!req.query.username) {
-      return res.status(400).send("Missing URL parameter: username");
+  if(!req.query._id) {
+    return res.status(400).send('Missing URL parameter: id');
   }
-  // Delete the matching user (user's posts and comments are still kept)
-  UserModel.findOneAndDelete({
-      username: req.query.username
-  })
+  // return newly created obj
+  UserModel.findByIdAndDelete(req.query._id)
   .then(user => {
       res.json(user);
   })
