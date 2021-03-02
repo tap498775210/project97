@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 import "./LoginForm.css";
 
 // const sampleUsernames = "aa";
@@ -31,6 +32,14 @@ function LoginForm() {
   };
 
   return (
+    <>
+    <div className="Message"> 
+      <Link to="/register" style={{color: "white"}}>
+        First time? Register here!
+      </Link>
+    </div>
+    <br />
+    <h2> Login </h2>
     <div className="LoginForm" display={display}>
       <Form onSubmit={handleSubmit}>
         {/* <Form.Control type="text" placeholder="Normal text" /> */}
@@ -58,6 +67,7 @@ function LoginForm() {
         </Button>
       </Form>
     </div>
+    </>
   );
 }
 

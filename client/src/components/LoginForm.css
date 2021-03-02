@@ -1,8 +1,31 @@
-.LoginForm {
+.LoginForm, .Register {
     padding: 30px;
 }
   
 .LoginForm form {
     max-width: 320px;
     margin: 0 auto;
+}
+
+.Register form {
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+h2 {
+    text-align: center;
+}
+
+.Message {
+    text-align: center;
+    color: white;
+    padding: 1%;
+    /* margin-left: 30%;
+    margin-right: 30%; */
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    width: 300px;
+    margin-top: 10px;
+    background-color:#353a40;
 }

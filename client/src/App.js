@@ -5,6 +5,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import LoginForm from "./components/LoginForm";
+import Register from "./components/Register";
 import NavigationBar from "./components/NavigationBar";
 import Question from "./components/Question";
 //import TBA from "./components/userProfile";   // TODO?
@@ -27,6 +28,11 @@ const routes = [
     main: () => <LoginForm />         // What shown on the main section when on that path
   },
   {
+    path: "/register",
+    sidebar: () => <div>reg!</div>,
+    main: () => <Register />
+  },
+  {
     path: "/questionAPI",
     sidebar: () => <div>posts!</div>,
     main: () => <Question />
@@ -44,16 +50,17 @@ const routes = [
 ];
 
 class App extends Component {
-  constructor(props) {
-      super(props);
-      this.state = { apiResponse: "" };
-  }
+  // constructor(props) {  // npm said the constructor is useless so it is commented out
+  //     super(props);
+  //     // this.state = { apiResponse: "" };
+  // }
 
-  callAPI() {
-      fetch("http://localhost:9000/questionAPI")
-          .then(res => res.text())
-          .then(res => this.setState({ apiResponse: res }));
-  }
+  // // We don't need callAPI right now??
+  // callAPI() {    
+  //     fetch("http://localhost:9000/questionAPI")
+  //         .then(res => res.text())
+  //         .then(res => this.setState({ apiResponse: res }));
+  // }
 
   componentDitMount() {   // Change Will to Did to erase a warning
       this.callAPI();
@@ -88,6 +95,9 @@ class App extends Component {
                 </li> */}
                 <li>
                   <Link to="/">Home/Login</Link>
+                </li>
+                <li>
+                  <Link to="/register">Register</Link>
                 </li>
                 <li>
                   <Link to="/questionAPI">Posts</Link>
