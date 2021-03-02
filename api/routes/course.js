@@ -13,7 +13,7 @@ router.post('/create', (req, res) => {
       .then(doc => {
           // empty doc
           if(!doc || doc.length === 0) {
-              return res.status(500).send("Error: Course not saved.");
+              return res.status(500).send("Course not saved.");
           }
           // resource created
           res.status(201).send(doc);
@@ -35,7 +35,7 @@ router.put('/update', (req, res) => {
   .then(doc => {
         // empty doc
         if(!doc || doc.length === 0) {
-            return res.status(500).send("Error: Course not found.");
+            return res.status(500).send("Course not found.");
         }
         // resource created
         res.status(201).send(doc);
@@ -53,7 +53,9 @@ router.get('/get', (req, res) => {
   }
   CourseModel.findById(req.query._id)
   .then(doc => {
-      res.json(doc);
+    if(!doc || doc.length === 0)
+        res.status(500).json("Course not found");
+    res.json(doc);
   })
   .catch(err => {
       res.status(500).json(err);
@@ -68,6 +70,8 @@ router.delete('/delete', (req, res) => {
   // delete course
   CourseModel.findByIdAndDelete(req.query._id)
   .then(doc => {
+      if(!doc || doc.length === 0)
+        res.status(500).json("Course not found");
       res.json(doc);
   })
   .catch(err => {

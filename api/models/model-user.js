@@ -62,14 +62,16 @@ UserSchema.pre('save', function(next) {
 // run before update
 UserSchema.pre('findOneAndUpdate', function(next) {
     var user = this;
+
+    if (!user._update.hasOwnProperty('password')) return next();
     // generate a salt
     bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
         if (err) return next(err);
-        
+            
         // hash the password using our new salt
         user._update.password = bcrypt.hashSync(user._update.password, salt);
         next();
-        });
+    });
 });
 
 // compare password

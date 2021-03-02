@@ -17,9 +17,9 @@ router.post('/register', (req, res) => {
   model.save()
       .then(doc => {
           if(!doc || doc.length === 0) 
-              return res.status(500).send(doc);
-          // resource created
-          res.status(201).send({_id : doc._id, name: doc.name, username : doc.username});
+            res.status(500).send(doc);
+          else
+            res.status(201).send({_id : doc._id, name: doc.name, username : doc.username});
       })
       .catch(err => {
           // catch and return error
@@ -39,22 +39,22 @@ router.post('/login', (req, res) => {
   UserModel.findOne({
     username: username
   })
-  .then(user => {
+  .then(doc => {
     // user found -> compare password
-    if (user) {
-      user.comparePassword(password, function(err, isMatch) {
+    if (doc) {
+      doc.comparePassword(password, function(err, isMatch) {
         if (err) throw err;
         // password match -> send username
         if(isMatch) 
-          res.json({_id : user._id, name: user.name, username : user.username});
+          res.json({_id : doc._id, name: doc.name, username : doc.username});
         // no match -> send empty response
         else 
-          res.json(null);
+          res.status(500).send("Incorrect password");
       });
     }
     // no user found -> send empty response
     else 
-      res.json(null);
+      res.status(500).send("Incorrect username");
   })
   .catch(err => {
       res.status(500).json(err);
@@ -69,11 +69,11 @@ router.get('/get', (req, res) => {
   }
   // find user with matching username
   UserModel.findById(req.query._id, req.body, {new : true})
-  .then(user => {
-    if (user)
-      res.json({_id : user._id, name: user.name, username : user.username});
+  .then(doc => {
+    if(!doc || doc.length === 0) 
+      res.status(500).send("User no found");
     else
-      res.json(null);
+      res.json({_id : doc._id, name: doc.name, username : doc.username});
   })
   .catch(err => {
       res.status(500).json(err);
@@ -86,16 +86,16 @@ router.put('/update', (req, res) => {
   if(!req.query._id) {
     return res.status(400).send('Missing URL parameter: id');
   }
-  if(!req.body || JSON.stringify(req.body) == "{}") {
-    return res.status(400).send('Missing request body');
+  if(!req.body) {
+    return res.status(400).send('Missing body');
   }
   // return newly created obj
-  UserModel.findByIdAndUpdate(req.query._id, req.body, {new : true})
-  .then(user => {
-    if (user)
-      res.json({_id : user._id, name: user.name, username : user.username});
+  UserModel.findOneAndUpdate({_id: req.query._id}, req.body, {new : true})
+  .then(doc => {
+    if(!doc || doc.length === 0) 
+      res.status(500).json({error: "User no found"});
     else
-      res.json(null);
+      res.json({_id : doc._id, name: doc.name, username : doc.username});
   })
   .catch(err => {
       res.status(500).json(err);
@@ -108,8 +108,11 @@ router.delete('/delete', (req, res) => {
     return res.status(400).send('Missing URL parameter: id');
   }
   // return newly created obj
-  UserModel.findByIdAndDelete(req.query._id)
+  UserModel.findOneAndDelete(req.query._id)
   .then(user => {
+    if(!doc || doc.length === 0) 
+      res.status(500).send("User no found");
+    else
       res.json(user);
   })
   .catch(err => {
