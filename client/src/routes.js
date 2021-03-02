@@ -1,6 +1,8 @@
 import LoginForm from "./components/LoginForm";
 import Register from "./components/Register";
 import Question from "./components/Question";
+import User from "./components/userProfile";
+
 //import TBA from "./components/userProfile";   // TODO?
 
 /* This file is for all of the routes needed for main views and sidebar navigation.
@@ -32,6 +34,11 @@ const routes = [
       sidebar: () => <div>search!</div>,
       main: () => <h2>Search</h2>
     },
+    {
+        path: "/user",
+        sidebar: () => <div>user profile!</div>,
+        main: () => <User/>
+    }
     // {  // TODO? user profile
     //   path: "/profile",
     //   sidebar: () => <div>user profile</div>,

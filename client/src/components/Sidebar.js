@@ -27,6 +27,9 @@ class Sidebar extends Component {
                     <Link to="/search">Search</Link>{" "}
                     {/* Search function not implemented */}
                     </li>
+                    <li>
+                        <Link to="/user/:id">profile</Link>
+                    </li>
                     {/* A link to the user profile in the sidebar. 
                     <li> 
                     <Link to="/profile"></Link>
