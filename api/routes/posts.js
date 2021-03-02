@@ -17,7 +17,7 @@ router.post('/create', (req, res) => {
               return res.status(500).send("Error: Post not saved.");
           }
           // resource created
-          res.status(201).send(doc);
+          res.status(201).json(doc);
       })
       .catch(err => {
           // catch and return error

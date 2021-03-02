@@ -45,9 +45,9 @@ let PostSchema = new Schema({
 }, { timestamps: true });
 
 // run before deleting post
-CourseSchema.pre('findByIdAndDelete', function(next) {
+PostSchema.pre('findByIdAndDelete', function(next) {
     // remove all comments for this post
     this.model('Comment').deleteMany({ post: this._id }, next);
 });
 
-module.exports = mongoose.model('Post', PostSchema);
+module.exports = mongoose.model('posts', PostSchema);

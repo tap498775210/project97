@@ -27,4 +27,4 @@ CourseSchema.pre('findByIdAndDelete', function(next) {
     this.model('Post').deleteMany({ course: this._id }, next);
 });
 
-module.exports = mongoose.model('Course', CourseSchema);
+module.exports = mongoose.model('courses', CourseSchema);

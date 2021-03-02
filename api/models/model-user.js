@@ -14,6 +14,10 @@ mongoose.connect(`mongodb+srv://${user}:${password}@${server}/${database}?retryW
     throw err;
 });
 
+// used to remove reference in posts and comments
+var PostModel = require('../models/model-post');
+var CommentModel = require('../models/model-comment');
+
 // User
 let UserSchema = new Schema({
     name: {
@@ -32,11 +36,35 @@ let UserSchema = new Schema({
 });
 
 // run before deleting user
-UserSchema.pre('findByIdAndDelete', function(next) {
+UserSchema.pre('findOneAndDelete', function(next) {  
+    PostModel.deleteMany({ user: this._id })
+        .then(doc => {
+            console.log(doc);
+            CommentModel.deleteMany({ user: this._id })
+                .then(doc => {
+                    console.log(doc);
+                    next();
+                })
+                .catch(err => {
+                    console.log("Failed to remove related comments"); 
+                    next(err); 
+                });
+        })
+        .catch(err => {
+            console.log("Failed to remove related posts"); 
+            next(err); 
+        });
+    /*
     // delete all comments created by this user
-    this.model('Comment').deleteMany({ user: this._id }, next);
-    // delete all posts created by this user
-    this.model('Post').deleteMany({ user: this._id }, next);
+    this.model('comments').deleteMany({ user: this._id }, function(err){
+        if (err) return next("Failed to removed related comments");
+         // delete all posts created by this user
+        this.model('posts').deleteMany({ user: this._id }, function(err){
+            if (err) return next("Failed to removed related posts");
+            next();
+        });
+    });
+    */
 });
 
 // hash password
@@ -82,4 +110,4 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
     });
 };
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('users', UserSchema);

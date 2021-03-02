@@ -108,7 +108,7 @@ router.delete('/delete', (req, res) => {
     return res.status(400).send('Missing URL parameter: id');
   }
   // return newly created obj
-  UserModel.findByIdAndDelete(req.query._id)
+  UserModel.findOneAndDelete({_id: req.query._id})
   .then(doc => {
     if(!doc || doc.length === 0) 
       res.status(500).send("User no found");
