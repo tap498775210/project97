@@ -12,11 +12,11 @@ router.post('/create', (req, res) => {
   model.save()
       .then(doc => {
           // empty doc
-          if(!doc || doc.length === 0) {
-              return res.status(500).send("Course not saved.");
-          }
+          if(!doc || doc.length === 0) 
+            res.status(500).send("Course not saved.");
           // resource created
-          res.status(201).send(doc);
+          else
+            res.status(201).json(doc);
       })
       .catch(err => {
           // catch and return error
@@ -27,18 +27,22 @@ router.post('/create', (req, res) => {
 // update course by id
 router.put('/update', (req, res) => {
   // no req.body -> error
-  if(!req.query.name) {
-    return res.status(400).send('Request body missing');
+  if(!req.query._id) {
+    return res.status(400).send('Missing URL parameter: id');
+  }
+  if(!req.body) {
+    return res.status(400).send('Missing body');
   }
   // return newly created obj
   CourseModel.findByIdAndUpdate(req.query._id, req.body, {new : true})
   .then(doc => {
         // empty doc
         if(!doc || doc.length === 0) {
-            return res.status(500).send("Course not found.");
+            res.status(500).send("Course not found.");
         }
+        else
         // resource created
-        res.status(201).send(doc);
+            res.status(201).json(doc);
     })
     .catch(err => {
         // catch and return error
@@ -48,14 +52,15 @@ router.put('/update', (req, res) => {
 
 // get course
 router.get('/get', (req, res) => {
-  if(!req.query.username) {
-      return res.status(400).send("Missing URL parameter: id");
-  }
+    if(!req.query._id) {
+        return res.status(400).send('Missing URL parameter: id');
+    }
   CourseModel.findById(req.query._id)
   .then(doc => {
     if(!doc || doc.length === 0)
-        res.status(500).json("Course not found");
-    res.json(doc);
+        res.status(500).send("Course not found");
+    else
+        res.json(doc);
   })
   .catch(err => {
       res.status(500).json(err);
@@ -70,9 +75,10 @@ router.delete('/delete', (req, res) => {
   // delete course
   CourseModel.findByIdAndDelete(req.query._id)
   .then(doc => {
-      if(!doc || doc.length === 0)
-        res.status(500).json("Course not found");
-      res.json(doc);
+    if(!doc || doc.length === 0)
+        res.status(500).send("Course not found");
+    else
+        res.json(doc);
   })
   .catch(err => {
       res.status(500).json(err);
