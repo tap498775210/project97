@@ -35,7 +35,7 @@ function LoginForm() {
     <>
     <div className="Message"> 
       <Link to="/register" style={{color: "white"}}>
-        First time? Register here!
+        First time? Click here to register!
       </Link>
     </div>
     <br />

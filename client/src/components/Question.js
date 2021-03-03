@@ -150,7 +150,7 @@ class Question extends Component {
         //show the post form submit window and questions 
         <>
         <div>
-          <h1 style= {{ display: "inline-block" }}>Post a Question</h1>
+          <h1>Post a Question</h1>
         </div>
 
         <form onSubmit={this.handleSubmit}>

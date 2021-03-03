@@ -20,12 +20,18 @@ h2 {
     text-align: center;
     color: white;
     padding: 1%;
-    /* margin-left: 30%;
-    margin-right: 30%; */
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
     width: 300px;
     margin-top: 10px;
     background-color:#353a40;
+}
+
+/* The width of the message box changed to 80% for screen width < 450px
+    reference: https://www.w3schools.com/cssref/css3_pr_mediaquery.asp */
+@media screen and (max-width: 450px) {
+    .Message {
+        width: 80%;
+    }
 }
