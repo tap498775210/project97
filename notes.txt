@@ -1,6 +1,10 @@
 To Do:
-Figure out how to push information from frontend to backend server and display it (for submitting questions)
-Right now we can display it in a console
+Remove commented codes and the debugging console.log functions before final submission
+Deal with "xxx is defined but never used" warnings before final submission 
+
+
+Changed the question list to a table, so we are able to add more columns in each row if needed 
+
 
 Darwin:
 removed unused files in main folder

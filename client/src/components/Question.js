@@ -2,9 +2,13 @@
 import React, { Component } from "react";
 // import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Link, Switch, Route } from "react-router-dom";
+import Table from 'react-bootstrap/Table'
 //import Form from "react-bootstrap/Form";
 import "./Question.css";
 
+/*
+Table reference: https://react-bootstrap.github.io/components/table/
+*/
 
 class Question extends Component {
   constructor(props) {
@@ -63,6 +67,61 @@ class Question extends Component {
     return list;
   }
 
+  // Generate a table for the quesions
+  questionTable() {
+    const questions = Array.from(this.state.apiResponse);
+    const rows = questions.map((question, index) => 
+      this.questionToCell(question, questions.length - index)
+    );
+    const table = (
+      <Table responsive bodered >
+        <thead>
+          <tr>
+            <th>Questions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows}
+        </tbody>
+      </Table>
+    );
+    return table;
+  }
+  // Generate a cell inside the table for each question
+  questionToCell(question, id) {
+    const link = "/q/" + id.toString();
+    return (
+      <tr boderless="true">
+        <td>
+          <Link to={link}>
+            {question}
+          </Link>
+        </td>
+      </tr>
+    );
+  }
+
+  // An example of react-bootstrap Table. Right now it has only one column
+  exampleQuestionTable() {    
+    return(
+      <Table responsive bodered>
+        <thead> 
+          <tr>  {/* A row */}
+            <th>Questions</th>  {/* The head of the table */}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>  {/* A row */}
+            <td>abc</td>  {/* A data cell */}
+          </tr>
+          <tr>
+            <td>def</td>
+          </tr>
+        </tbody>
+      </Table>
+    );
+  }
+
   // A function that generate a link for each question
   // Right now the link is "localhost:3000/q/[id]", 
   // where [id] right now is (the size of the question list - index of the question)
@@ -72,11 +131,12 @@ class Question extends Component {
   questionToLink(question, id) {
     const link = "/q/" + id.toString();
     return(
-      <li key={id.toString()} class="post"> 
+      <li key={id.toString()} className="post"> 
         <Link to={link}>{question}</Link>
       </li>
     );
   }
+
 
   render() {
     return (
@@ -89,7 +149,10 @@ class Question extends Component {
       // </div>
         //show the post form submit window and questions 
         <>
-        <h1>Post a Question</h1>
+        <div>
+          <h1 style= {{ display: "inline-block" }}>Post a Question</h1>
+        </div>
+
         <form onSubmit={this.handleSubmit}>
         <label>
           Subject:
@@ -97,10 +160,16 @@ class Question extends Component {
         </label>
         <input type='submit' value='Submit' />
         </form>
-        <div className='questionList'>
         <br />
-        {this.questionList()}
+        <div>
+          {this.questionTable()}
         </div>
+        {/* <div>
+          {this.exampleQuestionTable()}
+        </div> */}
+        {/* <div className='questionList'>        
+          {this.questionList()}
+        </div> */}
         {/* <div>
                 <p>{this.state.apiResponse}</p>
         </div> */}
