@@ -1,6 +1,7 @@
-var PostModel = require('../models/model-user'); 
+var PostModel = require('../models/model-post'); 
 var CommentModel = require('../models/model-comment'); 
 var express = require('express');
+const { route } = require('./users');
 var router = express.Router();
 
 // create a new post
@@ -63,10 +64,29 @@ router.get('/get', (req, res) => {
   });
 });
 
+//search post with key word
+router.get('/search', (req,res) => {
+    if (!req.body) {
+        return res.status(400).send("Missing Request body");
+    }
+    //key word with reg exp
+    var keyWord = new RegExp(req.query.body,'ix');
+    UserModel.find({content: keyWord})
+    .then(doc => {
+        if (!doc || doc.length === 0)
+            res.status(500).send("Post not found");
+        else
+            res.json(doc);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    })
+});
+
 // DELETE post
 router.delete('/delete', (req, res) => {
   if(!req.query._id) {
-      return res.status(400).send("Missing URL parameter: username");
+      return res.status(400).send("Missing URL parameter: post ID");
   }
     // delete post
     PostModel.findByIdAndDelete(req.query._id)

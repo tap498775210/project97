@@ -1,20 +1,20 @@
-var PostModel = require('../models/model-user'); 
+var PostModel = require('../models/model-post'); 
 var CommentModel = require('../models/model-comment'); 
 var express = require('express');
 var router = express.Router();
 
-// create a new post
+// create a new comment
 router.post('/create', (req, res) => {
   // req.body -> bad request
   if(!req.body) {
       return res.status(400).send('Request body missing');
   }
-  let model = new PostModel(req.body);
+  let model = new CommentModel(req.body);
   model.save()
       .then(doc => {
           // empty doc
           if(!doc || doc.length === 0) {
-              return res.status(500).send("Error: Post not saved.");
+              return res.status(500).send("Error: Comment not saved.");
           }
           // resource created
           res.status(201).send(doc);
@@ -25,7 +25,7 @@ router.post('/create', (req, res) => {
       });
 });
 
-// update post
+// update comment
 router.put('/update', (req, res) => {
   // no req.body -> error
   if(!req.query._id) {
@@ -47,7 +47,7 @@ router.put('/update', (req, res) => {
     });
 });
 
-// search post
+// search comment
 router.get('/get', (req, res) => {
   if(!req.query.username) {
       return res.status(400).send("Missing URL parameter: username");
@@ -63,10 +63,10 @@ router.get('/get', (req, res) => {
   });
 });
 
-// DELETE post
+// DELETE comment
 router.delete('/delete', (req, res) => {
   if(!req.query._id) {
-      return res.status(400).send("Missing URL parameter: username");
+      return res.status(400).send("Missing URL parameter: comment ID");
   }
     // delete post
     PostModel.findByIdAndDelete(req.query._id)
