@@ -71,7 +71,7 @@ router.get('/search', (req,res) => {
     }
     //key word with reg exp
     var keyWord = new RegExp(req.query.body,'ix');
-    UserModel.find({content: keyWord})
+    PostModel.find({content: keyWord})
     .then(doc => {
         if (!doc || doc.length === 0)
             res.status(500).send("Post not found");
