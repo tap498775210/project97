@@ -1,16 +1,21 @@
+const { compareSync } = require('bcrypt');
+const cookieParser = require('cookie-parser');
+
 // database setup
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
-    const server = 'cluster0.wbhcp.mongodb.net';
-    const database = 'db97';
-    const user = 'cs97w2021';
-    const password = 'Aa02252021';
-    
-    // login to database
-    mongoose.connect(`mongodb+srv://${user}:${password}@${server}/${database}?retryWrites=true&w=majority`, { useNewUrlParser: true, 'useUnifiedTopology': true, 'useCreateIndex': true}, (err) =>{
-        throw err;
-    });
+const server = 'cluster0.wbhcp.mongodb.net';
+const database = 'db97';
+const user = 'cs97w2021';
+const password = 'Aa02252021';
+
+// login to database
+mongoose.connect(`mongodb+srv://${user}:${password}@${server}/${database}?retryWrites=true&w=majority`, { useNewUrlParser: true, 'useUnifiedTopology': true, 'useCreateIndex': true}, (err) =>{
+    throw err;
+});
+
+var CommentModel = require('../models/model-comment');
 
 // User
 let PostSchema = new Schema({
@@ -24,6 +29,7 @@ let PostSchema = new Schema({
     },
     dateupdate:{
         type: Date, 
+        default: Date.now,
     }, 
     content: {
         type: String, 
@@ -47,7 +53,17 @@ let PostSchema = new Schema({
 // run before deleting post
 PostSchema.pre('findByIdAndDelete', function(next) {
     // remove all comments for this post
-    this.model('Comment').deleteMany({ post: this._id }, next);
+    CommentModel.deleteMany({post: this._id})
+    .then(doc => {
+        console.log(doc);
+        next();
+    })
+    .catch(err => {
+        console.log("Failed to remove related comments");
+        next(err);
+    })
+
+    // this.model('Comment').deleteMany({ post: this._id }, next);
 });
 
 module.exports = mongoose.model('posts', PostSchema);
