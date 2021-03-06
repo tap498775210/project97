@@ -48,21 +48,45 @@ router.put('/update', (req, res) => {
     });
 });
 
-// search post
-router.get('/get', (req, res) => {
-  if(!req.query.username) {
-      return res.status(400).send("Missing URL parameter: username");
-  }
-  UserModel.findOne({
-      username: req.query.username
-  }, { username:1, _id:0 })
-  .then(doc => {
-      res.json(doc);
-  })
-  .catch(err => {
-      res.status(500).json(err);
+// search post by username
+router.get('/getbyusername', (req, res) => {
+    if(!req.query.username) {
+        return res.status(400).send("Missing URL parameter: username");
+    }
+    // find post
+    PostModel.find({
+        username: req.query.username
+    })
+    .then(doc => {
+        if (!doc || doc.length === 0)
+            res.status(500).send("Post not found");
+        else
+            res.json(doc);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    });
   });
-});
+
+// search post by course
+router.get('/getbycourse', (req, res) => {
+    if(!req.query.course) {
+        return res.status(400).send("Missing URL parameter: course");
+    }
+    // find post
+    PostModel.find({
+        course: req.query.course
+    })
+    .then(doc => {
+        if (!doc || doc.length === 0)
+            res.status(500).send("Post not found");
+        else
+            res.json(doc);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    });
+  });
 
 //search post with key word
 router.get('/search', (req,res) => {
@@ -89,7 +113,7 @@ router.delete('/delete', (req, res) => {
       return res.status(400).send("Missing URL parameter: post ID");
   }
     // delete post
-    PostModel.findByIdAndDelete(req.query._id)
+    PostModel.findOneAndDelete({_id: req.query._id})
     .then(post => {
         res.json({post: post, comments: comments});
     })

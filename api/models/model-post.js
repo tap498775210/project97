@@ -40,10 +40,12 @@ let PostSchema = new Schema({
         ref: "Course",
         required: true,
     }, 
+    // not used for now
     upvote: [{
         type: Schema.Types.ObjectId,
         ref: "User",
     }],
+    // not used for now
     comment: [{
         type: Schema.Types.ObjectId, 
         ref: "Comment",
@@ -51,8 +53,7 @@ let PostSchema = new Schema({
 }, { timestamps: true });
 
 // run before deleting post
-PostSchema.pre('findByIdAndDelete', function(next) {
-    // remove all comments for this post
+PostSchema.pre('findOneAndDelete', function(next) {
     CommentModel.deleteMany({post: this._id})
     .then(doc => {
         console.log(doc);

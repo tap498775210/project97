@@ -38,7 +38,9 @@ let CommentSchema = new Schema({
     }],
 }, { timestamps: true });
 
-CommentSchema.pre('findByIdAndDelete', function(next) {
+// not used for now
+/*
+CommentSchema.pre('findOneAndDelete', function(next) {
     PostModel.deleteMany({comment: this._id})
     .then(doc => {
         console.log(doc);
@@ -50,5 +52,6 @@ CommentSchema.pre('findByIdAndDelete', function(next) {
     });
 
 });
+*/
 
 module.exports = mongoose.model('comments', CommentSchema);

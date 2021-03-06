@@ -32,7 +32,7 @@ router.put('/update', (req, res) => {
     return res.status(400).send('Request body missing');
   }
   // return newly created obj
-  PostModel.findByIdAndUpdate(req.query._id, req.body, {new : true})
+  CommentModel.findByIdAndUpdate(req.query._id, req.body, {new : true})
   .then(doc => {
         // empty doc
         if(!doc || doc.length === 0) {
@@ -47,14 +47,14 @@ router.put('/update', (req, res) => {
     });
 });
 
-// search comment
+// search comment by username
 router.get('/get', (req, res) => {
   if(!req.query.username) {
       return res.status(400).send("Missing URL parameter: username");
   }
-  UserModel.findOne({
+  CommentModel.find({
       username: req.query.username
-  }, { username:1, _id:0 })
+  })
   .then(doc => {
       res.json(doc);
   })
@@ -63,15 +63,31 @@ router.get('/get', (req, res) => {
   });
 });
 
+// search comment by post
+router.get('/get', (req, res) => {
+    if(!req.query.post) {
+        return res.status(400).send("Missing URL parameter: username");
+    }
+    CommentModel.find({
+        post: req.query.post
+    })
+    .then(doc => {
+        res.json(doc);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    });
+  });
+
 // DELETE comment
 router.delete('/delete', (req, res) => {
   if(!req.query._id) {
       return res.status(400).send("Missing URL parameter: comment ID");
   }
     // delete post
-    PostModel.findByIdAndDelete(req.query._id)
-    .then(post => {
-        res.json({post: post, comments: comments});
+    PostModel.findOneAndDelete({_id: req.query._id})
+    .then(doc => {
+        res.json(doc);
     })
     .catch(err => {
         res.status(500).json(err);
