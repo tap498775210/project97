@@ -57,7 +57,7 @@ router.post('/login', (req, res) => {
       res.status(500).send("Incorrect username");
   })
   .catch(err => {
-      res.status(500).json(err);
+      res.status(555).json(err);
   });
 });
 

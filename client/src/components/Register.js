@@ -80,9 +80,9 @@ function Register() {
           setDoneReg(true);
       }*/
 
-    console.log(usernamecp);    // Debug
-    console.log(passwordcp);    // Debug
-    console.log(passwordComfirmcp);   // Debug
+    //console.log(usernamecp);    // Debug
+    //console.log(passwordcp);    // Debug
+    //console.log(passwordComfirmcp);   // Debug
     setUsername("");
     setPassword("");
     setPasswordComfirm("");

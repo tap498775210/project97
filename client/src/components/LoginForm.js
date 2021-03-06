@@ -12,6 +12,7 @@ let display = "block";
 function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+    const [doneLog, setDoneLog] = useState(false);  
 
   const updateUsername = (event) => {
     setUsername(event.target.value);
@@ -20,16 +21,53 @@ function LoginForm() {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault(); // prevent reloading when hitting the button??
     console.log("submit:");
     let usernamecp = username;
     let passwordcp = password;
+
+      if (username === "" || password === "") {
+          alert("Please input a username or password.");
+          return;
+      } else {
+          await fetch('http://localhost:9000/users/login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({username: usernamecp, password: passwordcp}),
+          })
+              .then(async (res) => {
+                  if (res.status === 500) {
+                      const errMessage = await res.text();
+                      alert(errMessage);
+                      return (new Error(errMessage));
+                  } else if (res.status === 200) {
+                      setDoneLog(true);
+                      return res.json();
+                  }
+                  else {
+                      const errMessage = await res.json();
+                      return (new Error(errMessage));
+                  }
+              })
+              .catch(err => {
+                  console.log(err);
+              });
+      }
+
     console.log(usernamecp);
     console.log(passwordcp);
     setUsername("");
     setPassword("");
-  };
+    };
+
+    if (doneLog) {
+        return (
+            <>
+                <h1>log in successfully</h1>
+            </>
+            );
+    }
 
   return (
     <>
