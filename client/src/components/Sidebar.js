@@ -4,6 +4,10 @@ import routes from "../routes.js";
 
 import "./Sidebar.css"
 
+/*
+Reference: https://reactrouter.com/web/example/sidebar
+*/
+
 class Sidebar extends Component {
     render () {
         return  (

@@ -3,6 +3,9 @@ Remove commented codes and the debugging console.log functions before final subm
 Deal with "xxx is defined but never used" warnings before final submission 
 -----------------------------------------------------------------------------
 
+Added collapsable sidebar in App.js
+removed NavigationBar.js and NavigationBar.css since it is no longer needed
+
 Fixed linking between backend and frontend, question table submission works again
 updated /api/app.js to use the old questionAPI route that is still necessary
 fixed /api/routes/questionAPI.js apparantly it got reverted to an older version

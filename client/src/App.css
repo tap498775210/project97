@@ -2,12 +2,33 @@
   text-align: center;
 }
 
+.sidebarToggle {
+  background-color: #353a40;
+  border:none;
+  outline: none;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin: 0;
+}
+
+.navBar {
+  background-color: #353a40;
+  width: 100vw;
+  height: 60px;
+  line-height: 60px;
+  font-family: Helvetica, sans-serif;
+  font-size: 30px;
+  color: white;
+}
+
 .site {
   display: flex;
 }
 
 .sidebar {
-  width:0px;
+  transition-duration: .5s;
 }
 
 .main-body {

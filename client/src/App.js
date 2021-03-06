@@ -4,61 +4,53 @@
 
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import NavigationBar from "./components/NavigationBar";
 import Sidebar from "./components/Sidebar";
+import MenuIcon from '@material-ui/icons/Menu';
 import routes from "./routes";
 
 import Qna from "./components/qna";
 
 import './App.css';
 
-/*
-Reference: https://reactrouter.com/web/example/sidebar
-*/
-
-/* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
-function openNav() {
-  document.getElementById("mySidebar").style.width = "250px";
-  document.getElementById("main").style.marginLeft = "250px";
-}
-
-/* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
-function closeNav() {
-  document.getElementById("mySidebar").style.width = "0";
-  document.getElementById("main").style.marginLeft = "0";
-} 
-
 class App extends Component {
-  // constructor(props) {  // npm said the constructor is useless so it is commented out
-  //     super(props);
-  //     // this.state = { apiResponse: "" };
-  // }
+  constructor() {  // setup for debug and 
+      super();
+      this.state = { 
+        apiResponse: "",
+        showHideSidebar: false
+      };
+      this.hideComponent = this.hideComponent.bind(this);
+  }
 
-  // // We don't need callAPI right now??
-  // callAPI() {    
-  //     fetch("http://localhost:9000/questionAPI")
-  //         .then(res => res.text())
-  //         .then(res => this.setState({ apiResponse: res }));
-  // }
+  hideComponent() {   // used to toggle sidebar
+    console.log(this.state.showHideSidebar)
+    this.setState({ showHideSidebar: !this.state.showHideSidebar });
+  }
 
   componentDitMount() {   // Change Will to Did to erase a warning
-      this.callAPI();
-      console.log(this.state.apiResponse);  // Debug
+    this.callAPI();
+    console.log(this.state.apiResponse);  // Debug
   }
 
   render() {
+    const { showHideSidebar } = this.state;
     return (
       <React.Fragment>
         <Router>
-          {/* The navigation bar on the top. Currently it is just a decoration */}
-          <NavigationBar />
-
+          {/* Navigation Bar has been replaced with the following elements. */}
+          <div className="site">
+            <button className="sidebarToggle" onClick={() => this.hideComponent()}> 
+              <MenuIcon fontSize="large" style={{ color: "white"}} />
+            </button>
+            <div className="navBar">Qiazza</div>
+          </div>
+          
           {/* Sidebar has been separated into Sidebar.js and Sidebar.css
               Routes have been relocated to routes.js and included in relevant files
           */}
 
           <div className="site">
-            <Sidebar className="sidebar" />
+            {showHideSidebar && <Sidebar className="sidebar" />}
             <div className="main-body">
               <Switch>
                 {routes.map((route, index) => (
