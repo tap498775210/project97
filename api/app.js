@@ -10,7 +10,7 @@ var usersRouter = require('./routes/users');
 var postsRouter = require('./routes/posts');
 var commentsRouter = require('./routes/comments');
 var courseRouter = require('./routes/course');
-//var testAPIRouter = require("./routes/questionAPI");
+var questionAPIRouter = require("./routes/questionAPI"); // Still need this for current implementation of posts page
 
 var app = express();
 
@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-//app.use("/testAPI", testAPIRouter);
+app.use("/questionAPI", questionAPIRouter); // Still need this for current implementation of posts page
 app.use('/post', postsRouter);
 app.use('/comment', commentsRouter);
 app.use('/course', courseRouter);
