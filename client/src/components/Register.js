@@ -44,17 +44,16 @@ function Register() {
     setPasswordComfirm(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault(); // prevent reloading when hitting the button
     console.log("submit:");
     let usernamecp = username;
     let passwordcp = password;
     let passwordComfirmcp = passwordComfirm;
-    let successful = false;
 
       if (checkInfo(usernamecp, passwordcp, passwordComfirmcp)) {
 
-          successful = fetch('http://localhost:9000/users/register', {
+          await fetch('http://localhost:9000/users/register', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ name: 'someName', username: usernamecp, password: passwordcp}),
@@ -64,25 +63,22 @@ function Register() {
                       alert("register failed, please try again!");
                       return (new Error("failed"));
                   }
-                  else
-                      return res.json();
-
-              })
-              .then(json => {
-                  console.log(json);
-                  return true;
+                  else {
+                      let json = res.json();
+                      console.log(json);
+                      setDoneReg(true);
+                      return;
+                  }
               })
               .catch(err => {
                   console.log(err);
               });
       }
 
-      console.log(successful);
-
-      if (successful) {
+     /* if (successful) {
           alert("register succeed!!");
           setDoneReg(true);
-      }
+      }*/
 
     console.log(usernamecp);    // Debug
     console.log(passwordcp);    // Debug
