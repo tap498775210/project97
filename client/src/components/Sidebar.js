@@ -7,7 +7,7 @@ import "./Sidebar.css"
 class Sidebar extends Component {
     render () {
         return  (
-            <div class="sidebar-body">
+            <div className="sidebar-body">
                 {/* Links in the sidebar */}
                 
                 <ul style={{ listStyleType: "none", padding: 0 }}>
