@@ -1,7 +1,16 @@
 To Do:
 Remove commented codes and the debugging console.log functions before final submission
 Deal with "xxx is defined but never used" warnings before final submission 
+-----------------------------------------------------------------------------
 
+Fixed linking between backend and frontend, question table submission works again
+updated /api/app.js to use the old questionAPI route that is still necessary
+fixed /api/routes/questionAPI.js apparantly it got reverted to an older version
+
+
+Added a search bar in /search
+In Question.js: moved functions for QuestionTable to QuestionTable.js
+Fixed some typo 
 
 In login page: Changed the text in the message box 
                 Changed the width of the message box for devices with a small screen

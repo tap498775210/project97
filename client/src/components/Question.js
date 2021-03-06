@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import { Link, Switch, Route } from "react-router-dom";
 import Table from 'react-bootstrap/Table'
 //import Form from "react-bootstrap/Form";
+import QuestionTable from "./QuestionTable";
 import "./Question.css";
 
 /*
@@ -25,7 +26,7 @@ class Question extends Component {
     this.setState({word: event.target.value});
   }
   handleSubmit = async (event) => {
-    event.preventDefault();     // Prevent refresh the page when clicking "submit" button
+    event.preventDefault();     // Prevent refreshing the page when clicking "submit" button
     const response = await fetch("http://localhost:9000/questionAPI", {
       method: 'POST',
       headers: {
@@ -67,61 +68,6 @@ class Question extends Component {
     return list;
   }
 
-  // Generate a table for the quesions
-  questionTable() {
-    const questions = Array.from(this.state.apiResponse);
-    const rows = questions.map((question, index) => 
-      this.questionToCell(question, questions.length - index)
-    );
-    const table = (
-      <Table responsive bodered >
-        <thead>
-          <tr>
-            <th>Questions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows}
-        </tbody>
-      </Table>
-    );
-    return table;
-  }
-  // Generate a cell inside the table for each question
-  questionToCell(question, id) {
-    const link = "/q/" + id.toString();
-    return (
-      <tr boderless="true">
-        <td>
-          <Link to={link}>
-            {question}
-          </Link>
-        </td>
-      </tr>
-    );
-  }
-
-  // An example of react-bootstrap Table. Right now it has only one column
-  exampleQuestionTable() {    
-    return(
-      <Table responsive bodered>
-        <thead> 
-          <tr>  {/* A row */}
-            <th>Questions</th>  {/* The head of the table */}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>  {/* A row */}
-            <td>abc</td>  {/* A data cell */}
-          </tr>
-          <tr>
-            <td>def</td>
-          </tr>
-        </tbody>
-      </Table>
-    );
-  }
-
   // A function that generate a link for each question
   // Right now the link is "localhost:3000/q/[id]", 
   // where [id] right now is (the size of the question list - index of the question)
@@ -161,8 +107,12 @@ class Question extends Component {
         <input type='submit' value='Submit' />
         </form>
         <br />
+        
         <div>
-          {this.questionTable()}
+          {<QuestionTable 
+            questions={this.state.apiResponse} 
+            title="Questions"
+          />}
         </div>
         {/* <div>
           {this.exampleQuestionTable()}
