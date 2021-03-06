@@ -14,7 +14,7 @@ let bbb = {
 };
 
 let ccc = {
-    username: "abc123",
+    username: "cba456",
     password: "123456",
 };
 
@@ -64,7 +64,10 @@ let ccc = {
     body: JSON.stringify(ccc),
 })
     .then(res => res.json())
-    .then(json => console.log(json))
+    .then(json => {
+        rrr = json;
+        return console.log(json);
+    })
     .catch(err => {
         console.log(err);
     });*/
@@ -98,3 +101,26 @@ let ccc = {
     .catch(err => {
         console.log(err);
     });*/
+
+//test how to the arrow function behavior
+/*
+async function fff() {
+    let rrr = {};
+    await fetch('http://localhost:9000/users/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(ccc),
+    })
+        .then(res => res.json())
+        .then(json => {
+            rrr = json;
+            return console.log(json);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+
+    console.log(rrr.name);
+}
+
+fff();*/

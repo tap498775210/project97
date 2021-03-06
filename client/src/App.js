@@ -57,9 +57,9 @@ class App extends Component {
               Routes have been relocated to routes.js and included in relevant files
           */}
 
-          <div class="site">
-            <Sidebar class="sidebar" />
-            <div class="main-body">
+          <div className="site">
+            <Sidebar className="sidebar" />
+            <div className="main-body">
               <Switch>
                 {routes.map((route, index) => (
                   <Route
