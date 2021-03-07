@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import "./LoginForm.css";
+import { Redirect } from "react-router-dom";
 
 // const sampleUsernames = "aa";
 // const samplePassword = "asdf";
@@ -12,7 +13,8 @@ let display = "block";
 function LoginForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-    const [doneLog, setDoneLog] = useState(false);  
+    const [doneLog, setDoneLog] = useState(false);
+    const [name, setName] = useState("");
 
   const updateUsername = (event) => {
     setUsername(event.target.value);
@@ -43,7 +45,9 @@ function LoginForm() {
                       return (new Error(errMessage));
                   } else if (res.status === 200) {
                       setDoneLog(true);
-                      return res.json();
+                      let json = await res.json();
+                      console.log(json);
+                      setName(json.name);
                   }
                   else {
                       const errMessage = await res.json();
@@ -62,10 +66,11 @@ function LoginForm() {
     };
 
     if (doneLog) {
+
+        console.log(name);
+
         return (
-            <>
-                <h1>log in successfully</h1>
-            </>
+            <Redirect to={"user/" + { name }} />
             );
     }
 

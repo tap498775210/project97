@@ -33,7 +33,7 @@ const routes = [
       main: () => <Search />
     },
     {
-        path: "/user",
+        path: "/user/:name",
         sidebar: () => <div>user profile!</div>,
         main: () => <User/>
     }
