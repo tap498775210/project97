@@ -3,6 +3,8 @@ Remove commented codes and the debugging console.log functions before final subm
 Deal with "xxx is defined but never used" warnings before final submission 
 -----------------------------------------------------------------------------
 
+Show sidebar by default in a computer screen 
+
 Added an input box in /questionAPI for inputing question contents. Not functional yet. 
 Plans for Question: get the posts from backend
 

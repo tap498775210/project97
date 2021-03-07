@@ -10,15 +10,6 @@ import './App.css';
 import LoginForm from "./components/LoginForm";
 
 
-// /*
-// Context references: 
-//     https://stackoverflow.com/questions/49783155/pass-username-from-login-component-to-homepage-component
-//     https://reactjs.org/docs/context.html
-// */
-// const userid = React.createContext('');   
-// const courses = React.createContext([]);
-
-
 class App extends Component {
   constructor() {  // setup for debug and 
       super();
@@ -29,6 +20,7 @@ class App extends Component {
       };
       this.hideComponent = this.hideComponent.bind(this);
       this.setUserId = this.setUserId.bind(this);
+      this.resize = this.resize.bind(this);
   }
 
   hideComponent() {   // used to toggle sidebar
@@ -36,9 +28,21 @@ class App extends Component {
     this.setState({ showHideSidebar: !this.state.showHideSidebar });
   }
 
-  componentDitMount() {   // Change Will to Did to erase a warning
-    this.callAPI();
-    console.log(this.state.apiResponse);  // Debug
+  componentDidMount() {     
+    window.addEventListener("resize", this.resize);   // Detect screen resize
+    this.resize();  // Determine if the screen is large enough to show the sidebar
+    // Reference: https://stackoverflow.com/questions/44480053/how-to-detect-if-screen-size-has-changed-to-mobile-in-react
+  }
+
+  resize() {  
+    const isMobile = window.innerWidth <= 760;
+    if (this.state.showHideSidebar === isMobile) {
+      this.setState({showHideSidebar: !isMobile});
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.resize);
   }
 
   setUserId(id) {
