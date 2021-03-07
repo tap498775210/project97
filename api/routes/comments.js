@@ -63,14 +63,32 @@ router.get('/getbyuser', (req, res) => {
   });
 });
 
-// search comment by post id
-router.get('/getbypost', (req, res) => {
+// search comment by post id by creation date
+router.get('/getbypostcreate', (req, res) => {
     if(!req.query.post) {
         return res.status(400).send("Missing URL parameter: post");
     }
     CommentModel.find({
         post: req.query.post
     })
+    .sort({createdAt: -1})
+    .then(doc => {
+        res.json(doc);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    });
+  });
+
+  // search comment by post id by update date
+router.get('/getbypostupdate', (req, res) => {
+    if(!req.query.post) {
+        return res.status(400).send("Missing URL parameter: post");
+    }
+    CommentModel.find({
+        post: req.query.post
+    })
+    .sort({updatedAt: -1})
     .then(doc => {
         res.json(doc);
     })

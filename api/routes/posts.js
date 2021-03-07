@@ -68,8 +68,8 @@ router.get('/getbyuser', (req, res) => {
     });
   });
 
-// search post by course id
-router.get('/getbycourse', (req, res) => {
+// search post by course id sorted by creation date
+router.get('/getbycoursecreate', (req, res) => {
     if(!req.query.course) {
         return res.status(400).send("Missing URL parameter: course");
     }
@@ -77,6 +77,28 @@ router.get('/getbycourse', (req, res) => {
     PostModel.find({
         course: req.query.course
     })
+    .sort({createdAt: -1})
+    .then(doc => {
+        if (!doc || doc.length === 0)
+            res.status(500).send("Post not found");
+        else
+            res.json(doc);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    });
+  });
+
+  // search post by course id sorted by update date
+router.get('/getbycourseupdate', (req, res) => {
+    if(!req.query.course) {
+        return res.status(400).send("Missing URL parameter: course");
+    }
+    // find post
+    PostModel.find({
+        course: req.query.course
+    })
+    .sort({updatedAt: -1})
     .then(doc => {
         if (!doc || doc.length === 0)
             res.status(500).send("Post not found");
@@ -90,12 +112,13 @@ router.get('/getbycourse', (req, res) => {
 
 //search post with key word
 router.get('/search', (req,res) => {
-    if (!req.body) {
+    if (!req.query.keyword) {
         return res.status(400).send("Missing Request body");
     }
     //key word with reg exp
-    var keyWord = new RegExp(req.query.body,'ix');
-    PostModel.find({content: keyWord})
+    var keyWord = new RegExp(req.query.keyword);
+    PostModel.find({ $or: [{title: keyWord},{content: keyWord}] })
+    .sort({createdAt: -1})
     .then(doc => {
         if (!doc || doc.length === 0)
             res.status(500).send("Post not found");
