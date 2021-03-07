@@ -16,7 +16,8 @@ class Question extends Component {
     super(props);
     this.state = { 
       word: "",
-      apiResponse: "" 
+      apiResponse: "",
+      userId: this.props.userId, 
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -50,6 +51,14 @@ class Question extends Component {
         .then(res => res.json())
         .then(res => this.setState({ apiResponse: res }));
   }
+
+/*
+    TODO: find the courses associated by the user
+          then get the posts associated by the courses
+*/
+  // callAPI() {
+
+  // }
 
   componentDidMount() {   // Changed Will to Did to erase a warning
     this.callAPI();
@@ -85,6 +94,7 @@ class Question extends Component {
 
 
   render() {
+    console.log("Question: userId: " + this.state.userId);  // Debug
     return (
       // <div className="question">
       //   <h2 className="title">

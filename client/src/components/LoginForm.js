@@ -10,7 +10,7 @@ import { Redirect } from "react-router-dom";
 // let loggedin = false;
 let display = "block";
 
-function LoginForm() {
+function LoginForm(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
     const [doneLog, setDoneLog] = useState(false);
@@ -24,7 +24,7 @@ function LoginForm() {
   };
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // prevent reloading when hitting the button??
+    event.preventDefault(); 
     console.log("submit:");
     let usernamecp = username;
     let passwordcp = password;
@@ -45,6 +45,10 @@ function LoginForm() {
                       return (new Error(errMessage));
                   } else if (res.status === 200) {
                       setDoneLog(true);
+                      
+                      let rescp = await res.clone().json(); // Get a copy
+                      console.log(rescp);  // Debug
+                      props.setUserId(rescp._id);
                       let json = await res.json();
                       console.log(json);
                       setName(json.name);
@@ -59,8 +63,8 @@ function LoginForm() {
               });
       }
 
-    console.log(usernamecp);
-    console.log(passwordcp);
+    // console.log(usernamecp); // Debug
+    // console.log(passwordcp); // Debug
     setUsername("");
     setPassword("");
     };
@@ -85,12 +89,11 @@ function LoginForm() {
     <h2> Login </h2>
     <div className="LoginForm" display={display}>
       <Form onSubmit={handleSubmit}>
-        {/* <Form.Control type="text" placeholder="Normal text" /> */}
         <Form.Group>
           <Form.Label>Username</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Please do not use your real username"
+            placeholder="username"
             value={username}
             onChange={updateUsername}
           />
@@ -100,7 +103,7 @@ function LoginForm() {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Please do not use your real password"
+            placeholder="password"
             value={password}
             onChange={updatePassword}
           />

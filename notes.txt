@@ -3,6 +3,16 @@ Remove commented codes and the debugging console.log functions before final subm
 Deal with "xxx is defined but never used" warnings before final submission 
 -----------------------------------------------------------------------------
 
+Merged conflict with the last commit. Hope I didn't break anything. Will double check tomorrow!
+Added "userId" to App class's state. It will be the user id after login.
+Question accepts userId as a parameter as well. 
+Because the above implementations requires passing a function from App to LoginForm 
+and passing a value from App to Question, 
+the quickest way to do it right now is to render <LoginForm /> directly from App, 
+so the routes array and the <Route /> parts in both App and Sidebar are modified. 
+Plans for Question: get the posts from backend
+
+
 Added collapsable sidebar in App.js
 removed NavigationBar.js and NavigationBar.css since it is no longer needed
 

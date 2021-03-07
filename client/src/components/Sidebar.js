@@ -9,13 +9,14 @@ Reference: https://reactrouter.com/web/example/sidebar
 */
 
 class Sidebar extends Component {
-    render () {
-        return  (
-            <div className="sidebar-body">
-                {/* Links in the sidebar */}
-                
-                <ul style={{ listStyleType: "none", padding: 0 }}>
-                    {/* <li className="App-intro">
+  render() {
+
+    return (
+      <div className="sidebar-body">
+        {/* Links in the sidebar */}
+
+        <ul style={{ listStyleType: "none", padding: 0 }}>
+          {/* <li className="App-intro">
                     {this.state.apiResponse}
                     </li> */}
                     <li>
@@ -35,21 +36,23 @@ class Sidebar extends Component {
                     <li> 
                     <Link to="/profile"></Link>
                     </li> */}
-                </ul>
+        </ul>
 
-                <Switch>
-                    {routes.map((route, index) => (
-                    <Route
-                        key={index}
-                        path={route.path}
-                        exact={route.exact}
-                        children={<route.sidebar />}
-                    />
-                    ))}
-                </Switch>
-            </div>
-        );
-    }
+        <Switch>
+          <Route exact path="/" children={<div>home!</div>}/>
+          <Route path="/questionAPI" children={<div>posts!</div>}/>
+          {routes.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              exact={route.exact}
+              children={<route.sidebar />}
+            />
+          ))}
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default Sidebar;
