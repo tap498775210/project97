@@ -14,7 +14,7 @@ router.post('/create', (req, res) => {
       .then(doc => {
           // empty doc
           if(!doc || doc.length === 0) {
-              return res.status(500).send("Error: Comment not saved.");
+              return res.status(500).send("Comment not saved.");
           }
           // resource created
           res.status(201).send(doc);
@@ -36,7 +36,7 @@ router.put('/update', (req, res) => {
   .then(doc => {
         // empty doc
         if(!doc || doc.length === 0) {
-            return res.status(500).send("Error: Post not found.");
+            return res.status(500).send("Comment not found.");
         }
         // resource created
         res.status(201).send(doc);
@@ -47,13 +47,13 @@ router.put('/update', (req, res) => {
     });
 });
 
-// search comment by username
-router.get('/get', (req, res) => {
-  if(!req.query.username) {
-      return res.status(400).send("Missing URL parameter: username");
+// search comment by user id
+router.get('/getbyuser', (req, res) => {
+  if(!req.query.user) {
+      return res.status(400).send("Missing URL parameter: user");
   }
   CommentModel.find({
-      username: req.query.username
+      user: req.query.user
   })
   .then(doc => {
       res.json(doc);
@@ -63,10 +63,10 @@ router.get('/get', (req, res) => {
   });
 });
 
-// search comment by post
-router.get('/get', (req, res) => {
+// search comment by post id
+router.get('/getbypost', (req, res) => {
     if(!req.query.post) {
-        return res.status(400).send("Missing URL parameter: username");
+        return res.status(400).send("Missing URL parameter: post");
     }
     CommentModel.find({
         post: req.query.post
@@ -85,7 +85,7 @@ router.delete('/delete', (req, res) => {
       return res.status(400).send("Missing URL parameter: comment ID");
   }
     // delete post
-    PostModel.findOneAndDelete({_id: req.query._id})
+    CommentModel.findOneAndDelete({_id: req.query._id})
     .then(doc => {
         res.json(doc);
     })

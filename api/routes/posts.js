@@ -15,7 +15,7 @@ router.post('/create', (req, res) => {
       .then(doc => {
           // empty doc
           if(!doc || doc.length === 0) {
-              return res.status(500).send("Error: Post not saved.");
+              return res.status(500).send("Post not saved.");
           }
           // resource created
           res.status(201).json(doc);
@@ -37,7 +37,7 @@ router.put('/update', (req, res) => {
   .then(doc => {
         // empty doc
         if(!doc || doc.length === 0) {
-            return res.status(500).send("Error: Post not found.");
+            return res.status(500).send("Post not found.");
         }
         // resource created
         res.status(201).send(doc);
@@ -48,14 +48,14 @@ router.put('/update', (req, res) => {
     });
 });
 
-// search post by username
-router.get('/getbyusername', (req, res) => {
-    if(!req.query.username) {
-        return res.status(400).send("Missing URL parameter: username");
+// search post by user id
+router.get('/getbyuser', (req, res) => {
+    if(!req.query.user) {
+        return res.status(400).send("Missing URL parameter: user");
     }
     // find post
     PostModel.find({
-        username: req.query.username
+        user: req.query.user
     })
     .then(doc => {
         if (!doc || doc.length === 0)
@@ -68,7 +68,7 @@ router.get('/getbyusername', (req, res) => {
     });
   });
 
-// search post by course
+// search post by course id
 router.get('/getbycourse', (req, res) => {
     if(!req.query.course) {
         return res.status(400).send("Missing URL parameter: course");
@@ -108,18 +108,33 @@ router.get('/search', (req,res) => {
 });
 
 // DELETE post
-router.delete('/delete', (req, res) => {
+router.delete('/deleteone', (req, res) => {
   if(!req.query._id) {
       return res.status(400).send("Missing URL parameter: post ID");
   }
     // delete post
     PostModel.findOneAndDelete({_id: req.query._id})
     .then(post => {
-        res.json({post: post, comments: comments});
+        res.json(post);
     })
     .catch(err => {
         res.status(500).json(err);
     });
 });
+
+router.delete('/deletemany', (req, res) => {
+    if(!req.query._id) {
+        return res.status(400).send("Missing URL parameter: post ID");
+    }
+      // delete post
+      PostModel.deleteMany({_id: {
+        $in: req.query._id }})
+      .then(post => {
+          res.json(post);
+      })
+      .catch(err => {
+          res.status(500).json(err);
+      });
+  });
 
 module.exports = router;

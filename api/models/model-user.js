@@ -37,35 +37,26 @@ let UserSchema = new Schema({
 
 // run before deleting user
 UserSchema.pre('findOneAndDelete', function(next) {  
-    PostModel.deleteMany({ user: this._id })
-        .then(doc => {
-            console.log(doc);
-            CommentModel.deleteMany({ user: this._id })
-                .then(doc => {
-                    console.log(doc);
+    // delete posts firsts
+    PostModel.deleteMany({ user: this._conditions._id })
+        .then(post => {
+            console.log(post);
+            // delete comments
+            CommentModel.deleteMany({ user: this._conditions._id })
+                .then(comment => {
+                    console.log(comment);
                     next();
                 })
-                .catch(err => {
+                .catch(errcomment => {
                     console.log("Failed to remove related comments"); 
-                    next(err); 
+                    next(errcomment); 
                 });
         })
         .catch(err => {
             console.log("Failed to remove related posts"); 
             next(err); 
         });
-    /*
-    // delete all comments created by this user
-    this.model('comments').deleteMany({ user: this._id }, function(err){
-        if (err) return next("Failed to removed related comments");
-         // delete all posts created by this user
-        this.model('posts').deleteMany({ user: this._id }, function(err){
-            if (err) return next("Failed to removed related posts");
-            next();
-        });
     });
-    */
-});
 
 // hash password
 UserSchema.pre('save', function(next) {

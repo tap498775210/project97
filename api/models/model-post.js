@@ -27,10 +27,6 @@ let PostSchema = new Schema({
         type: Schema.Types.ObjectId, 
         ref: "User", 
     },
-    dateupdate:{
-        type: Date, 
-        default: Date.now,
-    }, 
     content: {
         type: String, 
         required: true,
@@ -54,7 +50,8 @@ let PostSchema = new Schema({
 
 // run before deleting post
 PostSchema.pre('findOneAndDelete', function(next) {
-    CommentModel.deleteMany({post: this._id})
+    console.log(this._conditions._id);
+    CommentModel.deleteMany({post: this._conditions._id})
     .then(doc => {
         console.log(doc);
         next();
@@ -67,4 +64,43 @@ PostSchema.pre('findOneAndDelete', function(next) {
     // this.model('Comment').deleteMany({ post: this._id }, next);
 });
 
+// delete many posts
+PostSchema.pre('deleteMany', function(next) {
+    var conditions = this._conditions;
+    if(Object.keys(conditions)[0]=="_id")
+        conditions._id.$in = JSON.parse(this._conditions._id.$in); 
+    this.find(conditions)
+    .select({"_id": 1})
+    .then(doc => {
+        // reformat doc so that it can be used as parameter for deleteMany
+        var arr = [];
+        for (var i = 0; i < doc.length; i++)
+        {
+            arr[i] = doc[i]._id;
+        }
+        var newjson = {post: {$in:arr}};
+        // delete comments with given post id
+        CommentModel.deleteMany(newjson)
+        .then(comments => {
+            console.log(comments);
+            next();
+        })
+        .catch(commenterr => {
+            console.log("Failed to remove related comments");
+            next(commenterr);
+        });
+    })
+    .catch(err => {
+        console.log("Failed to find posts");
+        next(err);
+    });
+});
+
 module.exports = mongoose.model('posts', PostSchema);
+
+/*
+    dateupdate:{
+        type: Date, 
+        default: Date.now,
+    }, 
+*/
