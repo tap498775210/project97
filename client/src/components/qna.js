@@ -1,4 +1,6 @@
 import React from 'react';
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import ReactDOM from 'react-dom';
 
 class Question extends React.Component {
@@ -36,13 +38,30 @@ export default class Qna extends React.Component {
             <>
                 <Question />
                 <Answers />
-                <form onSubmit={this.handleSubmit}>
+                {/* <form onSubmit={this.handleSubmit}>
                     <label>
                         want to provide an answer?<br/>
                         <input type='text' value={this.state.word} onChange={this.handleChange} />
                     </label>
                     <input type='submit' value='Submit' />
-                </form>
+                </form> */}
+                <br />
+                <div className="inputbox" style={{width: "700px"}}>
+                <Form onSubmit={this.handleSubmit}>
+                    <Form.Label>want to provide an answer?</Form.Label>
+                    <Form.Group>
+                        <Form.Control as='textarea' rows={5} 
+                            type='text' 
+                            value={this.state.word}
+                            placeholder='Your response...' 
+                            onChange={this.handleChange} 
+                        />
+                    </Form.Group>
+                    <Button variant="primary" type="submit">
+                        Answer
+                    </Button>
+                </Form>
+                </div>
             </>
         );
     }
