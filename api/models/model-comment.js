@@ -18,11 +18,11 @@ var PostModel = require('../models/model-post');
 let CommentSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId, 
-        ref: "User", 
+        ref: "users", 
     },
     post: {
         type: Schema.Types.ObjectId, 
-        ref: "Post", 
+        ref: "posts", 
         required: true,
     },
     content: {
@@ -31,7 +31,7 @@ let CommentSchema = new Schema({
     },
     upvote: [{
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: "users",
     }],
 }, { timestamps: true });
 

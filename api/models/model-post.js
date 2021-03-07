@@ -39,12 +39,12 @@ let PostSchema = new Schema({
     // not used for now
     upvote: [{
         type: Schema.Types.ObjectId,
-        ref: "User",
+        ref: "users",
     }],
     // not used for now
     comment: [{
         type: Schema.Types.ObjectId, 
-        ref: "Comment",
+        ref: "comments",
     }]
 }, { timestamps: true });
 

@@ -55,7 +55,8 @@ router.get('/get', (req, res) => {
     if(!req.query._id) {
         return res.status(400).send('Missing URL parameter: id');
     }
-  CourseModel.findById(req.query._id)
+  CourseModel.find({_id: {
+    $in: JSON.parse(req.query._id) }})
   .then(doc => {
     if(!doc || doc.length === 0)
         res.status(500).send("Course not found");

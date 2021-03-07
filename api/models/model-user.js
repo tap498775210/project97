@@ -24,6 +24,10 @@ let UserSchema = new Schema({
         type: String, 
         required: true,
     },
+    course: [{
+        type: Schema.Types.ObjectId,
+        ref: "courses",
+    }],
     username: {
         type: String, 
         required: true,

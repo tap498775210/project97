@@ -19,7 +19,7 @@ router.post('/register', (req, res) => {
           if(!doc || doc.length === 0) 
             res.status(500).send("Failed to save user");
           else
-            res.status(201).send({_id : doc._id, name: doc.name, username : doc.username});
+            res.status(201).send({_id : doc._id, name: doc.name, username : doc.username, course: doc.course});
       })
       .catch(err => {
           // catch and return error
@@ -46,7 +46,7 @@ router.post('/login', (req, res) => {
         if (err) throw err;
         // password match -> send username
         if(isMatch) 
-          res.json({_id : doc._id, name: doc.name, username : doc.username});
+          res.json({_id : doc._id, name: doc.name, username : doc.username, course: doc.course});
         // no match -> send empty response
         else 
           res.status(500).send("Incorrect password");
@@ -73,7 +73,7 @@ router.get('/get', (req, res) => {
     if(!doc || doc.length === 0) 
       res.status(500).send("User no found");
     else
-      res.json({_id : doc._id, name: doc.name, username : doc.username});
+      res.json({_id : doc._id, name: doc.name, username : doc.username, course: doc.course});
   })
   .catch(err => {
       res.status(500).json(err);
@@ -95,7 +95,7 @@ router.put('/update', (req, res) => {
     if(!doc || doc.length === 0) 
       res.status(500).send("User not found");
     else
-      res.json({_id : doc._id, name: doc.name, username : doc.username});
+      res.json({_id : doc._id, name: doc.name, username : doc.username, course: doc.course});
   })
   .catch(err => {
       res.status(500).json(err);
