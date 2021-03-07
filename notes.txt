@@ -3,7 +3,8 @@ Remove commented codes and the debugging console.log functions before final subm
 Deal with "xxx is defined but never used" warnings before final submission 
 -----------------------------------------------------------------------------
 
-Added an input box in /questionAPI for the contents. Not functional yet. 
+Added an input box in /questionAPI for inputing question contents. Not functional yet. 
+Plans for Question: get the posts from backend
 
 Merged conflict with the last commit. Hope I didn't break anything. Will double check tomorrow!
 Added "userId" to App class's state. It will be the user id after login.
