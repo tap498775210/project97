@@ -15,47 +15,49 @@ class Question extends Component {
     super(props);
     this.state = {
       word: "",
-      newPost: {title: "", content: "", course: "603d930c493bb1680c5d4f15"},  // Hardcode course for now ;_;
+      newPost: {
+        title: "", 
+        user: this.props.userId,            // Need to login before creating posts
+        // user: "60431fd54ac31e30045e359e" // Can use the hardcoded user id to avoid login everytime
+        content: "", 
+        course: "603d930c493bb1680c5d4f15", // Hard code for now ;_;
+      },  
       apiResponse: "",
       posts: null,  // Store existing posts from the server
-      //titles: [],
       titleId: [], // An array of {title, id}. Example of element: {title: 'abc', id: '12345'}
-      userId: this.props.userId,
+      // userId: this.props.userId,
     };
-    this.handleChange = this.handleChange.bind(this);
+    // this.handleChange = this.handleChange.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleContentChange = this.handleContentChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    // this.setState({ word: event.target.value });
-    if (event.target.name === 'title') {
-      this.setState({newPost: {
-        title: event.target.value, 
-        content: this.state.newPost.content,
-        course: this.state.newPost.course,
-      }});
-    } else if (event.target.name === 'content') {
-      this.setState({newPost: {
-        title: this.state.newPost.title, 
-        content: event.target.value,
-        course: this.state.newPost.course,
-      }});
-    } 
+  // handleChange(event) {
+  //   // this.setState({ word: event.target.value });
+  //   const newPost = this.state.newPost;
+  //   if (event.target.name === 'title') {
+  //     newPost.title = event.target.value;
+  //   } else if (event.target.name === 'content') {
+  //     newPost.content = event.target.value;
+  //   } 
+
+  //   this.setState({newPost: newPost});
+  // }
+  handleTitleChange(event) {
+    this.setState({newPost: {
+      title: event.target.value, 
+      content: this.state.newPost.content,
+      course: this.state.newPost.course,
+    }});
   }
-  // handleTitleChange(event) {
-  //   this.setState({newPost: {
-  //     title: event.target.value, 
-  //     content: this.state.newPost.content,
-  //     course: this.state.newPost.course,
-  //   }});
-  // }
-  // handleContentChange(event) {
-  //   this.setState({newPost: {
-  //     title: this.state.newPost.title, 
-  //     content: event.target.value,
-  //     course: this.state.newPost.course,
-  //   }});
-  // }
+  handleContentChange(event) {
+    this.setState({newPost: {
+      title: this.state.newPost.title, 
+      content: event.target.value,
+      course: this.state.newPost.course,
+    }});
+  }
   // handleSubmit = async (event) => {
   //   event.preventDefault();     // Prevent refreshing the page when clicking "submit" button
   //   const response = await fetch("http://localhost:9000/questionAPI", {
@@ -76,7 +78,7 @@ class Question extends Component {
   //   console.log("is apiResponse an array: " + Array.isArray(this.state.apiResponse));// debug
   // }
   handleSubmit = async (event) => {
-    //event.preventDefault();     // Prevent refreshing the page when clicking "submit" button
+    // event.preventDefault();     // Prevent refreshing the page when clicking "submit" button
     console.log("title: " + this.state.newPost.title);
     console.log("content: " + this.state.newPost.content);
     let newjs = JSON.stringify(this.state.newPost);
@@ -90,9 +92,8 @@ class Question extends Component {
       body: JSON.stringify(this.state.newPost),
     })
       .then(async (response) => {
-        response.json();
-        // console.log(response.clone().status);
-        // console.log(response.clone().body);//test
+        // response.json();
+        console.log(response.clone().status);
       })
 
     // const question = await response.json();
@@ -102,6 +103,7 @@ class Question extends Component {
       newPost: {
         title: '', 
         content: '',
+        user: this.props.userId,
         course: '603d930c493bb1680c5d4f15',
       },
     });  // Empty the input box  
@@ -190,7 +192,7 @@ Parameters:
   questions: an array of {title, id}, where title is the title of a post, id is the _id of a post
 */
   render() {
-    // console.log("Question: userId: " + this.state.userId);  // Debug
+    console.log("Question: userId: " + this.state.userId);  // Debug
     return (
       <>
         <div>
@@ -211,19 +213,19 @@ Parameters:
               <Form.Control 
                 type='text' 
                 value={this.state.newPost.title}
-                name='title'
+                // name='title'
                 placeholder='title' 
                 // onChange={this.handleChange} 
-                onChange={this.handleChange}
+                onChange={this.handleTitleChange}
               />
             </Form.Group>
             <Form.Group>
               <Form.Control as='textarea' rows={5} 
                 type='text'
                 value={this.state.newPost.content} // this.state.content not implemented yet
-                name='content'
+                // name='content'
                 placeholder='details of your question'
-                onChange={this.handleChange}
+                onChange={this.handleContentChange}
               />
             </Form.Group>
             <Button variant="primary" type="submit">

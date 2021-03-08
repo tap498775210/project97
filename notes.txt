@@ -12,13 +12,18 @@ To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup f
 
 --------------------------------------------------------------------------------
 
+added user for created posts. Login required, otherwise posts could not be created. 
+    (there is a hardcoded userId in Question's state, feel free to use it to avoid logging 
+    in everytime we recompile the app)
+The course for created posts is still hardcoded for now. Ideas are in the following paragraph. 
+
 added create post feature in Question, but not fully implemented. Each created post has 
 only a title, content, course, while the course is hardcoded. It requires reloading the 
 page to render newly created post. 
 plan: hardcode some checkbox for courses in the form, like ⬜CS 97  ⬜CS 33,
     to let the user choose which course is related to this post. 
     Then setState the selected course id. 
-    checkbox reference:  https://reactjs.org/docs/forms.html (Ctrl F "checkbox)
+    checkbox reference:  https://reactjs.org/docs/forms.html (Ctrl F "checkbox")
     bootstrap reference: https://react-bootstrap.github.io/components/forms/#forms-check-inline
 
 pass both title and post id to QuestionTable so it can redirect to /q/[post id]
