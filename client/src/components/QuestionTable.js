@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Table from 'react-bootstrap/Table'
+import Table from 'react-bootstrap/Table';
 
 // Generate a cell inside the table for each question
 function questionToCell(question, id) {
@@ -20,7 +20,7 @@ function questionToCell(question, id) {
 // props: 
 //  title: the header of the table
 //  questions: array containing strings of questions (titles)
-function questionTable(props) {
+function QuestionTable(props) {
     const questions = Array.from(props.questions);
     const rows = questions.map((question, index) => 
       questionToCell(question, questions.length - index)
@@ -40,4 +40,4 @@ function questionTable(props) {
     return table;
 }
 
-export default questionTable;
+export default QuestionTable;

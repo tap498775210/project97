@@ -1,11 +1,9 @@
-//import React, { useState, Component } from "react";
 import React, { Component } from "react";
-// import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Link, Switch, Route } from "react-router-dom";
-import Table from 'react-bootstrap/Table';
+import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import QuestionTable from "./QuestionTable";
+// import QuestionTable from "./QuestionTable";
+import QuestionTableV2 from "./QuestionTableV2";
 import "./Question.css";
 
 /*
@@ -20,6 +18,7 @@ class Question extends Component {
       apiResponse: "",
       posts: null,  // Store posts from the server
       titles: [],
+      titleId: [],
       userId: this.props.userId,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -66,32 +65,45 @@ class Question extends Component {
       // .then(data => console.log(data))
       .then(data => {
         this.setState({posts: data});
-        console.log("incallAPI: " + this.state.posts[0].title);
+        // console.log(this.state.posts[0]);  // Debug
         const titleArr = this.titles();
-        console.log(titleArr);    // // Debug
+        // console.log(titleArr);    // // Debug
         this.setState({titles: titleArr});
-        console.log(this.state.titles);   // Debug
-        
+        // console.log(this.state.titles);   // Debug
+        console.log("title and id");
+        // const titleAndIdArr = this.titlesAndIds();
+        this.setState({titleId: this.titlesAndIds()});
+        console.log(this.state.titleId);
       });
   }
 
   // Get titles from this.state.posts
   titles() {
     let titleArr = [];    
-    console.log("is array: "+ Array.isArray(this.state.posts)); // Debug
+    // console.log("is array: "+ Array.isArray(this.state.posts)); // Debug
     let posts = this.state.posts;
     posts.forEach(post => titleArr.push(post.title));
-    console.log("titles: " + titleArr); // Debug
     return titleArr;
+  }
+
+  titlesAndIds() {
+    let titleAndIdArr = [];
+    let posts = this.state.posts;
+    posts.forEach(post => titleAndIdArr.push({title: post.title, id: post._id}));
+    return titleAndIdArr;
   }
 
   componentDidMount() {   // Changed Will to Did to erase a warning
     this.callAPI();
-    console.log("typeof data: " + typeof this.state.data);
-    console.log("is array: " + Array.isArray(this.state.data));
-    console.log("data: " + this.state.data);
+    // console.log("typeof data: " + typeof this.state.data);
+    // console.log("is array: " + Array.isArray(this.state.data));
+    // console.log("data: " + this.state.data);
   }
 
+
+// =======================================================================
+//                           Unused functions 
+// -----------------------------------------------------------------------
   // Generate a list of questions
   // It seems to execute whenever we type a character in the input box
   questionList() {
@@ -119,20 +131,12 @@ class Question extends Component {
       </li>
     );
   }
-
+// -----------------------------------------------------------------------
+// =======================================================================
 
   render() {
-    console.log("Question: userId: " + this.state.userId);  // Debug
-    //const titleArr = this.titles();
+    // console.log("Question: userId: " + this.state.userId);  // Debug
     return (
-      // <div className="question">
-      //   <h2 className="title">
-      //     {solved_symbol} {props.title}
-      //   </h2>
-      //   <div className="qcontent">{props.content}</div>
-      //   <div className="user">{props.user}</div>
-      // </div>
-      //show the post form submit window and questions 
       <>
         <div>
           <h1>Post a Question</h1>
@@ -171,20 +175,11 @@ class Question extends Component {
         <br />
 
         <div>
-          {<QuestionTable
-            questions={this.state.titles}
+          {<QuestionTableV2
+            questions={this.state.titleId}
             title="Questions"
           />}
         </div>
-        {/* <div>
-          {this.exampleQuestionTable()}
-        </div> */}
-        {/* <div className='questionList'>        
-          {this.questionList()}
-        </div> */}
-        {/* <div>
-                <p>{this.state.apiResponse}</p>
-        </div> */}
       </>
     );
   }

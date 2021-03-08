@@ -12,9 +12,10 @@ To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup f
 
 --------------------------------------------------------------------------------
 
+pass both title and post id to QuestionTable so it can redirect to /q/[post id]
+
 In Question.js: Used a temporary function to display question titles
 functions for creating posts not implemented yet
-plan: pass both title and post id to QuestionTable so it can redirect to /q/[post id]
 Copied files from branch jc:
    api/bin/www
    api/package.json (keep both hbs and jade)
@@ -31,7 +32,6 @@ The difference of /api between two branches before copy is in apidiff_before.dif
 Show sidebar by default in a computer screen 
 
 Added an input box in /questionAPI for inputing question contents. Not functional yet. 
-Plans for Question: get the posts from backend
 
 Merged conflict with the last commit. Hope I didn't break anything. Will double check tomorrow!
 Added "userId" to App class's state. It will be the user id after login.
@@ -40,7 +40,6 @@ Because the above implementations requires passing a function from App to LoginF
 and passing a value from App to Question, 
 the quickest way to do it right now is to render <LoginForm /> directly from App, 
 so the routes array and the <Route /> parts in both App and Sidebar are modified. 
-Plans for Question: get the posts from backend
 
 
 Added collapsable sidebar in App.js

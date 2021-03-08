@@ -54,7 +54,7 @@ router.get('/gettem', (req, res) => {
     PostModel.find({})
         .sort({createdAt: -1})
         .then(doc => {
-            console.log(doc);
+            // console.log(doc);
             if (!doc || doc.length === 0)
                 res.status(500).send("Post not found");
             else
