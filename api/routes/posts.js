@@ -10,6 +10,7 @@ router.post('/create', (req, res) => {
   if(!req.body) {
       return res.status(400).send('Request body missing');
   }
+  console.log(req.body.title);
   let model = new PostModel(req.body);
   model.save()
       .then(doc => {
@@ -48,8 +49,9 @@ router.put('/update', (req, res) => {
     });
 });
 
-// tempoary
+// temporary function
 // get all posts
+// Will use getbycourse when we can let the user to add courses
 router.get('/gettem', (req, res) => {
     PostModel.find({})
         .sort({createdAt: -1})

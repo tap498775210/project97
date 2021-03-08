@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-// import QuestionTable from "./QuestionTable";
+// import QuestionTable from "./QuestionTable";  // Use V2
 import QuestionTableV2 from "./QuestionTableV2";
 import "./Question.css";
 
@@ -15,10 +15,11 @@ class Question extends Component {
     super(props);
     this.state = {
       word: "",
+      newPost: {title: "", content: "", course: "603d930c493bb1680c5d4f15"},  // Hardcode course for now ;_;
       apiResponse: "",
-      posts: null,  // Store posts from the server
-      titles: [],
-      titleId: [],
+      posts: null,  // Store existing posts from the server
+      //titles: [],
+      titleId: [], // An array of {title, id}. Example of element: {title: 'abc', id: '12345'}
       userId: this.props.userId,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -26,26 +27,86 @@ class Question extends Component {
   }
 
   handleChange(event) {
-    this.setState({ word: event.target.value });
+    // this.setState({ word: event.target.value });
+    if (event.target.name === 'title') {
+      this.setState({newPost: {
+        title: event.target.value, 
+        content: this.state.newPost.content,
+        course: this.state.newPost.course,
+      }});
+    } else if (event.target.name === 'content') {
+      this.setState({newPost: {
+        title: this.state.newPost.title, 
+        content: event.target.value,
+        course: this.state.newPost.course,
+      }});
+    } 
   }
+  // handleTitleChange(event) {
+  //   this.setState({newPost: {
+  //     title: event.target.value, 
+  //     content: this.state.newPost.content,
+  //     course: this.state.newPost.course,
+  //   }});
+  // }
+  // handleContentChange(event) {
+  //   this.setState({newPost: {
+  //     title: this.state.newPost.title, 
+  //     content: event.target.value,
+  //     course: this.state.newPost.course,
+  //   }});
+  // }
+  // handleSubmit = async (event) => {
+  //   event.preventDefault();     // Prevent refreshing the page when clicking "submit" button
+  //   const response = await fetch("http://localhost:9000/questionAPI", {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ word: this.state.word }),
+  //   });
+  //   console.log(response);//test
+  //   console.log(response.body);//test
+
+  //   const question = await response.json();
+  //   console.log(`${question[0]}`);
+  //   console.log(question);  // Debug
+  //   this.setState({ word: "" });  // Empty the input box  // working =D
+  //   this.setState({ apiResponse: question });
+  //   console.log("is apiResponse an array: " + Array.isArray(this.state.apiResponse));// debug
+  // }
   handleSubmit = async (event) => {
-    event.preventDefault();     // Prevent refreshing the page when clicking "submit" button
-    const response = await fetch("http://localhost:9000/questionAPI", {
+    //event.preventDefault();     // Prevent refreshing the page when clicking "submit" button
+    console.log("title: " + this.state.newPost.title);
+    console.log("content: " + this.state.newPost.content);
+    let newjs = JSON.stringify(this.state.newPost);
+    console.log("newjs type: " + typeof newjs);
+    console.log(newjs);
+    await fetch("http://localhost:9000/post/create", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ word: this.state.word }),
-    });
-    console.log(response);//test
-    console.log(response.body);//test
+      body: JSON.stringify(this.state.newPost),
+    })
+      .then(async (response) => {
+        response.json();
+        // console.log(response.clone().status);
+        // console.log(response.clone().body);//test
+      })
 
-    const question = await response.json();
-    console.log(`${question[0]}`);
-    console.log(question);  // Debug
-    this.setState({ word: "" });  // Empty the input box  // working =D
-    this.setState({ apiResponse: question });
-    console.log("is apiResponse an array: " + Array.isArray(this.state.apiResponse));// debug
+    // const question = await response.json();
+    // console.log(`${question[0]}`);
+    // console.log(question);  // Debug
+    this.setState({ 
+      newPost: {
+        title: '', 
+        content: '',
+        course: '603d930c493bb1680c5d4f15',
+      },
+    });  // Empty the input box  
+    // this.setState({ apiResponse: question });
+    // console.log("is apiResponse an array: " + Array.isArray(this.state.apiResponse));// debug
   }
 
   // callAPI() {
@@ -59,38 +120,26 @@ class Question extends Component {
             then get the posts associated by the courses
   */
   // Temporary
+  // TODO: error handling
   callAPI() {
-    fetch("http://localhost:9000/post/gettem")
+    fetch("http://localhost:9000/post/gettem")  // Used a temporary function to get all posts
+                                                // Will use '/getbycourse' when we can let the user to add courses
       .then(res => res.json())
       // .then(data => console.log(data))
       .then(data => {
         this.setState({posts: data});
-        // console.log(this.state.posts[0]);  // Debug
-        const titleArr = this.titles();
-        // console.log(titleArr);    // // Debug
-        this.setState({titles: titleArr});
-        // console.log(this.state.titles);   // Debug
-        console.log("title and id");
         // const titleAndIdArr = this.titlesAndIds();
-        this.setState({titleId: this.titlesAndIds()});
+        this.setState({titleId: this.titlesAndIds(data)});
+        console.log("title and id");
         console.log(this.state.titleId);
       });
   }
 
-  // Get titles from this.state.posts
-  titles() {
-    let titleArr = [];    
-    // console.log("is array: "+ Array.isArray(this.state.posts)); // Debug
-    let posts = this.state.posts;
-    posts.forEach(post => titleArr.push(post.title));
-    return titleArr;
-  }
-
-  titlesAndIds() {
-    let titleAndIdArr = [];
-    let posts = this.state.posts;
-    posts.forEach(post => titleAndIdArr.push({title: post.title, id: post._id}));
-    return titleAndIdArr;
+  // Get titles and ids from the server returned posts. 
+  titlesAndIds(data) {
+    let titleIdArr = [];
+    data.forEach(element => titleIdArr.push({title: element.title, id: element._id}));
+    return titleIdArr;
   }
 
   componentDidMount() {   // Changed Will to Did to erase a warning
@@ -134,6 +183,12 @@ class Question extends Component {
 // -----------------------------------------------------------------------
 // =======================================================================
 
+/*
+QuestionTableV2: generate a table of questions
+Parameters: 
+  title: the title of the table.  
+  questions: an array of {title, id}, where title is the title of a post, id is the _id of a post
+*/
   render() {
     // console.log("Question: userId: " + this.state.userId);  // Debug
     return (
@@ -155,16 +210,20 @@ class Question extends Component {
             <Form.Group>
               <Form.Control 
                 type='text' 
-                value={this.state.word}
+                value={this.state.newPost.title}
+                name='title'
                 placeholder='title' 
-                onChange={this.handleChange} 
+                // onChange={this.handleChange} 
+                onChange={this.handleChange}
               />
             </Form.Group>
             <Form.Group>
               <Form.Control as='textarea' rows={5} 
                 type='text'
-                value={this.state.content} // this.state.content not implemented yet
-                //onChange={}
+                value={this.state.newPost.content} // this.state.content not implemented yet
+                name='content'
+                placeholder='details of your question'
+                onChange={this.handleChange}
               />
             </Form.Group>
             <Button variant="primary" type="submit">
