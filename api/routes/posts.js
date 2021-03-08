@@ -1,6 +1,7 @@
-var PostModel = require('../models/model-user'); 
+var PostModel = require('../models/model-post'); 
 var CommentModel = require('../models/model-comment'); 
 var express = require('express');
+const { route } = require('./users');
 var router = express.Router();
 
 // create a new post
@@ -14,7 +15,7 @@ router.post('/create', (req, res) => {
       .then(doc => {
           // empty doc
           if(!doc || doc.length === 0) {
-              return res.status(500).send("Error: Post not saved.");
+              return res.status(500).send("Post not saved.");
           }
           // resource created
           res.status(201).json(doc);
@@ -36,7 +37,7 @@ router.put('/update', (req, res) => {
   .then(doc => {
         // empty doc
         if(!doc || doc.length === 0) {
-            return res.status(500).send("Error: Post not found.");
+            return res.status(500).send("Post not found.");
         }
         // resource created
         res.status(201).send(doc);
@@ -47,35 +48,134 @@ router.put('/update', (req, res) => {
     });
 });
 
-// search post
-router.get('/get', (req, res) => {
-  if(!req.query.username) {
-      return res.status(400).send("Missing URL parameter: username");
-  }
-  UserModel.findOne({
-      username: req.query.username
-  }, { username:1, _id:0 })
-  .then(doc => {
-      res.json(doc);
-  })
-  .catch(err => {
-      res.status(500).json(err);
+// tempoary
+// get all posts
+router.get('/gettem', (req, res) => {
+    PostModel.find({})
+        .sort({createdAt: -1})
+        .then(doc => {
+            console.log(doc);
+            if (!doc || doc.length === 0)
+                res.status(500).send("Post not found");
+            else
+                res.json(doc);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+
+
+// search post by user id
+router.get('/getbyuser', (req, res) => {
+    if(!req.query.user) {
+        return res.status(400).send("Missing URL parameter: user");
+    }
+    // find post
+    PostModel.find({
+        user: req.query.user
+    })
+    .then(doc => {
+        if (!doc || doc.length === 0)
+            res.status(500).send("Post not found");
+        else
+            res.json(doc);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    });
   });
+
+// search post by course id sorted by creation date
+router.get('/getbycoursecreate', (req, res) => {
+    if(!req.query.course) {
+        return res.status(400).send("Missing URL parameter: course");
+    }
+    // find post
+    PostModel.find({
+        course: req.query.course
+    })
+    .sort({createdAt: -1})
+    .then(doc => {
+        if (!doc || doc.length === 0)
+            res.status(500).send("Post not found");
+        else
+            res.json(doc);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    });
+  });
+
+  // search post by course id sorted by update date
+router.get('/getbycourseupdate', (req, res) => {
+    if(!req.query.course) {
+        return res.status(400).send("Missing URL parameter: course");
+    }
+    // find post
+    PostModel.find({
+        course: req.query.course
+    })
+    .sort({updatedAt: -1})
+    .then(doc => {
+        if (!doc || doc.length === 0)
+            res.status(500).send("Post not found");
+        else
+            res.json(doc);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    });
+  });
+
+//search post with key word
+router.get('/search', (req,res) => {
+    if (!req.query.keyword) {
+        return res.status(400).send("Missing Request body");
+    }
+    //key word with reg exp
+    var keyWord = new RegExp(req.query.keyword);
+    PostModel.find({ $or: [{title: keyWord},{content: keyWord}] })
+    .sort({createdAt: -1})
+    .then(doc => {
+        if (!doc || doc.length === 0)
+            res.status(500).send("Post not found");
+        else
+            res.json(doc);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    })
 });
 
 // DELETE post
-router.delete('/delete', (req, res) => {
+router.delete('/deleteone', (req, res) => {
   if(!req.query._id) {
-      return res.status(400).send("Missing URL parameter: username");
+      return res.status(400).send("Missing URL parameter: post ID");
   }
     // delete post
-    PostModel.findByIdAndDelete(req.query._id)
+    PostModel.findOneAndDelete({_id: req.query._id})
     .then(post => {
-        res.json({post: post, comments: comments});
+        res.json(post);
     })
     .catch(err => {
         res.status(500).json(err);
     });
 });
+
+router.delete('/deletemany', (req, res) => {
+    if(!req.query._id) {
+        return res.status(400).send("Missing URL parameter: post ID");
+    }
+      // delete post
+      PostModel.deleteMany({_id: {
+        $in: req.query._id }})
+      .then(post => {
+          res.json(post);
+      })
+      .catch(err => {
+          res.status(500).json(err);
+      });
+  });
 
 module.exports = router;

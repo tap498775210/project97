@@ -18,6 +18,8 @@ class Question extends Component {
     this.state = {
       word: "",
       apiResponse: "",
+      posts: null,  // Store posts from the server
+      titles: [],
       userId: this.props.userId,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -47,22 +49,47 @@ class Question extends Component {
     console.log("is apiResponse an array: " + Array.isArray(this.state.apiResponse));// debug
   }
 
-  callAPI() {
-    fetch("http://localhost:9000/questionAPI")
-      .then(res => res.json())
-      .then(res => this.setState({ apiResponse: res }));
-  }
+  // callAPI() {
+  //   fetch("http://localhost:9000/questionAPI")
+  //     .then(res => res.json())
+  //     .then(res => this.setState({ apiResponse: res }));
+  // }
 
   /*
-      TODO: find the courses associated by the user
+      TODO: find the courses associated with the user
             then get the posts associated by the courses
   */
-  // callAPI() {
+  // Temporary
+  callAPI() {
+    fetch("http://localhost:9000/post/gettem")
+      .then(res => res.json())
+      // .then(data => console.log(data))
+      .then(data => {
+        this.setState({posts: data});
+        console.log("incallAPI: " + this.state.posts[0].title);
+        const titleArr = this.titles();
+        console.log(titleArr);    // // Debug
+        this.setState({titles: titleArr});
+        console.log(this.state.titles);   // Debug
+        
+      });
+  }
 
-  // }
+  // Get titles from this.state.posts
+  titles() {
+    let titleArr = [];    
+    console.log("is array: "+ Array.isArray(this.state.posts)); // Debug
+    let posts = this.state.posts;
+    posts.forEach(post => titleArr.push(post.title));
+    console.log("titles: " + titleArr); // Debug
+    return titleArr;
+  }
 
   componentDidMount() {   // Changed Will to Did to erase a warning
     this.callAPI();
+    console.log("typeof data: " + typeof this.state.data);
+    console.log("is array: " + Array.isArray(this.state.data));
+    console.log("data: " + this.state.data);
   }
 
   // Generate a list of questions
@@ -96,6 +123,7 @@ class Question extends Component {
 
   render() {
     console.log("Question: userId: " + this.state.userId);  // Debug
+    //const titleArr = this.titles();
     return (
       // <div className="question">
       //   <h2 className="title">
@@ -144,7 +172,7 @@ class Question extends Component {
 
         <div>
           {<QuestionTable
-            questions={this.state.apiResponse}
+            questions={this.state.titles}
             title="Questions"
           />}
         </div>

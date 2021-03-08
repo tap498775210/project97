@@ -3,6 +3,31 @@ Remove commented codes and the debugging console.log functions before final subm
 Deal with "xxx is defined but never used" warnings before final submission 
 -----------------------------------------------------------------------------
 
+Warning occured after login since commit 64aca8e: 
+index.js:1 Warning: Can't perform a React state update on an unmounted component. 
+This is a no-op, but it indicates a memory leak in your application. 
+To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
+    at LoginForm (http://localhost:3000/static/js/main.chunk.js:651:89)
+    at Route (http://localhost:3000/static/js/vendors~main.chunk.js:46768:29)
+
+--------------------------------------------------------------------------------
+
+In Question.js: Used a temporary function to display question titles
+functions for creating posts not implemented yet
+plan: pass both title and post id to QuestionTable so it can redirect to /q/[post id]
+Copied files from branch jc:
+   api/bin/www
+   api/package.json (keep both hbs and jade)
+   api/models/model-comment.js
+   api/models/model-post.js
+   api/models/model-user.js
+   api/routes/comments.js
+   api/routes/course.js
+   api/routes/posts.js
+   api/routes/users.js
+The difference of /api between two branches before copy is in apidiff_before.diff
+
+
 Show sidebar by default in a computer screen 
 
 Added an input box in /questionAPI for inputing question contents. Not functional yet. 

@@ -1,9 +1,11 @@
 {
-  "name": "database",
+  "name": "api",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node --unhandled-rejections=warn ./bin/www"
+    "start": "node ./bin/www",
+    "start-watch": "nodemon ./bin/www",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -11,8 +13,9 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
-    "hbs": "^4.1.1",
     "http-errors": "~1.6.3",
+    "hbs": "^4.1.1",
+    "jade": "^0.29.0",
     "mongodb": "^3.6.4",
     "mongoose": "^5.11.18",
     "morgan": "~1.9.1",
