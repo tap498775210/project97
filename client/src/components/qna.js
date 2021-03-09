@@ -59,17 +59,48 @@ class Answers extends React.Component {
 export default class Qna extends React.Component {
     constructor(props) {
         super(props);
+        const { id } = this.props.match.params;
+
         this.state = {
-            word: ""
+            content: "",
+            post: id 
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        
+        console.log(this.state);
     }
 
     handleChange(event) {
         this.setState({
-            word: event.target.value
+            content: event.target.value
         });
+    }
+
+    handleSubmit= async (event) => {
+        event.preventDefault();
+        //console.log(this.state);
+        if (this.state.content === "") {
+            alert("You need to type something to answer");
+        }
+        else {
+            let newAnswer = JSON.stringify(this.state);
+            console.log(newAnswer);
+            await fetch("http://localhost:9000/comment/create", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(this.state),
+            })
+                .then(res => {
+                    // response.json();
+                    console.log(res.clone().status);
+                })
+        }
+
+        return;
     }
 
     render() {
@@ -81,7 +112,7 @@ export default class Qna extends React.Component {
                 {/* <form onSubmit={this.handleSubmit}>
                     <label>
                         want to provide an answer?<br/>
-                        <input type='text' value={this.state.word} onChange={this.handleChange} />
+                        <input type='text' value={this.state.content} onChange={this.handleChange} />
                     </label>
                     <input type='submit' value='Submit' />
                 </form> */}
@@ -92,7 +123,7 @@ export default class Qna extends React.Component {
                     <Form.Group>
                         <Form.Control as='textarea' rows={5} 
                             type='text' 
-                            value={this.state.word}
+                            value={this.state.content}
                             placeholder='Your response...'
                             onChange={this.handleChange} 
                         />

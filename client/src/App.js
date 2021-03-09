@@ -81,7 +81,7 @@ class App extends Component {
                     />
                 ))}
                 <Route path="/questionAPI" children={<Question userId={this.state.userId}/>}/>
-                <Route Route path="/q/:id" children={<Qna />} />
+                <Route Route path="/q/:id" component={Qna} />
               </Switch>
             </div>
           </div>
