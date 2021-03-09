@@ -1,14 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import ReactDOM from 'react-dom';
+import { useParams } from "react-router-dom";
 
-class Question extends React.Component {
-    render() {
-        return (
-            <h1> This is the question part.</h1>
+function titlesAndIds(data) {
+    let titleIdArr = [];
+    data.forEach(element => titleIdArr.push({ title: element.title, id: element._id }));
+    return titleIdArr;
+}
+
+function GetQuestion() {
+    const [question, setQuestion] = useState("");
+    let { id } = useParams();
+    fetch("http://localhost:9000/post/gettem")  // Used a temporary function to get all posts
+        // Will use '/getbycourse' when we can let the user to add courses
+        .then(res => res.json())
+        // .then(data => console.log(data))
+        .then(data => {
+            const list = titlesAndIds(data);
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].id === id)
+                    setQuestion(list[i].title)
+            }
+        })
+
+    console.log(question);
+    return (
+            <div>
+            <h1>Original question: { question }</h1>
+            </div>
         );
-    }
+}
+
+function GetAnswers() {
+    const [answers, setAnswers] = useState([]);
+
+    let { id } = useParams();
+    const getUrl = "http://localhost:9000/comment/getbypostcreate?post=" + id;
+    fetch(getUrl)
+        .then(res => res.json())
+        .then(res => console.log(res))
+    return (
+        <br/>
+        );
 }
 
 class Answers extends React.Component {
@@ -27,16 +62,21 @@ export default class Qna extends React.Component {
         this.state = {
             word: ""
         };
+
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange() {
-
+    handleChange(event) {
+        this.setState({
+            word: event.target.value
+        });
     }
 
     render() {
         return (
             <>
-                <Question />
+                <GetQuestion />
+                <GetAnswers />
                 <Answers />
                 {/* <form onSubmit={this.handleSubmit}>
                     <label>
@@ -53,7 +93,7 @@ export default class Qna extends React.Component {
                         <Form.Control as='textarea' rows={5} 
                             type='text' 
                             value={this.state.word}
-                            placeholder='Your response...' 
+                            placeholder='Your response...'
                             onChange={this.handleChange} 
                         />
                     </Form.Group>
