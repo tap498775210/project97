@@ -78,37 +78,55 @@ class Question extends Component {
   //   console.log("is apiResponse an array: " + Array.isArray(this.state.apiResponse));// debug
   // }
   handleSubmit = async (event) => {
-    // event.preventDefault();     // Prevent refreshing the page when clicking "submit" button
+    event.preventDefault();     // Prevent refreshing the page when clicking "submit" button
+    // We need this ^^^ to successfully submit posts.
     console.log("title: " + this.state.newPost.title);
     console.log("content: " + this.state.newPost.content);
     let newjs = JSON.stringify(this.state.newPost);
     console.log("newjs type: " + typeof newjs);
     console.log(newjs);
-    await fetch("http://localhost:9000/post/create", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(this.state.newPost),
-    })
-      .then(async (response) => {
-        // response.json();
-        console.log(response.clone().status);
+    if (this.state.newPost.title == "" && this.state.newPost.content == "") {
+      alert("Your post is empty.");
+      return;
+    }
+    else if (this.state.newPost.title == "") {   // Prevent posts from submitting to backend without title
+      alert("Your post needs a title.");
+      return;
+    }
+    else if (this.state.newPost.content == "") {  // Prevent posts from submitting to backend without content
+      alert("Your post needs content.");
+      return;
+    }
+    // Although we have backend error checking, the page still refreshes when submitting w/o title or body
+    // so if someone submits but forgot a title, the whole body will be erased.
+    else {  
+      await fetch("http://localhost:9000/post/create", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(this.state.newPost),
       })
+        .then(async (response) => {
+          // response.json();
+          console.log(response.clone().status);
+        })
 
-    // const question = await response.json();
-    // console.log(`${question[0]}`);
-    // console.log(question);  // Debug
-    this.setState({ 
-      newPost: {
-        title: '', 
-        content: '',
-        user: this.props.userId,
-        course: '603d930c493bb1680c5d4f15',
-      },
-    });  // Empty the input box  
-    // this.setState({ apiResponse: question });
-    // console.log("is apiResponse an array: " + Array.isArray(this.state.apiResponse));// debug
+      // const question = await response.json();
+      // console.log(`${question[0]}`);
+      // console.log(question);  // Debug
+      this.setState({ 
+        newPost: {
+          title: '', 
+          content: '',
+          user: this.props.userId,
+          course: '603d930c493bb1680c5d4f15',
+        },
+      });  // Empty the input box  
+      // this.setState({ apiResponse: question });
+      // console.log("is apiResponse an array: " + Array.isArray(this.state.apiResponse));// debug
+      window.location.reload(); // need to reload AFTER post is handled to display the table
+    }
   }
 
   // callAPI() {

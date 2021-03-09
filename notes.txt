@@ -12,6 +12,18 @@ To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup f
 
 --------------------------------------------------------------------------------
 
+added form verification for creating posts. Alerts will now appear when title, content,
+or both are emtpy.
+also changed creating post feature in Question.js to submit and refresh after submission occurs.
+previous commit had a bug that did not allow new posts to be submitted, frontend never POST to
+backend.
+need to fix issue where sidebar doesn't extend down to bottom of screen after loading the questions.
+    possible solutions:
+    render sidebar after main body
+    add scrolling to QuestionTable
+will probably go with scrolling QuestionTable
+
+
 added user for created posts. Login required, otherwise posts could not be created. 
     (there is a hardcoded userId in Question's state, feel free to use it to avoid logging 
     in everytime we recompile the app)
