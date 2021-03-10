@@ -29,6 +29,13 @@ class App extends Component {
   }
 
   componentDidMount() {     
+    const loggedInUsername = localStorage.getItem('username');
+    const loggedInID = localStorage.getItem('user_id');
+    if (loggedInUsername) {
+      this.setState({"username": loggedInUsername});
+      this.setState({"userId": loggedInID});
+    }
+
     window.addEventListener("resize", this.resize);   // Detect screen resize
     this.resize();  // Determine if the screen is large enough to show the sidebar
     // Reference: https://stackoverflow.com/questions/44480053/how-to-detect-if-screen-size-has-changed-to-mobile-in-react

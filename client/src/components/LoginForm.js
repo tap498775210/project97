@@ -68,6 +68,10 @@ class LoginForm extends Component {
             let json = await res.json();
             console.log(json);
 
+            // store login locally to prevent auto logout on refresh
+            localStorage.setItem('username', this.state.username);
+            localStorage.setItem('user_id', rescp._id);
+
             //setDoneLog
             this.setState({doneLog: true, name: json.name});
             this.props.setUser({id: rescp._id, username: this.state.username});

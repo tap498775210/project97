@@ -7,6 +7,11 @@
     color: #353a40;
 }
 
+#question {
+    max-height: 160px;
+    overflow-y: auto;
+}
+
 #title h3{
     font-weight: 600;
 }

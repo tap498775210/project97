@@ -36,7 +36,7 @@ function GetQuestion() {
 
     console.log(question);
     return (
-        <div className="boxed">
+        <div id="question" className="boxed">
         <div id="title"><h3>{ question }</h3></div>
         <div id="content"><p>{ content }</p></div>
         </div>

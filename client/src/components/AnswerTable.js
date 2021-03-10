@@ -18,7 +18,7 @@ export default function AnswerTable(props) {
   const comments = props.comments;
   const rows = comments.map((comments) => answerToCell(comments));
   const table = (
-    <Table responsive >
+    <Table responsive id="table">
       <thead id="title">
         <tr>
           <th>{props.title}</th>

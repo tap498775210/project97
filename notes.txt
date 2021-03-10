@@ -4,6 +4,11 @@ Remove unused images before final submission
 Deal with "xxx is defined but never used" warnings before final submission 
 -----------------------------------------------------------------------------
 
+added login/logout feature such that user will not be signed out when page is refreshed.
+user's login (username and userId) is now stored in localStorage.
+only signout from user's profile page will signout from Qiazza.
+
+
 added notification on login page "Login to display site contents"
 updated user page to show user's name after logging in
 added styling to question page, fixed issue where sidebar doesn't extend down to bottom

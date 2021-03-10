@@ -7,3 +7,12 @@ tbody {
     color: #353a40;
     font-weight: 400;
 }
+
+#table {
+    display: block;
+    max-width: 980px; /* 1000px minus 10px padding on each side */
+    min-height: 200px;
+    height: calc(100vh - 560px);
+    font-weight: 400;
+    overflow-y: scroll;
+}
