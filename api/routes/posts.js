@@ -67,6 +67,24 @@ router.get('/gettem', (req, res) => {
         });
 });
 
+// Get specific post by post id
+// Currently does not work, was just an idea
+router.get('/getbypostid', (req, res) => {
+    if(!req.query._id) {
+        return res.status(400).send("Missing URL parameter: id");
+    }
+    // find post
+    PostModel.findById(req.query._id)
+    .then(doc => {
+        if (!doc || doc.length === 0)
+            res.status(500).send("Post not found");
+        else
+            res.json(doc);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    });
+  });
 
 // search post by user id
 router.get('/getbyuser', (req, res) => {
