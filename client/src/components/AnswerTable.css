@@ -8,7 +8,7 @@ tbody {
     font-weight: 400;
 }
 
-#table {
+#atable {
     display: block;
     max-width: 980px; /* 1000px minus 10px padding on each side */
     min-height: 200px;

@@ -4,11 +4,10 @@ th {
     font-weight: 600;
 }
 
-#table {
+#qtable {
     display: block;
     max-width: 980px; /* 1000px minus 10px padding on each side */
     min-height: 200px;
-    height: calc(100vh - 490px);
+    height: calc(100vh - 485px);
     font-weight: 400;
-    overflow-y: scroll;
 }

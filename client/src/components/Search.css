@@ -1,0 +1,8 @@
+.boxed {
+    border: 1px solid #b4b9c0;
+    border-radius: 10px;
+    padding: 10px;
+    max-width: 1000px;
+    margin-bottom: 25px;
+    color: #353a40;
+}

@@ -4,6 +4,14 @@ Remove unused images before final submission
 Deal with "xxx is defined but never used" warnings before final submission 
 -----------------------------------------------------------------------------
 
+fixed warning in AnswerTable.js, "Warning: Each child in a list should have a unique "key" prop."
+added key to AnswerTable values and modified how qna.js passes array to AnswerTable.
+css updates, fixed issue where AnswerTable.css was overriding QuestionTableV2.css
+To Do:
+    implement frontend branch features done by Kexin
+    possibly merge over some frontend branch css done by Aiqi
+
+
 added login/logout feature such that user will not be signed out when page is refreshed.
 user's login (username and userId) is now stored in localStorage.
 only signout from user's profile page will signout from Qiazza.
@@ -21,12 +29,12 @@ updated API call and GetQuestions to be more efficient.
 also added much needed formatting and styling to qna page.
 
 
-    Show different contents on the sidebar before and after logging in, but won't prevent the 
+Show different contents on the sidebar before and after logging in, but won't prevent the 
 user directly accesses the unshown pages by typing the urls. (Will test them soon)
-    In App class: redirect the user to /user/[username] after login. Also redirect to that page 
+In App class: redirect the user to /user/[username] after login. Also redirect to that page 
 when a logged-in user attempt to access /register. 
-    Solved some warnings. 
-    Added some images in /src/images, although we may not use them. In this case will remove them 
+Solved some warnings. 
+Added some images in /src/images, although we may not use them. In this case will remove them 
 before submission. 
 
 added form verification for creating posts. Alerts will now appear when title, content,

@@ -66,14 +66,14 @@ export default class Qna extends Component {
         fetch(getCommentsUrl)
             .then(res => res.json())
             .then(data => {
-                var answers = [];
+                var answersList = titlesAndIds(data);
+                var answers = []
                 for (var i = 0; i < data.length; i++) {
-                    answers.push(data[i].content);
+                    answers.push({ content: answersList[i].content, id: answersList[i].id});
                 }
                 this.setState({ answers: answers });
-                //console.log(this.state.answers);
-                console.log("obtaining answers: ");
-                console.log(answers);
+                // console.log("obtaining answers: ");
+                // console.log(answers);
             })
     }
 

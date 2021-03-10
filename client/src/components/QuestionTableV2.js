@@ -22,7 +22,7 @@ function QuestionTableV2(props) {
   const questions = props.questions;
   const rows = questions.map((question) => questionToCellV2(question));
   const table = (
-    <Table responsive id="table">
+    <Table responsive id="qtable">
       <thead>
         <tr>
           <th>{props.title}</th>
@@ -35,23 +35,5 @@ function QuestionTableV2(props) {
   );
   return table;
 }
-
-// function QuestionTableV2(props) {
-//   const questions = props.questions;
-//   const rows = questions.map((question) => questionToCellV2(question));
-//   const table = (
-//     <table>
-//       <thead>
-//         <tr>
-//           <th>{props.title}</th>
-//         </tr>
-//       </thead>
-//       <tbody>
-//         {rows}
-//       </tbody>
-//     </table>
-//   );
-//   return table;
-// }
 
 export default QuestionTableV2;

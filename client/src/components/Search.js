@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import QuestionTableV2 from './QuestionTableV2';
 
+import './Search.css'
+
 // InputGroup reference: https://react-bootstrap.github.io/components/input-group/
 // Button reference: https://react-bootstrap.netlify.app/components/buttons/
 
@@ -55,7 +57,7 @@ class Search extends Component {
     const resultTitle = "Showing " + this.state.results.length + " results";
     return (
       <>
-        <div>
+        <div style={{ maxWidth: "1000px" }}>
           <Form onSubmit={this.handleSubmit}>
             <InputGroup className="mb-3">
               <Form.Control
@@ -79,7 +81,7 @@ class Search extends Component {
           </Form>
         </div>
         <br />
-        <div>
+        <div className="boxed">
           {this.state.showResults && <QuestionTableV2 questions={this.state.results} title={resultTitle}/>}
         </div>
       </>
