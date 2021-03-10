@@ -1,10 +1,10 @@
 // Register form
 // Right now just copy and paste from LoginForm
-
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import {Alert, handleShow } from './alert'
 import "./LoginForm.css";
 
 const fetch = require('node-fetch');
@@ -14,26 +14,33 @@ const fetch = require('node-fetch');
 // let loggedin = false;
 let display = "block";
 
-function checkInfo(username, password, confirmP) {
-    if (username === "" || password === "" || confirmP === "") {
-        alert("Please enter all the information.");
-        return false;
+function checkInfo(Name, username, password, confirmP) {
+    if (Name ==="" || username === "" || password === "" || confirmP === "") {
+        return [false, "Please enter all the information."];
     }
 
     if (password !== confirmP) {
-        alert("The confirm password does not match the password.");
-        return false;
+        return [false, "The confirm password does not match the password."];
     }
 
-    return true;
+    return [true];
 }
 
 function Register() {
+  // user info
+  const [Name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-    const [passwordComfirm, setPasswordComfirm] = useState("");
-    const [doneReg, setDoneReg] = useState(false);
+  const [passwordComfirm, setPasswordComfirm] = useState("");
+  const [doneReg, setDoneReg] = useState(false);
 
+  // error popup/message
+  const [title, setTitle] = useState("");
+  const [message, setMessage] = useState("");
+
+  const updateName = (event) => {
+    setName(event.target.value)
+  }
   const updateUsername = (event) => {
     setUsername(event.target.value);
   };
@@ -47,21 +54,35 @@ function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault(); // prevent reloading when hitting the button
     console.log("submit:");
+    let namecp = Name;
     let usernamecp = username;
     let passwordcp = password;
     let passwordComfirmcp = passwordComfirm;
+    let validate = checkInfo(namecp, usernamecp, passwordcp, passwordComfirmcp);
 
-      if (checkInfo(usernamecp, passwordcp, passwordComfirmcp)) {
+      if (validate[0]) {
 
           await fetch('http://localhost:9000/users/register', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ name: 'someName', username: usernamecp, password: passwordcp}),
+              body: JSON.stringify({ name: namecp, username: usernamecp, password: passwordcp}),
           })
               .then(res => {
                   if (res.status !== 201) {
-                      alert("register failed, please try again!");
-                      return (new Error("failed"));
+                    const contentType = res.headers.get("content-type");
+                    if (contentType && contentType.indexOf("application/json") !== -1) {
+                      handleShow();
+                      setTitle("Register failed");
+                      setMessage("Username already existed!");
+                    }
+                    else
+                    {
+                      handleShow();
+                      setTitle("Register failed");
+                      setMessage("Server error, please try again!");
+                    }
+                      
+                      return (new Error("register failed"));
                   }
                   else {
                       let json = res.json();
@@ -74,6 +95,11 @@ function Register() {
                   console.log(err);
               });
       }
+      else{
+        handleShow();
+        setTitle("Register failed");
+        setMessage(validate[1]);
+      }
 
      /* if (successful) {
           alert("register succeed!!");
@@ -83,6 +109,7 @@ function Register() {
     //console.log(usernamecp);    // Debug
     //console.log(passwordcp);    // Debug
     //console.log(passwordComfirmcp);   // Debug
+    setName("")
     setUsername("");
     setPassword("");
     setPasswordComfirm("");
@@ -91,10 +118,12 @@ function Register() {
     if (doneReg) {
         return(
             <>
-                <h>Congradulation!! You have Signed up. Please go log in.</h>
+                <h>Congradulation!! You have signed up. Please login.</h>
             </>
         );
     }
+
+    console.log(handleShow); 
 
   return (
     <>
@@ -108,6 +137,15 @@ function Register() {
     <div className="Register" display={display}>
       <Form onSubmit={handleSubmit}>
         {/* <Form.Control type="text" placeholder="Normal text" /> */}
+        <Form.Group>
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Please do not use your real name"
+            value={Name}
+            onChange={updateName}
+          />
+        </Form.Group>
         <Form.Group>
           <Form.Label>Username</Form.Label>
           <Form.Control
@@ -130,15 +168,16 @@ function Register() {
           <Form.Label>Comfirm Password</Form.Label>
           <Form.Control
             type="password"
-            placeholder="confirm your password"
+            placeholder="Confirm your password"
             value={passwordComfirm}
             onChange={updateComfirm}
           />  
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button className="mainButton" variant="primary" type="submit">
           Register
         </Button>
       </Form>
+      <Alert title={title} message={message}/>
     </div>
     </>
   );

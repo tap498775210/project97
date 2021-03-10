@@ -23,9 +23,6 @@ class Sidebar extends Component {
                     <Link to="/">Home/Login</Link>
                     </li>
                     <li>
-                    <Link to="/register">Register</Link>
-                    </li>
-                    <li>
                     <Link to="/questionAPI">Posts</Link>
                     </li>
                     <li>
@@ -39,8 +36,9 @@ class Sidebar extends Component {
         </ul>
 
         <Switch>
-          <Route exact path="/" children={<div>home!</div>}/>
-          <Route path="/questionAPI" children={<div>posts!</div>}/>
+          <Route exact path="/" children={<div>Login here!</div>}/>
+          <Route Route path="/user/:name" children={<div>View and modify your profile!</div>}/>
+          <Route path="/questionAPI" children={<div>Read and ask questions!</div>}/>
           {routes.map((route, index) => (
             <Route
               key={index}

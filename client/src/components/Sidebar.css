@@ -2,5 +2,20 @@
     height: 100vh;
     padding: 10px;
     width: 200px;
-    background: #f0f0f0;
+    background-color: rgb(238, 238, 238);
+    background-size: 100% 2.3em;
+    background-image: -webkit-linear-gradient(rgb(171, 221, 219) .06em, transparent .05em);
+    border-right: 0.6mm solid rgba(255, 132, 123, 0.6);
 }
+
+li{
+    font-size: 20px;
+    color:rgb(0, 88, 189);
+    margin-top: 7px;
+    font-weight: bold;
+}
+
+a:hover {
+    color: rgb(182, 80, 80);
+    text-decoration: none;
+  }

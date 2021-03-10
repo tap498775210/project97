@@ -12,6 +12,16 @@
     margin: 0 auto;
 }
 
+.mainButton {
+    width: 100%;
+    font-size: 19px;
+    margin-top: 5px;
+}
+
+.profileButton{
+    margin-right: 10px;
+}
+
 h2 {
     text-align: center;
 }

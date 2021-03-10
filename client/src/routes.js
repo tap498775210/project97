@@ -20,7 +20,7 @@ const routes = [
     // },
     {
       path: "/register",
-      sidebar: () => <div>reg!</div>,
+      sidebar: () => <div>Register your account!</div>,
       main: () => <Register />
     },
     // {
@@ -30,14 +30,14 @@ const routes = [
     // },
     {
       path: "/search",
-      sidebar: () => <div>search!</div>,
+      sidebar: () => <div>Search for post using keyword!</div>,
       main: () => <Search />
     },
-    {
-        path: "/user/:name",
-        sidebar: () => <div>user profile!</div>,
-        main: () => <User/>
-    }
+    // {
+    //     path: "/user/:name",
+    //     sidebar: () => <div>Show and update your profile!</div>,
+    //     main: () => <User userId={this.state.userId}/>
+    // }
     // {  // TODO? user profile
     //   path: "/profile",
     //   sidebar: () => <div>user profile</div>,
