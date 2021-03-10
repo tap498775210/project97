@@ -1,25 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 
-// answer: {title, id}
-function questionToCellV2(question) {
-  const link = "/q/" + question.id.toString();
+// comment: {answers}
+function answerToCell(comment) {
   return (
-    <tr borderless="true" key={question.id.toString()}>
+    <tr borderless="true" >
       <td>
-        <Link to={link}>
-          {question.title}
-        </Link>
+          {comment}
       </td>
     </tr>
   );
 }
 
 
-function QuestionTableV2(props) {
-  const questions = props.questions;
-  const rows = questions.map((question) => questionToCellV2(question));
+export default function AnswerTable(props) {
+  const comments = props.comments;
+  const rows = comments.map((comments) => answerToCell(comments));
   const table = (
     <Table responsive >
       <thead>
@@ -34,5 +30,3 @@ function QuestionTableV2(props) {
   );
   return table;
 }
-
-export default QuestionTableV2;

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, Component } from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import ReactDOM from 'react-dom';
+import Table from 'react-bootstrap/Table';
+import AnswerTable from "./AnswerTable";
 import { useParams } from "react-router-dom";
 
 import "./qna.css";
@@ -35,24 +36,14 @@ function GetQuestion() {
 
     console.log(question);
     return (
-            <div>
-            <div className="boxed"><h3>{ question }</h3></div>
-            <div className="boxed"><p>{ content }</p></div>
-            </div>
-        );
+        <div className="boxed">
+        <div id="title"><h3>{ question }</h3></div>
+        <div id="content"><p>{ content }</p></div>
+        </div>
+    );
 }
 
-class Answers extends React.Component {
-    render() {
-        return (
-            <div>
-                <p>this is the answer part.</p>
-            </div>
-        );
-    }
-}
-
-export default class Qna extends React.Component {
+export default class Qna extends Component {
     constructor(props) {
         super(props);
         const { id } = this.props.match.params;
@@ -60,7 +51,7 @@ export default class Qna extends React.Component {
         this.state = {
             content: "",
             post: id,
-            answers: [],
+            answers: [], // array of {answer}
             ans_op: <br/>,
         };
 
@@ -73,19 +64,6 @@ export default class Qna extends React.Component {
     callAPI() {
         //console.log(this.state);
         const getCommentsUrl = "http://localhost:9000/comment/getbypostcreate?post=" + this.state.post;
-        //const getPostUrl = "http://localhost:9000/post/getbypostid?id=" + this.state.post;
-
-        /*fetch(getPostUrl)
-            .then(res => res.json())
-            .then(data => {
-                var content = "";
-                content.push(data.content)
-                this.setState({ content: content });
-                console.log("obtaining content: ");
-                console.log(content);
-            })
-            */
-
         fetch(getCommentsUrl)
             .then(res => res.json())
             .then(data => {
@@ -97,14 +75,6 @@ export default class Qna extends React.Component {
                 //console.log(this.state.answers);
                 console.log("obtaining answers: ");
                 console.log(answers);
-
-                /*const op = answers.map((answer) => {
-                    <li>
-                        {answer}
-                    </li>
-                });
-                this.setState({ ans_op: op });
-                console.log(this.state);*///tried to get a right format fot the answers but failed
             })
     }
 
@@ -139,7 +109,7 @@ export default class Qna extends React.Component {
                     console.log(res.clone().status);
                 })
         }
-
+        window.location.reload(); // need to reload AFTER post is handled to display the table
         return;
     }
 
@@ -147,31 +117,24 @@ export default class Qna extends React.Component {
         return (
             <>
                 <GetQuestion />
-                {/* <form onSubmit={this.handleSubmit}>
-                    <label>
-                        want to provide an answer?<br/>
-                        <input type='text' value={this.state.content} onChange={this.handleChange} />
-                    </label>
-                    <input type='submit' value='Submit' />
-                </form> */}
-                <div className="inputbox" style={{width: "700px"}}>
-                <Form onSubmit={this.handleSubmit}>
-                    <Form.Label>Want to provide an answer?</Form.Label>
-                    <Form.Group>
-                        <Form.Control as='textarea' rows={3} 
-                            type='text' 
-                            value={this.state.content}
-                            placeholder='Your response...'
-                            onChange={this.handleChange} 
-                        />
-                    </Form.Group>
-                    <Button variant="primary" type="submit">
-                        Answer
-                    </Button>
-                </Form>
+                <div className="boxed">
+                    <Form onSubmit={this.handleSubmit}>
+                        <Form.Label>Want to provide an answer?</Form.Label>
+                        <Form.Group>
+                            <Form.Control as='textarea' rows={3} 
+                                type='text' 
+                                value={this.state.content}
+                                placeholder='Your response...'
+                                onChange={this.handleChange} 
+                            />
+                        </Form.Group>
+                        <Button variant="primary" type="submit">
+                            Answer
+                        </Button>
+                    </Form>
                 </div>
-                <div>
-                <h5>{ this.state.answers }</h5>
+                <div className="boxed">
+                    <AnswerTable comments={this.state.answers} title="Responses"/>
                 </div>
             </>
         );
