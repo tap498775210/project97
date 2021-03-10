@@ -3,20 +3,24 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import SearchIcon from '@material-ui/icons/Search';
-import QuestionTable from './QuestionTable';
+import QuestionTableV2 from './QuestionTableV2';
 
 // InputGroup reference: https://react-bootstrap.github.io/components/input-group/
 // Button reference: https://react-bootstrap.netlify.app/components/buttons/
+
+function titlesAndIds(data) {
+  let titleIdArr = [];
+  data.forEach(element => titleIdArr.push({ title: element.title, id: element._id , content: element.content}));
+  return titleIdArr;
+}
 
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
       keyword: "",
-      results: ["tem", "tem2"],   // Temporary pre-initialized
-                                  // TODO: initialize it to an empty array after implementing all needed functions
+      results: [],  // empty array of format {title, id}
       showResults: false,         // Whether to render the results. Set to true after search
-                                  // Please point out if there is a better approprach or alternative common practice
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -24,7 +28,27 @@ class Search extends Component {
   handleSubmit = async (event) => {
     event.preventDefault();   // Prevent refreshing the page when clicking "submit" button
     console.log(this.state.keyword);  // Debug
-    this.setState({keyword: "", showResults: true});
+    this.getQuestions();
+    this.setState({ showResults: true});
+  }
+
+  getQuestions() {
+    fetch("http://localhost:9000/post/gettem")  // Used a temporary function to get all posts
+        .then(res => res.json())
+        .then(data => {
+            const list = titlesAndIds(data);
+            var search = [];
+            for (var i = 0; i < list.length; i++) {
+              if (list[i].title.toLowerCase().includes(this.state.keyword.toLowerCase()) || list[i].content.toLowerCase().includes(this.state.keyword.toLowerCase())) {
+                search.push({ title: list[i].title, id: list[i].id});
+              }
+            }
+            this.setState({ results: search });
+            // Used for debugging
+            console.log("obtaining results: ");
+            console.log(search);
+        })
+    //this.setState({ keyword: ""});
   }
 
   render() {
@@ -56,7 +80,7 @@ class Search extends Component {
         </div>
         <br />
         <div>
-          {this.state.showResults && <QuestionTable questions={this.state.results} title={resultTitle}/>}
+          {this.state.showResults && <QuestionTableV2 questions={this.state.results} title={resultTitle}/>}
         </div>
       </>
     );

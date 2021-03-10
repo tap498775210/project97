@@ -1,7 +1,9 @@
 .sidebar-body {
-    height: 100vh;
+    min-height: 800px;
+    height: calc(100vh - 60px);
     padding: 10px;
     width: 200px;
+<<<<<<< HEAD
     background-color: rgb(238, 238, 238);
     background-size: 100% 2.3em;
     background-image: -webkit-linear-gradient(rgb(171, 221, 219) .06em, transparent .05em);
@@ -19,3 +21,34 @@ a:hover {
     color: rgb(182, 80, 80);
     text-decoration: none;
   }
+=======
+    /* background: #f0f0f0; */
+    /* background: #353a4018; */
+    /* background: #e8e9eba9; */
+    background: #e8e9eb;
+
+    margin-top: 60px;
+    position: fixed;
+}
+
+a {
+    color: #353a40;
+}
+/* a:hover {
+    color: #353a40a4;
+} */
+
+li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10%;
+    font-size: 20px;
+}
+
+
+@media screen and (max-width: 450px) {
+    .sidebar-body {
+        width: 40%;
+    }
+}
+>>>>>>> 7f4c94d0a85a6b06897a3cd215257da2dfa011b7

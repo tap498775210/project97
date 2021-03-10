@@ -1,16 +1,62 @@
 To Do:
 Remove commented codes and the debugging console.log functions before final submission
+Remove unused images before final submission
 Deal with "xxx is defined but never used" warnings before final submission 
+
 -----------------------------------------------------------------------------
+And our old friend appear again :/
 
-Warning occured after login since commit 64aca8e: 
-index.js:1 Warning: Can't perform a React state update on an unmounted component. 
-This is a no-op, but it indicates a memory leak in your application. 
-To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
-    at LoginForm (http://localhost:3000/static/js/main.chunk.js:651:89)
+Warning: Can't perform a React state update on an unmounted component. 
+This is a no-op, but it indicates a memory leak in your application. To fix, cancel 
+all subscriptions and asynchronous tasks in the componentWillUnmount method.
+    at Question (http://localhost:3000/static/js/main.chunk.js:1438:5)
     at Route (http://localhost:3000/static/js/vendors~main.chunk.js:46768:29)
+-------------------------------------------------------------------------------
 
---------------------------------------------------------------------------------
+
+
+minor changes of css and display.
+
+file changed:
+    App.css and Sidebar.css     
+        changed the position of navbar, sidebar, and the sidebar toggle button to fixed. 
+        new changes that are involved with position change are seperated with the original
+        styles with a line. 
+    App.js      
+        changed classname of the main body: if the sidebar is present, then use the class 
+        "main-body-w-bar". Might not be the clever way but it works.  
+    Sidebar.js
+        Removed router
+    AnswerTable.js
+        Added key
+    Register.js
+        Changed form placeholder text
+
+
+added login/logout feature such that user will not be signed out when page is refreshed.
+user's login (username and userId) is now stored in localStorage.
+only signout from user's profile page will signout from Qiazza.
+
+
+added notification on login page "Login to display site contents"
+updated user page to show user's name after logging in
+added styling to question page, fixed issue where sidebar doesn't extend down to bottom
+of screen after loading the questions by adding scrolling to QuestionTableV2
+also added functionality so that sidebar adjusts dynamically with display resizing.
+
+
+added responses to qna page, created new AnswerTable.js and AnswerTable.css for this.
+updated API call and GetQuestions to be more efficient.
+also added much needed formatting and styling to qna page.
+
+
+    Show different contents on the sidebar before and after logging in, but won't prevent the 
+user directly accesses the unshown pages by typing the urls. (Will test them soon)
+    In App class: redirect the user to /user/[username] after login. Also redirect to that page 
+when a logged-in user attempt to access /register. 
+    Solved some warnings. 
+    Added some images in /src/images, although we may not use them. In this case will remove them 
+before submission. 
 
 added form verification for creating posts. Alerts will now appear when title, content,
 or both are emtpy.

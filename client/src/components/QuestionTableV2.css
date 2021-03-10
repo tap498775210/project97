@@ -1,0 +1,14 @@
+th {
+    width: 1000px;
+    color: #353a40;
+    font-weight: 600;
+}
+
+#table {
+    display: block;
+    max-width: 980px; /* 1000px minus 10px padding on each side */
+    min-height: 200px;
+    height: calc(100vh - 490px);
+    font-weight: 400;
+    overflow-y: scroll;
+}

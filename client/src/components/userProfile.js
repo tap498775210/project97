@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -20,6 +21,11 @@ function ProfileList(props) {
     const [myCourses, setmyCourses] = useState([]);
     const [password, setPassword] = useState("");
     const [passwordComfirm, setPasswordComfirm] = useState("");
+=======
+import React from 'react';
+import { useParams } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+>>>>>>> 7f4c94d0a85a6b06897a3cd215257da2dfa011b7
 
     // error message
     const [title, setTitle] = useState("");
@@ -79,6 +85,7 @@ function ProfileList(props) {
             });
     }
 
+<<<<<<< HEAD
     // update user
     const UpdateProfile = async (event) => {
         event.preventDefault();
@@ -228,12 +235,26 @@ function ProfileList(props) {
             </>
         );
     }
+=======
+    return (
+        <h1>Welcome to Qiazza, {name}!</h1>
+    );
+}
+
+// Clear locally stored user login and refresh to re-mount components
+function handleLogout() {
+    localStorage.clear();
+    window.location.reload();
+>>>>>>> 7f4c94d0a85a6b06897a3cd215257da2dfa011b7
 }
 
 export default function Page(props) {
     return (
         <>
-        < ProfileList/>
+        <ProfileList />
+        
+        {/* Kind of rough implementation of signout button. Need to work on routing instead of href. */}
+        <a href="http://localhost:3000/"><Button onClick={handleLogout}>Logout</Button></a>
         </>
     );
 }
