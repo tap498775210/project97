@@ -1,33 +1,52 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import "./LoginForm.css";
-import { Redirect } from "react-router-dom";
 
-// const sampleUsernames = "aa";
-// const samplePassword = "asdf";
-// let loggedin = false;
 let display = "block";
 
-function LoginForm(props) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [doneLog, setDoneLog] = useState(false);
-  const [name, setName] = useState("");
+class LoginForm extends Component {
+  // Didn't know what happened but: 
+  // https://stackoverflow.com/questions/53949393/cant-perform-a-react-state-update-on-an-unmounted-component
+  _isMounted = false;
 
-  const updateUsername = (event) => {
-    setUsername(event.target.value);
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+      doneLog: false,
+      name: '',
+    }
+    this.updateUsername = this.updateUsername.bind(this);
+    this.updatePassword = this.updatePassword.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+    this.setState = (state, callback) => {
+      return;
+    };
+  }
+
+  updateUsername = (event) => {
+    this.setState({username: event.target.value});
   };
-  const updatePassword = (event) => {
-    setPassword(event.target.value);
+  updatePassword = (event) => {
+    this.setState({password: event.target.value});
   };
 
-  const handleSubmit = async (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
     console.log("submit:");
-    let usernamecp = username;
-    let passwordcp = password;
+    let username = this.state.username;
+    let password = this.state.password;
 
     if (username === "" || password === "") {
       alert("Please input a username or password.");
@@ -36,7 +55,7 @@ function LoginForm(props) {
       await fetch('http://localhost:9000/users/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: usernamecp, password: passwordcp }),
+        body: JSON.stringify({ username: username, password: password }),
       })
         .then(async (res) => {
           if (res.status === 500) {
@@ -44,14 +63,14 @@ function LoginForm(props) {
             alert(errMessage);
             return (new Error(errMessage));
           } else if (res.status === 200) {
-            setDoneLog(true);
-
             let rescp = await res.clone().json(); // Get a copy
             console.log(rescp);  // Debug
-            props.setUserId(rescp._id);
             let json = await res.json();
             console.log(json);
-            setName(json.name);
+
+            //setDoneLog
+            this.setState({doneLog: true, name: json.name});
+            this.props.setUser({id: rescp._id, username: this.state.username});
           }
           else {
             const errMessage = await res.json();
@@ -65,56 +84,60 @@ function LoginForm(props) {
 
     // console.log(usernamecp); // Debug
     // console.log(passwordcp); // Debug
-    setUsername("");
-    setPassword("");
+    this.setState({username: "", password: ""});
   };
 
-  if (doneLog) {
+  // if (doneLog) {
 
-    console.log(name);
 
+  //   let name = this.state.name;
+  //   console.log(name);
+
+  //   return (
+  //     <Redirect to={"user/" + { name }} />
+  //   );
+  // }
+
+  render() {
     return (
-      <Redirect to={"user/" + { name }} />
+      <>
+        {/* {this.state.doneLog && <Redirect to={"/user/" + this.state.username} />} */}
+        <div className="Message">
+          <Link to="/register" style={{ color: "white" }}>
+            First time? Click here to register!
+        </Link>
+        </div>
+        <br />
+        <h2> Login </h2>
+        <div className="LoginForm" display={display}>
+          <Form onSubmit={this.handleSubmit}>
+            <Form.Group>
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="username"
+                value={this.state.username}
+                onChange={this.updateUsername}
+              />
+            </Form.Group>
+
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="password"
+                value={this.state.password}
+                onChange={this.updatePassword}
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Login
+          </Button>
+          </Form>
+        </div>
+      </>
     );
   }
-
-  return (
-    <>
-      <div className="Message">
-        <Link to="/register" style={{ color: "white" }}>
-          First time? Click here to register!
-      </Link>
-      </div>
-      <br />
-      <h2> Login </h2>
-      <div className="LoginForm" display={display}>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group>
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="username"
-              value={username}
-              onChange={updateUsername}
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="password"
-              value={password}
-              onChange={updatePassword}
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit">
-            Login
-        </Button>
-        </Form>
-      </div>
-    </>
-  );
 }
 
 export default LoginForm;

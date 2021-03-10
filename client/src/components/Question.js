@@ -85,15 +85,15 @@ class Question extends Component {
     let newjs = JSON.stringify(this.state.newPost);
     console.log("newjs type: " + typeof newjs);
     console.log(newjs);
-    if (this.state.newPost.title == "" && this.state.newPost.content == "") {
+    if (this.state.newPost.title === "" && this.state.newPost.content === "") {
       alert("Your post is empty.");
       return;
     }
-    else if (this.state.newPost.title == "") {   // Prevent posts from submitting to backend without title
+    else if (this.state.newPost.title === "") {   // Prevent posts from submitting to backend without title
       alert("Your post needs a title.");
       return;
     }
-    else if (this.state.newPost.content == "") {  // Prevent posts from submitting to backend without content
+    else if (this.state.newPost.content === "") {  // Prevent posts from submitting to backend without content
       alert("Your post needs content.");
       return;
     }

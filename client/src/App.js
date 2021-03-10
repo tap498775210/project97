@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
 import MenuIcon from '@material-ui/icons/Menu';
 import Sidebar from "./components/Sidebar";
 import routes from "./routes";
 import Question from "./components/Question";
 import Qna from "./components/qna";
-
-import './App.css';
 import LoginForm from "./components/LoginForm";
-
+import Register from "./components/Register";
+import './App.css';
 
 class App extends Component {
   constructor() {  // setup for debug and 
@@ -17,9 +16,10 @@ class App extends Component {
         apiResponse: "",
         showHideSidebar: false,
         userId: "",   // Userid is set after login 
+        username: "",
       };
       this.hideComponent = this.hideComponent.bind(this);
-      this.setUserId = this.setUserId.bind(this);
+      this.setUser = this.setUser.bind(this);
       this.resize = this.resize.bind(this);
   }
 
@@ -45,13 +45,18 @@ class App extends Component {
     window.removeEventListener("resize", this.resize);
   }
 
-  setUserId(id) {
-    this.setState({userId: id});
+  setUser(userinfo) {
+    // console.log(userinfo)
+    this.setState({userId: userinfo.id, username: userinfo.username});
   }
 
   render() {
     const { showHideSidebar } = this.state;
+    const loggedIn = this.state.userId !== '';
+    const redirectUserPath = '/user/' + this.state.username;
     console.log("App: userId: " + this.state.userId); // Debug
+    console.log("App: username: " + this.state.username); // Debug
+    console.log('App: loggedIn: ' + loggedIn);
     return (
       <React.Fragment>
         <Router>
@@ -68,10 +73,19 @@ class App extends Component {
           */}
 
           <div className="site">
-            {showHideSidebar && <Sidebar className="sidebar" />}
+            {showHideSidebar && <Sidebar loggedIn={loggedIn} className="sidebar" />}
             <div className="main-body">
               <Switch>
-                <Route exact path="/" children={<LoginForm setUserId={this.setUserId}/>}/>
+                {/* <Route exact path="/" children={
+                  <LoginForm setUser={this.setUser}/>
+                }/> */}
+                <Route exact path='/'>
+                  {loggedIn ? 
+                    <Redirect to={redirectUserPath} /> : <LoginForm setUser={this.setUser} />}
+                </Route>
+                <Route path='/register'>
+                  {loggedIn ? <Redirect to={redirectUserPath} /> : <Register />}
+                </Route>
                 {routes.map((route, index) => (
                   <Route
                     key={index}
@@ -81,7 +95,16 @@ class App extends Component {
                     />
                 ))}
                 <Route path="/questionAPI" children={<Question userId={this.state.userId}/>}/>
+                {/* <Route path="/questionAPI">
+                  {loggedIn ? 
+                    <Question userId={this.state.userId}/> : <Redirect exact to='/' />
+                  }
+                </Route> */}
+
                 <Route Route path="/q/:id" component={Qna} />
+                {/* <Route Route path="/q/:id" >
+                  {loggedIn ? <Qna /> : <Redirect exact to='/' />}
+                </Route> */}
               </Switch>
             </div>
           </div>
