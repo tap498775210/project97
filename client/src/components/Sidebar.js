@@ -48,35 +48,12 @@ class Sidebar extends Component {
           {/* <li className="App-intro">
                     {this.state.apiResponse}
                     </li> */}
-<<<<<<< HEAD
-                    <li>
-                    <Link to="/">Home/Login</Link>
-                    </li>
-                    <li>
-                    <Link to="/questionAPI">Posts</Link>
-                    </li>
-                    <li>
-                    <Link to="/search">Search</Link>{" "}
-                    {/* Search function not implemented */}
-                    </li>
-                    {/* A link to the user profile in the sidebar. 
-                    <li> 
-                    <Link to="/profile"></Link>
-                    </li> */}
-        </ul>
-
-        <Switch>
-          <Route exact path="/" children={<div>Login here!</div>}/>
-          <Route Route path="/user/:name" children={<div>View and modify your profile!</div>}/>
-          <Route path="/questionAPI" children={<div>Read and ask questions!</div>}/>
-=======
           {this.links()}
         </ul>
 
         {/* <Switch>
           <Route exact path="/" children={<div>home!</div>} />
           <Route path="/questionAPI" children={<div>posts!</div>} />
->>>>>>> 7f4c94d0a85a6b06897a3cd215257da2dfa011b7
           {routes.map((route, index) => (
             <Route
               key={index}

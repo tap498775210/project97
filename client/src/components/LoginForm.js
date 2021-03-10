@@ -5,15 +5,12 @@ import { Link } from "react-router-dom";
 import {Alert, handleShow } from './alert'
 import "./LoginForm.css";
 
-<<<<<<< HEAD
 // import global variables
 import globalVal from './globalVar';
 
 // const sampleUsernames = "aa";
 // const samplePassword = "asdf";
 // let loggedin = false;
-=======
->>>>>>> 7f4c94d0a85a6b06897a3cd215257da2dfa011b7
 let display = "block";
 
 class LoginForm extends Component {
@@ -21,14 +18,6 @@ class LoginForm extends Component {
   // https://stackoverflow.com/questions/53949393/cant-perform-a-react-state-update-on-an-unmounted-component
   _isMounted = false;
 
-<<<<<<< HEAD
-  // error message
-  const [title, setTitle] = useState("");
-  const [message, setMessage] = useState("");
-
-  const updateUsername = (event) => {
-    setUsername(event.target.value);
-=======
   constructor(props) {
     super(props);
     this.state = {
@@ -55,7 +44,6 @@ class LoginForm extends Component {
 
   updateUsername = (event) => {
     this.setState({username: event.target.value});
->>>>>>> 7f4c94d0a85a6b06897a3cd215257da2dfa011b7
   };
   updatePassword = (event) => {
     this.setState({password: event.target.value});
@@ -87,15 +75,6 @@ class LoginForm extends Component {
             return (new Error(errMessage));
           } else if (res.status === 200) {
             let rescp = await res.clone().json(); // Get a copy
-<<<<<<< HEAD
-            props.setUserId(rescp._id);
-            let json = await res.json();
-            globalVal.id = json._id;
-            globalVal.name = json.name;
-            globalVal.course = json.course;
-            globalVal.username = json.username;
-            setDoneLog(true);
-=======
             console.log(rescp);  // Debug
             let json = await res.json();
             console.log(json);
@@ -104,10 +83,14 @@ class LoginForm extends Component {
             localStorage.setItem('username', this.state.username);
             localStorage.setItem('user_id', rescp._id);
 
+            globalVal.id = json._id;
+            globalVal.name = json.name;
+            globalVal.course = json.course;
+            globalVal.username = json.username;
+
             //setDoneLog
             this.setState({doneLog: true, name: json.name});
             this.props.setUser({id: rescp._id, username: this.state.username});
->>>>>>> 7f4c94d0a85a6b06897a3cd215257da2dfa011b7
           }
           else {
             const errMessage = await res.json();
@@ -124,60 +107,6 @@ class LoginForm extends Component {
     this.setState({username: "", password: ""});
   };
 
-<<<<<<< HEAD
-  let property = props.setUserId;
-
-  if (globalVal.id == null && props.userId != null)
-  {
-    props.setUserId(null);
-  }
-  if (doneLog || globalVal.id != null) {
-    return (
-      <Redirect to={{
-        pathname: "user/" + globalVal.id
-      }} />
-    );
-  }
-
-  return (
-    <>
-      <div className="Message">
-        <Link to="/register" style={{ color: "white" }}>
-          First time? Click here to register!
-      </Link>
-      </div>
-      <br />
-      <h2> Login </h2>
-      <div className="LoginForm" display={display}>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group>
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="username"
-              value={username}
-              onChange={updateUsername}
-            />
-          </Form.Group>
-
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="password"
-              value={password}
-              onChange={updatePassword}
-            />
-          </Form.Group>
-          <Button className="mainButton" variant="primary" type="submit">
-            Login
-        </Button>
-        </Form>
-        <Alert title={title} message={message}/>
-      </div>
-    </>
-  );
-=======
   // if (doneLog) {
 
 
@@ -230,7 +159,20 @@ class LoginForm extends Component {
       </>
     );
   }
->>>>>>> 7f4c94d0a85a6b06897a3cd215257da2dfa011b7
 }
+
+/*
+if (globalVal.id == null && props.userId != null)
+  {
+    props.setUserId(null);
+  }
+  if (doneLog || globalVal.id != null) {
+    return (
+      <Redirect to={{
+        pathname: "user/" + globalVal.id
+      }} />
+    );
+  }
+*/
 
 export default LoginForm;
