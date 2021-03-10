@@ -3,12 +3,27 @@ Remove commented codes and the debugging console.log functions before final subm
 Deal with "xxx is defined but never used" warnings before final submission 
 -----------------------------------------------------------------------------
 
-Warning occured after login since commit 64aca8e: 
-index.js:1 Warning: Can't perform a React state update on an unmounted component. 
-This is a no-op, but it indicates a memory leak in your application. 
-To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
-    at LoginForm (http://localhost:3000/static/js/main.chunk.js:651:89)
-    at Route (http://localhost:3000/static/js/vendors~main.chunk.js:46768:29)
+minor changes of css and display.
+
+file changed:
+    App.css and Sidebar.css     
+        changed the position of navbar, sidebar, and the sidebar toggle button to fixed. 
+        new changes that are involved with position change are seperated with the original
+        styles with a line. 
+    App.js      
+        changed classname of the main body: if the sidebar is present, then use the class 
+        "main-body-w-bar". Might not be the clever way but it works.  
+    Sidebar.js
+        Removed router
+    AnswerTable.js
+        Added key
+    Register.js
+        Changed form placeholder text
+
+
+added login/logout feature such that user will not be signed out when page is refreshed.
+user's login (username and userId) is now stored in localStorage.
+only signout from user's profile page will signout from Qiazza.
 
 --------------------------------------------------------------------------------
 

@@ -112,7 +112,7 @@ function Register() {
           <Form.Label>Username</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Please do not use your real username"
+            placeholder="username"
             value={username}
             onChange={updateUsername}
           />
@@ -121,7 +121,7 @@ function Register() {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Please do not use your real password"
+            placeholder="password"
             value={password}
             onChange={updatePassword}
           />

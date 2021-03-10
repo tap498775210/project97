@@ -2,5 +2,32 @@
     height: 100vh;
     padding: 10px;
     width: 200px;
-    background: #f0f0f0;
+    /* background: #f0f0f0; */
+    /* background: #353a4018; */
+    /* background: #e8e9eba9; */
+    background: #e8e9eb;
+
+    margin-top: 60px;
+    position: fixed;
+}
+
+a {
+    color: #353a40;
+}
+/* a:hover {
+    color: #353a40a4;
+} */
+
+li {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10%;
+    font-size: 20px;
+}
+
+
+@media screen and (max-width: 450px) {
+    .sidebar-body {
+        width: 40%;
+    }
 }
