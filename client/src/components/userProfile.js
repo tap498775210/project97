@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import React, { useState } from 'react';
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -21,11 +21,11 @@ function ProfileList(props) {
     const [myCourses, setmyCourses] = useState([]);
     const [password, setPassword] = useState("");
     const [passwordComfirm, setPasswordComfirm] = useState("");
-=======
-import React from 'react';
-import { useParams } from "react-router-dom";
-import Button from "react-bootstrap/Button";
->>>>>>> 7f4c94d0a85a6b06897a3cd215257da2dfa011b7
+// =======
+// import React from 'react';
+// import { useParams } from "react-router-dom";
+// import Button from "react-bootstrap/Button";
+// >>>>>>> 7f4c94d0a85a6b06897a3cd215257da2dfa011b7
 
     // error message
     const [title, setTitle] = useState("");
@@ -85,7 +85,7 @@ import Button from "react-bootstrap/Button";
             });
     }
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
     // update user
     const UpdateProfile = async (event) => {
         event.preventDefault();
@@ -235,17 +235,17 @@ import Button from "react-bootstrap/Button";
             </>
         );
     }
-=======
-    return (
-        <h1>Welcome to Qiazza, {name}!</h1>
-    );
+// =======
+//     return (
+//         <h1>Welcome to Qiazza, {name}!</h1>
+//     );
 }
 
 // Clear locally stored user login and refresh to re-mount components
 function handleLogout() {
     localStorage.clear();
     window.location.reload();
->>>>>>> 7f4c94d0a85a6b06897a3cd215257da2dfa011b7
+// >>>>>>> 7f4c94d0a85a6b06897a3cd215257da2dfa011b7
 }
 
 export default function Page(props) {

@@ -13,6 +13,12 @@ all subscriptions and asynchronous tasks in the componentWillUnmount method.
     at Route (http://localhost:3000/static/js/vendors~main.chunk.js:46768:29)
 -------------------------------------------------------------------------------
 
+known problems:
+1. Whenever logged in or not, the sidebar will show posts and search
+2. "TypeError: Cannot read property 'params' of undefined" that prevent loading Qna
+3. Need to change margin of main-body, sidebar, and the toggle button
+
+
 
 
 minor changes of css and display.

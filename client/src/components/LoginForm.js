@@ -3,6 +3,8 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import {Alert, handleShow } from './alert'
+import { Redirect } from "react-router-dom";
+
 import "./LoginForm.css";
 
 // import global variables
@@ -25,6 +27,10 @@ class LoginForm extends Component {
       password: '',
       doneLog: false,
       name: '',
+
+      // error message
+      title: '',
+      message: '',
     }
     this.updateUsername = this.updateUsername.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
@@ -57,8 +63,8 @@ class LoginForm extends Component {
 
     if (username === "" || password === "") {
       handleShow();
-      setTitle("Login failed");
-      setMessage("Please input username and password.");
+      this.setState({title: "Login failed"});
+      this.setState({message: "Please input username and password."});
       return;
     } else {
       await fetch('http://localhost:9000/users/login', {
@@ -70,8 +76,8 @@ class LoginForm extends Component {
           if (res.status === 500) {
             const errMessage = await res.text();
             handleShow();
-            setTitle("Login failed");
-            setMessage(errMessage);
+            this.setState({title: "Login failed"});
+            this.setState({message: errMessage});
             return (new Error(errMessage));
           } else if (res.status === 200) {
             let rescp = await res.clone().json(); // Get a copy
@@ -104,7 +110,7 @@ class LoginForm extends Component {
 
     // console.log(usernamecp); // Debug
     // console.log(passwordcp); // Debug
-    this.setState({username: "", password: ""});
+    this.setState({username: "", password: "", title: "", message: ""});
   };
 
   // if (doneLog) {
