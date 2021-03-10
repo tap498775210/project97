@@ -33,19 +33,6 @@ function GetQuestion() {
         );
 }
 
-function GetAnswers() {
-    const [answers, setAnswers] = useState([]);
-
-    let { id } = useParams();
-    const getUrl = "http://localhost:9000/comment/getbypostcreate?post=" + id;
-    fetch(getUrl)
-        .then(res => res.json())
-        .then(res => console.log(res))
-    return (
-        <br/>
-        );
-}
-
 class Answers extends React.Component {
     render() {
         return (
@@ -63,13 +50,43 @@ export default class Qna extends React.Component {
 
         this.state = {
             content: "",
-            post: id 
+            post: id,
+            answers: [],
+            ans_op: <br/>,
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         
         console.log(this.state);
+    }
+
+    callAPI() {
+        //console.log(this.state);
+        const getUrl = "http://localhost:9000/comment/getbypostcreate?post=" + this.state.post;
+        fetch(getUrl)
+            .then(res => res.json())
+            .then(data => {
+                var answers = [];
+                for (var i = 0; i < data.length; i++) {
+                    answers.push(data[i].content);
+                }
+                this.setState({ answers: answers });
+                //console.log(this.state.answers);
+                console.log(answers);
+
+                /*const op = answers.map((answer) => {
+                    <li>
+                        {answer}
+                    </li>
+                });
+                this.setState({ ans_op: op });
+                console.log(this.state);*///tried to get a right format fot the answers but failed
+            })
+    }
+
+    componentDidMount() { 
+        this.callAPI();
     }
 
     handleChange(event) {
@@ -107,8 +124,7 @@ export default class Qna extends React.Component {
         return (
             <>
                 <GetQuestion />
-                <GetAnswers />
-                <Answers />
+                <h5>{ this.state.answers }</h5>
                 {/* <form onSubmit={this.handleSubmit}>
                     <label>
                         want to provide an answer?<br/>
