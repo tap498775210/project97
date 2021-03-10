@@ -12,7 +12,9 @@ Reference: https://reactrouter.com/web/example/sidebar
 window.onresize = function() {
   let calcH = window.innerHeight;
   var img = document.getElementById("sbbd");
-  img.style.height = calcH;
+  if (img) {
+    img.style.height = calcH;
+  }
 }
 
 class Sidebar extends Component {
@@ -20,9 +22,9 @@ class Sidebar extends Component {
     if (this.props.loggedIn) {
       return (
         <>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/questionAPI">Posts</Link></li>
-          <li><Link to="/search">Search</Link></li>
+          <li><Link to="/" className={'link'}>Home</Link></li>
+          <li><Link to="/questionAPI" className={'link'}>Posts</Link></li>
+          <li><Link to="/search" className={'link'}>Search</Link></li>
           {/* A link to the user profile in the sidebar.  */}
           {/* <li><Link to="/profile"></Link></li> */}
         </>
@@ -49,7 +51,7 @@ class Sidebar extends Component {
           {this.links()}
         </ul>
 
-        <Switch>
+        {/* <Switch>
           <Route exact path="/" children={<div>home!</div>} />
           <Route path="/questionAPI" children={<div>posts!</div>} />
           {routes.map((route, index) => (
@@ -60,7 +62,7 @@ class Sidebar extends Component {
               children={<route.sidebar />}
             />
           ))}
-        </Switch>
+        </Switch> */}
       </div>
     );
   }
