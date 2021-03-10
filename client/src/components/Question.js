@@ -49,6 +49,7 @@ class Question extends Component {
       title: event.target.value, 
       content: this.state.newPost.content,
       course: this.state.newPost.course,
+      user: this.props.userId,
     }});
   }
   handleContentChange(event) {
@@ -56,6 +57,7 @@ class Question extends Component {
       title: this.state.newPost.title, 
       content: event.target.value,
       course: this.state.newPost.course,
+      user: this.props.userId,
     }});
   }
   // handleSubmit = async (event) => {
@@ -210,7 +212,8 @@ Parameters:
   questions: an array of {title, id}, where title is the title of a post, id is the _id of a post
 */
   render() {
-    console.log("Question: userId: " + this.state.userId);  // Debug
+    console.log("Question: userId in newPost: " + this.state.newPost.user);  // Debug
+    console.log('TAT');
     return (
       <>
         <div >
