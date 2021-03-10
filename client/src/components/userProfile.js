@@ -1,8 +1,6 @@
 import React from 'react';
 import { useParams } from "react-router-dom";
-
-
-
+import Button from "react-bootstrap/Button";
 
 //const profilePic = <img src="567.png" alt="sadfsfdsafds"/>;
 
@@ -24,14 +22,23 @@ function ProfileList(props) {
     );*/
 
     return (
-        <h1>Welcome!!!</h1>
-        );
+        <h1>Welcome to Qiazza, {name}!</h1>
+    );
+}
+
+// Clear locally stored user login and refresh to re-mount components
+function handleLogout() {
+    localStorage.clear();
+    window.location.reload();
 }
 
 export default function Page(props) {
     return (
         <>
-        < ProfileList/>
+        <ProfileList />
+        
+        {/* Kind of rough implementation of signout button. Need to work on routing instead of href. */}
+        <a href="http://localhost:3000/"><Button onClick={handleLogout}>Logout</Button></a>
         </>
     );
 }

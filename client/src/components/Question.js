@@ -49,6 +49,7 @@ class Question extends Component {
       title: event.target.value, 
       content: this.state.newPost.content,
       course: this.state.newPost.course,
+      user: this.props.userId,
     }});
   }
   handleContentChange(event) {
@@ -56,6 +57,7 @@ class Question extends Component {
       title: this.state.newPost.title, 
       content: event.target.value,
       course: this.state.newPost.course,
+      user: this.props.userId,
     }});
   }
   // handleSubmit = async (event) => {
@@ -85,15 +87,15 @@ class Question extends Component {
     let newjs = JSON.stringify(this.state.newPost);
     console.log("newjs type: " + typeof newjs);
     console.log(newjs);
-    if (this.state.newPost.title == "" && this.state.newPost.content == "") {
+    if (this.state.newPost.title === "" && this.state.newPost.content === "") {
       alert("Your post is empty.");
       return;
     }
-    else if (this.state.newPost.title == "") {   // Prevent posts from submitting to backend without title
+    else if (this.state.newPost.title === "") {   // Prevent posts from submitting to backend without title
       alert("Your post needs a title.");
       return;
     }
-    else if (this.state.newPost.content == "") {  // Prevent posts from submitting to backend without content
+    else if (this.state.newPost.content === "") {  // Prevent posts from submitting to backend without content
       alert("Your post needs content.");
       return;
     }
@@ -210,10 +212,11 @@ Parameters:
   questions: an array of {title, id}, where title is the title of a post, id is the _id of a post
 */
   render() {
-    console.log("Question: userId: " + this.state.userId);  // Debug
+    console.log("Question: userId in newPost: " + this.state.newPost.user);  // Debug
+    console.log('TAT');
     return (
       <>
-        <div>
+        <div >
           <h1>Post a Question</h1>
         </div>
 
@@ -225,7 +228,7 @@ Parameters:
           <input type='submit' value='Submit' />
         </form> */}
         
-        <div className="inputbox" style={{width: "700px"}}>
+        <div className="boxed">
           <Form onSubmit={this.handleSubmit}>
             <Form.Group>
               <Form.Control 
@@ -238,7 +241,7 @@ Parameters:
               />
             </Form.Group>
             <Form.Group>
-              <Form.Control as='textarea' rows={5} 
+              <Form.Control as='textarea' rows={4} 
                 type='text'
                 value={this.state.newPost.content} // this.state.content not implemented yet
                 // name='content'
@@ -251,9 +254,8 @@ Parameters:
             </Button>
           </Form>
         </div>
-        <br />
 
-        <div>
+        <div id="QuestionTable" className="boxed">
           {<QuestionTableV2
             questions={this.state.titleId}
             title="Questions"
