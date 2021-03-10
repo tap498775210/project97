@@ -4,6 +4,18 @@ Remove unused images before final submission
 Deal with "xxx is defined but never used" warnings before final submission 
 -----------------------------------------------------------------------------
 
+added notification on login page "Login to display site contents"
+updated user page to show user's name after logging in
+added styling to question page, fixed issue where sidebar doesn't extend down to bottom
+of screen after loading the questions by adding scrolling to QuestionTableV2
+also added functionality so that sidebar adjusts dynamically with display resizing.
+
+
+added responses to qna page, created new AnswerTable.js and AnswerTable.css for this.
+updated API call and GetQuestions to be more efficient.
+also added much needed formatting and styling to qna page.
+
+
     Show different contents on the sidebar before and after logging in, but won't prevent the 
 user directly accesses the unshown pages by typing the urls. (Will test them soon)
     In App class: redirect the user to /user/[username] after login. Also redirect to that page 
@@ -11,12 +23,6 @@ when a logged-in user attempt to access /register.
     Solved some warnings. 
     Added some images in /src/images, although we may not use them. In this case will remove them 
 before submission. 
-TODO from previous notes:
-    need to fix issue where sidebar doesn't extend down to bottom of screen after loading the questions.
-        possible solutions:
-        render sidebar after main body
-        add scrolling to QuestionTable
-    will probably go with scrolling QuestionTable
 
 added form verification for creating posts. Alerts will now appear when title, content,
 or both are emtpy.

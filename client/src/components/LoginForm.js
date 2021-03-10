@@ -109,6 +109,7 @@ class LoginForm extends Component {
         </div>
         <br />
         <h2> Login </h2>
+        <h5> to display site contents </h5>
         <div className="LoginForm" display={display}>
           <Form onSubmit={this.handleSubmit}>
             <Form.Group>

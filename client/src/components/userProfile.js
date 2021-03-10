@@ -24,14 +24,14 @@ function ProfileList(props) {
     );*/
 
     return (
-        <h1>Welcome!!!</h1>
-        );
+        <h1>Welcome to Qiazza, {name}!</h1>
+    );
 }
 
 export default function Page(props) {
     return (
         <>
-        < ProfileList/>
+        <ProfileList />
         </>
     );
 }

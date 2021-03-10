@@ -8,6 +8,13 @@ import "./Sidebar.css"
 Reference: https://reactrouter.com/web/example/sidebar
 */
 
+// Resizes sidebar when screen is resized
+window.onresize = function() {
+  let calcH = window.innerHeight;
+  var img = document.getElementById("sbbd");
+  img.style.height = calcH;
+}
+
 class Sidebar extends Component {
   links() {
     if (this.props.loggedIn) {
@@ -32,7 +39,7 @@ class Sidebar extends Component {
 
   render() {
     return (
-      <div className="sidebar-body">
+      <div id="sbbd" className="sidebar-body">
         {/* Links in the sidebar */}
 
         <ul style={{ listStyleType: "none", padding: 0 }}>

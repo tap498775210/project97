@@ -213,7 +213,7 @@ Parameters:
     console.log("Question: userId: " + this.state.userId);  // Debug
     return (
       <>
-        <div>
+        <div >
           <h1>Post a Question</h1>
         </div>
 
@@ -225,7 +225,7 @@ Parameters:
           <input type='submit' value='Submit' />
         </form> */}
         
-        <div className="inputbox" style={{width: "700px"}}>
+        <div className="boxed">
           <Form onSubmit={this.handleSubmit}>
             <Form.Group>
               <Form.Control 
@@ -238,7 +238,7 @@ Parameters:
               />
             </Form.Group>
             <Form.Group>
-              <Form.Control as='textarea' rows={5} 
+              <Form.Control as='textarea' rows={4} 
                 type='text'
                 value={this.state.newPost.content} // this.state.content not implemented yet
                 // name='content'
@@ -251,9 +251,8 @@ Parameters:
             </Button>
           </Form>
         </div>
-        <br />
 
-        <div>
+        <div id="QuestionTable" className="boxed">
           {<QuestionTableV2
             questions={this.state.titleId}
             title="Questions"

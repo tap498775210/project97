@@ -1,6 +1,8 @@
 import React from "react";
 import Table from 'react-bootstrap/Table';
 
+import "./AnswerTable.css";
+
 // comment: {answers}
 function answerToCell(comment) {
   return (
@@ -12,13 +14,12 @@ function answerToCell(comment) {
   );
 }
 
-
 export default function AnswerTable(props) {
   const comments = props.comments;
   const rows = comments.map((comments) => answerToCell(comments));
   const table = (
     <Table responsive >
-      <thead>
+      <thead id="title">
         <tr>
           <th>{props.title}</th>
         </tr>

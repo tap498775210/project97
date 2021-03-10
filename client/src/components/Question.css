@@ -1,6 +1,13 @@
-.post {
-    width: 1000px;
-    border: 10px solid green;
-    padding: 50px;
-    margin: 20px;
+h1 {
+    color: #353a40;
+    font-weight: 300;
+}
+
+.boxed {
+    border: 1px solid #b4b9c0;
+    border-radius: 10px;
+    padding: 10px;
+    max-width: 1000px;
+    margin-bottom: 25px;
+    color: #353a40;
 }
