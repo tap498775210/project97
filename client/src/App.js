@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import MenuIcon from '@material-ui/icons/Menu';
 import Sidebar from "./components/Sidebar";
 import routes from "./routes";

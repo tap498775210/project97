@@ -1,7 +1,6 @@
 import React, { useState, Component } from 'react';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Table from 'react-bootstrap/Table';
 import AnswerTable from "./AnswerTable";
 import { useParams } from "react-router-dom";
 
