@@ -72,7 +72,7 @@ class LoginForm extends Component {
             // store login locally to prevent auto logout on refresh
             localStorage.setItem('user_id', json._id);
             localStorage.setItem('name', json.name);
-            localStorage.setItem('course', json.name);
+            localStorage.setItem('course', json.course);
             localStorage.setItem('username', json.username);
 
             //setDoneLog
