@@ -197,10 +197,16 @@ function ProfileList(props) {
 
     }
     else if (localStorage.getItem("username")){
+        const name = localStorage.getItem('name');
+        const displayName = (name === 'someName') ? 'user' : name;
+        const isName = (name !== 'someName');
+        const message = isName ? <br></br> : <p>Update profile below to edit your name</p>;
         return(
             <>
-            <h1>Welcome, {localStorage.getItem('name')}!</h1>
-            <br></br>
+            {/* <h1>Welcome, {localStorage.getItem('name')}!</h1> */}
+            <h1>Welcome, {displayName}!</h1>
+            {/* <br></br> */}
+            {message}
             <h4>Username: </h4>
             <p>{localStorage.getItem('username')}</p>
             <br></br>
