@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+// import { Alert, handleShow } from "./Alert"
 import "./LoginForm.css";
 
 let display = "block";
@@ -69,8 +70,10 @@ class LoginForm extends Component {
             console.log(json);
 
             // store login locally to prevent auto logout on refresh
-            localStorage.setItem('username', this.state.username);
-            localStorage.setItem('user_id', rescp._id);
+            localStorage.setItem('user_id', json._id);
+            localStorage.setItem('name', json.name);
+            localStorage.setItem('course', json.name);
+            localStorage.setItem('username', json.username);
 
             //setDoneLog
             this.setState({doneLog: true, name: json.name});

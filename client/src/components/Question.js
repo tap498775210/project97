@@ -52,6 +52,7 @@ class Question extends Component {
       user: this.props.userId,
     }});
   }
+
   handleContentChange(event) {
     this.setState({newPost: {
       title: this.state.newPost.title, 
@@ -131,26 +132,12 @@ class Question extends Component {
     }
   }
 
-  // callAPI() {
-  //   fetch("http://localhost:9000/questionAPI")
-  //     .then(res => res.json())
-  //     .then(res => this.setState({ apiResponse: res }));
-  // }
-
-  /*
-      TODO: find the courses associated with the user
-            then get the posts associated by the courses
-  */
-  // Temporary
-  // TODO: error handling
   callAPI() {
     fetch("http://localhost:9000/post/gettem")  // Used a temporary function to get all posts
                                                 // Will use '/getbycourse' when we can let the user to add courses
       .then(res => res.json())
-      // .then(data => console.log(data))
       .then(data => {
         this.setState({posts: data});
-        // const titleAndIdArr = this.titlesAndIds();
         this.setState({titleId: this.titlesAndIds(data)});
         console.log("title and id");
         console.log(this.state.titleId);
@@ -212,8 +199,8 @@ Parameters:
   questions: an array of {title, id}, where title is the title of a post, id is the _id of a post
 */
   render() {
-    console.log("Question: userId in newPost: " + this.state.newPost.user);  // Debug
-    console.log('TAT');
+    // console.log("Question: userId in newPost: " + this.state.newPost.user);  // Debug
+    // console.log('TAT');
     return (
       <>
         <div >

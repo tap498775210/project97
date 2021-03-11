@@ -32,6 +32,16 @@ h5 {
     background-color:#353a40;
 }
 
+.mainButton {
+    width: 100%;
+    font-size: 19px;
+    margin-top: 5px;
+}
+
+.profileButton{
+    margin-right: 10px;
+}
+
 /* The width of the message box changed to 80% for screen width < 450px
     reference: https://www.w3schools.com/cssref/css3_pr_mediaquery.asp */
 @media screen and (max-width: 450px) {

@@ -68,6 +68,20 @@ router.get('/get', (req, res) => {
   });
 });
 
+// get all courses
+router.get('/getall', (req, res) => {
+  CourseModel.find()
+  .then(doc => {
+    if(!doc || doc.length === 0)
+        res.status(500).send("No course available so far");
+    else
+        res.json(doc);
+  })
+  .catch(err => {
+      res.status(500).json(err);
+  });
+});
+
 // DELETE course
 router.delete('/delete', (req, res) => {
   if(!req.query._id) {

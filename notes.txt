@@ -4,6 +4,13 @@ Remove unused images before final submission
 Deal with "xxx is defined but never used" warnings before final submission 
 -----------------------------------------------------------------------------
 
+TODO: fix issue with course selection
+
+adapted user profile page. switched to using localStorage instead of globalVar
+Alert was not able to be implemented, currently still using old alert system
+LoginForm, App, and userProfile are now using localStorage
+
+
 updated to have all of aiqi's css changes. next up is to add kexing's user profile work.
 warning is also resolved on main branch.
 minor changes of css and display.

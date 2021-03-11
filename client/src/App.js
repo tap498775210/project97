@@ -7,6 +7,7 @@ import Question from "./components/Question";
 import Qna from "./components/qna";
 import LoginForm from "./components/LoginForm";
 import Register from "./components/Register";
+import User from "./components/userProfile";
 import './App.css';
 
 class App extends Component {
@@ -15,7 +16,7 @@ class App extends Component {
       this.state = { 
         apiResponse: "",
         showHideSidebar: false,
-        userId: "",   // Userid is set after login 
+        userId: null,   // Userid is set after login 
         username: "",
       };
       this.hideComponent = this.hideComponent.bind(this);
@@ -35,6 +36,8 @@ class App extends Component {
       this.setState({"username": loggedInUsername});
       this.setState({"userId": loggedInID});
     }
+    console.log("Local user: " + this.username);
+    console.log("Local userId: " + this.userId)
 
     window.addEventListener("resize", this.resize);   // Detect screen resize
     this.resize();  // Determine if the screen is large enough to show the sidebar
@@ -59,7 +62,7 @@ class App extends Component {
 
   render() {
     const { showHideSidebar } = this.state;
-    const loggedIn = this.state.userId !== '';
+    const loggedIn = this.state.userId !== null;
     const redirectUserPath = '/user/' + this.state.username;
     console.log("App: userId: " + this.state.userId); // Debug
     console.log("App: username: " + this.state.username); // Debug
@@ -89,7 +92,7 @@ class App extends Component {
                 }/> */}
                 <Route exact path='/'>
                   {loggedIn ? 
-                    <Redirect to={redirectUserPath} /> : <LoginForm setUser={this.setUser} />}
+                    <Redirect to={redirectUserPath} /> : <LoginForm setUser={this.setUser} userId={this.state.userId} />}
                 </Route>
                 <Route path='/register'>
                   {loggedIn ? <Redirect to={redirectUserPath} /> : <Register />}
@@ -103,16 +106,8 @@ class App extends Component {
                     />
                 ))}
                 <Route path="/questionAPI" children={<Question userId={this.state.userId}/>}/>
-                {/* <Route path="/questionAPI">
-                  {loggedIn ? 
-                    <Question userId={this.state.userId}/> : <Redirect exact to='/' />
-                  }
-                </Route> */}
-
-                <Route Route path="/q/:id" component={Qna} />
-                {/* <Route Route path="/q/:id" >
-                  {loggedIn ? <Qna /> : <Redirect exact to='/' />}
-                </Route> */}
+                <Route Route path="/q/:id" childre={<Qna />} />
+                <Route Route path="/user/:name" children={<User />} />
               </Switch>
             </div>
           </div>
