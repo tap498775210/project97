@@ -18,10 +18,12 @@ class App extends Component {
         showHideSidebar: false,
         userId: null,   // Userid is set after login 
         username: "",
+        courses: null,
       };
       this.hideComponent = this.hideComponent.bind(this);
       this.setUser = this.setUser.bind(this);
       this.resize = this.resize.bind(this);
+      this.setCourses = this.setCourses.bind(this);
   }
 
   hideComponent() {   // used to toggle sidebar
@@ -58,6 +60,10 @@ class App extends Component {
   setUser(userinfo) {
     // console.log(userinfo)
     this.setState({userId: userinfo.id, username: userinfo.username});
+  }
+
+  setCourses(courses){
+    this.setState({courses: courses});
   }
 
   render() {
@@ -107,7 +113,7 @@ class App extends Component {
                 ))}
                 <Route path="/questionAPI" children={<Question userId={this.state.userId}/>}/>
                 <Route Route path="/q/:id" component={Qna} />
-                <Route Route path="/user/:name" children={<User />} />
+                <Route Route path="/user/:name" children={<User setCourses={this.setCourses} courses={this.state.courses}/>} />
               </Switch>
             </div>
           </div>

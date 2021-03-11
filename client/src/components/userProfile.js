@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-//import { useParams } from "react-router-dom";
+import {Alert, handleShow } from './Alert'
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import MultiSelect from "react-multi-select-component";
 
-var gotCourses = false;
 var courses = [];
 var courseNames = [];
 
@@ -17,10 +16,9 @@ function ProfileList(props) {
     const [myCourses, setmyCourses] = useState([]);
     const [password, setPassword] = useState("");
     const [passwordComfirm, setPasswordComfirm] = useState("");
-
     // error message
-    // const [title, setTitle] = useState("");
-    // const [message, setMessage] = useState("");
+    const [title, setTitle] = useState("");
+    const [message, setMessage] = useState("");
     
     const updateName = (event) => {
         setName(event.target.value)
@@ -46,6 +44,7 @@ function ProfileList(props) {
 
     // get courses from db
     const getCourse = async () => {
+        console.log("called")
         await fetch('http://localhost:9000/course/getall', {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
@@ -54,6 +53,7 @@ function ProfileList(props) {
               if (res.status === 200) {
                 var result = await res.json();
                 var temp = [];
+                courseNames = [];
                 var tempmyCourse = [];
                 for(var i = 0; i < result.length; i++)
                 {
@@ -67,7 +67,8 @@ function ProfileList(props) {
                     }
                 }
                 courses = temp;
-                // refresh
+                // store values
+                props.setCourses(result);
                 setmyCourses(courses);
               }
             })
@@ -81,8 +82,9 @@ function ProfileList(props) {
         event.preventDefault();
         // validation
         if (password !== passwordComfirm){
-            alert("The passwords do not match.");
-            return;
+            handleShow();
+            setTitle("Update failed")
+            setMessage("The passwords do not match.");
         } else {
             // modify request
             let request = {};
@@ -111,8 +113,10 @@ function ProfileList(props) {
                 changeUpdate();
                 } 
                 else {
-                alert("Server error, please try again!");
-                return (new Error("update failed"));
+                    handleShow();
+                    setTitle("Update failed")
+                    setMessage("Server error, please try again!");
+                    return (new Error("update failed"));
                 }
             })
             .catch(err => {
@@ -132,10 +136,12 @@ function ProfileList(props) {
     }
 
     // fetch courses available
-    if (!gotCourses && localStorage.getItem("username") !== ""){
-        gotCourses = true;
+    if (props.courses === null && localStorage.getItem("username") !== ""){
+        console.log("called");
         getCourse();
     }
+
+    console.log(courseNames);
 
     if (update){
         return(
@@ -185,7 +191,7 @@ function ProfileList(props) {
                     Cancel
                 </Button>
             </Form>
-                {/* <Alert title={title} message={message}/> */}
+            <Alert title={title} message={message}/>
             </>
         )
 
@@ -220,8 +226,10 @@ function ProfileList(props) {
     }
 }
 
-export default function Page(props) {
+export default function User(props) {
+    console.log(props.courses);
+    console.log(props.setCourses);
     return (
-        <ProfileList />
+        <ProfileList courses={props.courses} setCourses={props.setCourses}/>
     );
 }

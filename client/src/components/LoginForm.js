@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-// import { Alert, handleShow } from "./Alert"
+import { Alert, handleShow } from "./Alert"
 import "./LoginForm.css";
 
 let display = "block";
@@ -19,6 +19,8 @@ class LoginForm extends Component {
       password: '',
       doneLog: false,
       name: '',
+      title: 'Login failed',
+      message: '',
     }
     this.updateUsername = this.updateUsername.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
@@ -50,7 +52,8 @@ class LoginForm extends Component {
     let password = this.state.password;
 
     if (username === "" || password === "") {
-      alert("Please input a username or password.");
+      handleShow();
+      this.setState({message: "Please input a username or password."})
       return;
     } else {
       await fetch('http://localhost:9000/users/login', {
@@ -61,7 +64,8 @@ class LoginForm extends Component {
         .then(async (res) => {
           if (res.status === 500) {
             const errMessage = await res.text();
-            alert(errMessage);
+            handleShow();
+            this.setState({message: errMessage})
             return (new Error(errMessage));
           } else if (res.status === 200) {
             let rescp = await res.clone().json(); // Get a copy
@@ -142,6 +146,7 @@ class LoginForm extends Component {
               Login
           </Button>
           </Form>
+          <Alert title={this.state.title} message={this.state.message}/>
         </div>
       </>
     );

@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import {Alert, handleShow } from './Alert'
 import "./LoginForm.css";
 
 const fetch = require('node-fetch');
@@ -16,16 +17,14 @@ let display = "block";
 
 function checkInfo(username, password, confirmP) {
     if (username === "" || password === "" || confirmP === "") {
-        alert("Please enter all the information.");
-        return false;
+      return [false, "Please enter all the information."];
     }
 
     if (password !== confirmP) {
-        alert("The confirm password does not match the password.");
-        return false;
+      return [false, "The confirm password does not match the password."];
     }
 
-    return true;
+    return [true];
 }
 
 function Register() {
@@ -33,6 +32,10 @@ function Register() {
   const [password, setPassword] = useState("");
     const [passwordComfirm, setPasswordComfirm] = useState("");
     const [doneReg, setDoneReg] = useState(false);
+
+    // for alertbox
+    const [title, setTitle] = useState("");
+    const [message, setMessage] = useState("");
 
   const updateUsername = (event) => {
     setUsername(event.target.value);
@@ -50,8 +53,9 @@ function Register() {
     let usernamecp = username;
     let passwordcp = password;
     let passwordComfirmcp = passwordComfirm;
+    let validation = checkInfo(usernamecp, passwordcp, passwordComfirmcp);
 
-      if (checkInfo(usernamecp, passwordcp, passwordComfirmcp)) {
+      if (validation[0]) {
 
           await fetch('http://localhost:9000/users/register', {
               method: 'POST',
@@ -60,8 +64,19 @@ function Register() {
           })
               .then(res => {
                   if (res.status !== 201) {
-                      alert("register failed, please try again!");
-                      return (new Error("failed"));
+                    const contentType = res.headers.get("content-type");
+                    if (contentType && contentType.indexOf("application/json") !== -1) {
+                      handleShow();
+                      setTitle("Register failed");
+                      setMessage("Username already existed!");
+                    }
+                    else
+                    {
+                      handleShow();
+                      setTitle("Register failed");
+                      setMessage("Server error, please try again!");
+                    }
+                    return (new Error("register failed"));
                   }
                   else {
                       let json = res.json();
@@ -74,15 +89,11 @@ function Register() {
                   console.log(err);
               });
       }
-
-     /* if (successful) {
-          alert("register succeed!!");
-          setDoneReg(true);
-      }*/
-
-    //console.log(usernamecp);    // Debug
-    //console.log(passwordcp);    // Debug
-    //console.log(passwordComfirmcp);   // Debug
+      else{
+        handleShow();
+        setTitle("Register failed");
+        setMessage(validation[1]);
+      }
     setUsername("");
     setPassword("");
     setPasswordComfirm("");
@@ -139,6 +150,7 @@ function Register() {
           Register
         </Button>
       </Form>
+      <Alert title={title} message={message}/>
     </div>
     </>
   );
