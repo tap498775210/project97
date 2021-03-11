@@ -4,6 +4,12 @@ import {Modal, Button} from 'react-bootstrap'
 export var handleClose;
 export var handleShow;
 
+
+/*
+props:
+  title
+  message
+*/
 export function Alert(props) {
     var [show, setShow] = useState(false);
 

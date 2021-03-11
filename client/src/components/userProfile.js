@@ -49,7 +49,7 @@ function ProfileList(props) {
       const printCourses = ()=>{ 
         let temp = [];
         for(let i = 0; i < courseNames.length; i++)
-            temp[i] = <p>{courseNames[i]}</p>
+            temp[i] = <p key={i}>{courseNames[i]}</p>
         return temp;
         };
 

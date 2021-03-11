@@ -25,7 +25,7 @@ class LoginForm extends Component {
     this.state = {
       username: '',
       password: '',
-      doneLog: false,
+      doneLog: this.props.username !== null,
       name: '',
 
       // error message
@@ -63,8 +63,13 @@ class LoginForm extends Component {
 
     if (username === "" || password === "") {
       handleShow();
-      this.setState({title: "Login failed"});
-      this.setState({message: "Please input username and password."});
+      // this.setState({title: "Login failed"});
+      this.setState({
+        title: "Login failed", 
+        message: "Please input username and password.",
+        username: '',
+        password: '',
+      });
       return;
     } else {
       await fetch('http://localhost:9000/users/login', {
@@ -110,7 +115,7 @@ class LoginForm extends Component {
 
     // console.log(usernamecp); // Debug
     // console.log(passwordcp); // Debug
-    this.setState({username: "", password: "", title: "", message: ""});
+    this.setState({username: "", password: ""});
   };
 
   // if (doneLog) {
@@ -125,9 +130,12 @@ class LoginForm extends Component {
   // }
 
   render() {
+    console.log('doneLog: '+this.state.doneLog);
+    console.log('global id: '+globalVal.id);
     return (
       <>
-        {/* {this.state.doneLog && <Redirect to={"/user/" + this.state.username} />} */}
+        {this.state.doneLog && <Redirect to={"/user/" + this.props.username} />}
+        <Alert title={this.state.title} message={this.state.message} />
         <div className="Message">
           <Link to="/register" style={{ color: "white" }}>
             First time? Click here to register!

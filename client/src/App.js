@@ -19,6 +19,7 @@ class App extends Component {
         apiResponse: "",
         showHideSidebar: false,
         userId: null,   // Userid is set after login 
+        username: null,
       };
       this.hideComponent = this.hideComponent.bind(this);
       this.setUser = this.setUser.bind(this);
@@ -61,8 +62,8 @@ class App extends Component {
 
   render() {
     const { showHideSidebar } = this.state;
-    const loggedIn = this.state.userId !== '';
-    const redirectUserPath = '/user/' + this.state.username;
+    const loggedIn = this.state.userId !== null;
+    // const redirectUserPath = '/user/' + this.state.username;
     console.log("App: userId: " + this.state.userId); // Debug
     console.log("App: username: " + this.state.username); // Debug
     console.log('App: loggedIn: ' + loggedIn);
@@ -86,16 +87,17 @@ class App extends Component {
             {showHideSidebar && <Sidebar loggedIn={loggedIn} className="sidebar" />}
             <div className={main_classname}>
               <Switch>
-                {/* <Route exact path="/" children={
-                  <LoginForm setUser={this.setUser}/>
-                }/> */}
-                <Route exact path='/'>
+                <Route exact path="/" children={
+                  <LoginForm username={this.state.username} setUser={this.setUser}/>
+                }/>
+                {/* <Route exact path='/'>
                   {loggedIn ? 
                     <Redirect to={redirectUserPath} /> : <LoginForm setUser={this.setUser} userId={this.state.userId} />}
-                </Route>
-                <Route path='/register'>
+                </Route> */}
+                {/* <Route path='/register'>
                   {loggedIn ? <Redirect to={redirectUserPath} /> : <Register />}
-                </Route>
+                </Route> */}
+                <Route path='/register' children={<Register />} />
                 {routes.map((route, index) => (
                   <Route
                     key={index}
@@ -105,7 +107,8 @@ class App extends Component {
                     />
                 ))}
                 <Route path="/questionAPI" children={<Question userId={this.state.userId}/>}/>
-                <Route Route path="/q/:id" children={<Qna />} />
+                {/* <Route Route path="/q/:id" children={<Qna />} /> */}
+                <Route Route path="/q/:id" component={Qna } />
                 <Route Route path="/user/:name" children={<User />}/>
               </Switch>
             </div>

@@ -8,6 +8,9 @@
     background-size: 100% 2.3em;
     background-image: -webkit-linear-gradient(rgb(171, 221, 219) .06em, transparent .05em);
     border-right: 0.6mm solid rgba(255, 132, 123, 0.6);
+
+    margin-top: 60px;
+    position: fixed;
 }
 
 li{
@@ -47,11 +50,11 @@ a:hover {
     padding-left: 10%;
     font-size: 20px;
 }
-
+*/
 
 @media screen and (max-width: 450px) {
     .sidebar-body {
         width: 40%;
     }
 }
->>>>>>> 7f4c94d0a85a6b06897a3cd215257da2dfa011b7 */
+/*>>>>>>> 7f4c94d0a85a6b06897a3cd215257da2dfa011b7 */

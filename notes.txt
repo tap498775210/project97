@@ -11,14 +11,32 @@ This is a no-op, but it indicates a memory leak in your application. To fix, can
 all subscriptions and asynchronous tasks in the componentWillUnmount method.
     at Question (http://localhost:3000/static/js/main.chunk.js:1438:5)
     at Route (http://localhost:3000/static/js/vendors~main.chunk.js:46768:29)
+
+
+Browser console warning when popping up the alert in LoginForm:
+
+Warning: findDOMNode is deprecated in StrictMode. findDOMNode was passed an instance of 
+Transition which is inside StrictMode. Instead, add a ref directly to the element you want 
+to reference. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-find-node
+
+
+Warning: Each child in a list should have a unique "key" prop.
+
+Check the render method of `ProfileList`
 -------------------------------------------------------------------------------
+known issues:
+1. two logout button in user profile page
+    when clicking the grey logout button, the page remains at '/user/[username]',
+    and shows 'Logged out, please login again.' with a logout button;
+    when clicking the blue logout button, the pages redirects to '/' with logged-out status
+2. the above warnings 
+3. global variables seems to be null after reloading the page
 
-known problems:
-1. Whenever logged in or not, the sidebar will show posts and search
-2. "TypeError: Cannot read property 'params' of undefined" that prevent loading Qna
-3. Need to change margin of main-body, sidebar, and the toggle button
 
-
+cancelled all redirections in App class. Redirect logged-in user in LoginForm
+changes in LoginForm: doneLog is initialized by App class. 
+changed position, margin, and @media for sidebar
+added key for <p> in userProfile
 
 
 minor changes of css and display.
