@@ -42,26 +42,9 @@ class Sidebar extends Component {
     return (
       <div id="sbbd" className="sidebar-body">
         {/* Links in the sidebar */}
-
         <ul style={{ listStyleType: "none", padding: 0 }}>
-          {/* <li className="App-intro">
-                    {this.state.apiResponse}
-                    </li> */}
           {this.links()}
         </ul>
-
-        {/* <Switch>
-          <Route exact path="/" children={<div>home!</div>} />
-          <Route path="/questionAPI" children={<div>posts!</div>} />
-          {routes.map((route, index) => (
-            <Route
-              key={index}
-              path={route.path}
-              exact={route.exact}
-              children={<route.sidebar />}
-            />
-          ))}
-        </Switch> */}
       </div>
     );
   }

@@ -4,6 +4,22 @@ Remove unused images before final submission
 Deal with "xxx is defined but never used" warnings before final submission 
 -----------------------------------------------------------------------------
 
+updated to have all of aiqi's css changes. next up is to add kexing's user profile work.
+warning is also resolved on main branch.
+minor changes of css and display.
+file changed:
+    App.css and Sidebar.css     
+        changed the position of navbar, sidebar, and the sidebar toggle button to fixed. 
+        new changes that are involved with position change are seperated with the original
+        styles with a line. 
+    App.js      
+        changed classname of the main body: if the sidebar is present, then use the class 
+        "main-body-w-bar". Might not be the clever way but it works.  
+    Sidebar.js
+        Removed router
+    Register.js
+        Changed form placeholder text
+
 fixed warning in AnswerTable.js, "Warning: Each child in a list should have a unique "key" prop."
 added key to AnswerTable values and modified how qna.js passes array to AnswerTable.
 css updates, fixed issue where AnswerTable.css was overriding QuestionTableV2.css

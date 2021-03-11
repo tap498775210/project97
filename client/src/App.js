@@ -64,6 +64,7 @@ class App extends Component {
     console.log("App: userId: " + this.state.userId); // Debug
     console.log("App: username: " + this.state.username); // Debug
     console.log('App: loggedIn: ' + loggedIn);
+    const main_classname = showHideSidebar ? 'main-body-w-bar' : 'main-body';
     return (
       <React.Fragment>
         <Router>
@@ -81,7 +82,7 @@ class App extends Component {
 
           <div className="site">
             {showHideSidebar && <Sidebar loggedIn={loggedIn} className="sidebar" />}
-            <div className="main-body">
+            <div className={main_classname}>
               <Switch>
                 {/* <Route exact path="/" children={
                   <LoginForm setUser={this.setUser}/>
