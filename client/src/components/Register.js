@@ -15,8 +15,8 @@ const fetch = require('node-fetch');
 // let loggedin = false;
 let display = "block";
 
-function checkInfo(username, password, confirmP) {
-    if (username === "" || password === "" || confirmP === "") {
+function checkInfo(Name, username, password, confirmP) {
+    if (Name ==="" || username === "" || password === "" || confirmP === "") {
       return [false, "Please enter all the information."];
     }
 
@@ -28,15 +28,19 @@ function checkInfo(username, password, confirmP) {
 }
 
 function Register() {
+  const [Name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-    const [passwordComfirm, setPasswordComfirm] = useState("");
-    const [doneReg, setDoneReg] = useState(false);
+  const [passwordComfirm, setPasswordComfirm] = useState("");
+  const [doneReg, setDoneReg] = useState(false);
 
-    // for alertbox
-    const [title, setTitle] = useState("");
-    const [message, setMessage] = useState("");
+  // for alertbox
+  const [title, setTitle] = useState("");
+  const [message, setMessage] = useState("");
 
+  const updateName = (event) => {
+    setName(event.target.value)
+  }
   const updateUsername = (event) => {
     setUsername(event.target.value);
   };
@@ -49,18 +53,18 @@ function Register() {
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // prevent reloading when hitting the button
-    console.log("submit:");
+    let namecp = Name;
     let usernamecp = username;
     let passwordcp = password;
     let passwordComfirmcp = passwordComfirm;
-    let validation = checkInfo(usernamecp, passwordcp, passwordComfirmcp);
+    let validation = checkInfo(namecp, usernamecp, passwordcp, passwordComfirmcp);
 
       if (validation[0]) {
 
           await fetch('http://localhost:9000/users/register', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ name: 'someName', username: usernamecp, password: passwordcp}),
+              body: JSON.stringify({ name: namecp, username: usernamecp, password: passwordcp}),
           })
               .then(res => {
                   if (res.status !== 201) {
@@ -94,6 +98,7 @@ function Register() {
         setTitle("Register failed");
         setMessage(validation[1]);
       }
+    setName("");
     setUsername("");
     setPassword("");
     setPasswordComfirm("");
@@ -102,7 +107,7 @@ function Register() {
     if (doneReg) {
         return(
             <>
-                <h>Congradulation!! You have Signed up. Please go log in.</h>
+                <h>Congradulation!! You have Signed up. Please login.</h>
             </>
         );
     }
@@ -118,7 +123,15 @@ function Register() {
     <h2> Register </h2>
     <div className="Register" display={display}>
       <Form onSubmit={handleSubmit}>
-        {/* <Form.Control type="text" placeholder="Normal text" /> */}
+      <Form.Group>
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Please do not use your real name"
+            value={Name}
+            onChange={updateName}
+          />
+        </Form.Group>
         <Form.Group>
           <Form.Label>Username</Form.Label>
           <Form.Control
