@@ -1,7 +1,7 @@
 #Qiazza!!!
 ---
 This is our project for our CS97 2021 winter
-This porject behave like piazza that people can post questions and answer questions
+This project behave like piazza that people can post questions and answer questions
 after they log into the website
 ---
 To make this project run, you need to do
