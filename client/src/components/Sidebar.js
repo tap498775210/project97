@@ -22,7 +22,7 @@ class Sidebar extends Component {
       return (
         <>
           <li><Link to="/" className={'link'}>Home</Link></li>
-          <li><Link to="/questionAPI" className={'link'}>Posts</Link></li>
+          <li><Link to="/posts" className={'link'}>Posts</Link></li>
           <li><Link to="/search" className={'link'}>Search</Link></li>
           {/* A link to the user profile in the sidebar.  */}
           {/* <li><Link to="/profile"></Link></li> */}

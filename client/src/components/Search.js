@@ -54,9 +54,10 @@ class Search extends Component {
   }
 
   render() {
-    const resultTitle = "Showing " + this.state.results.length + " results";
+    const resultTitle = "Showing " + this.state.results.length + " result(s)";
     return (
       <>
+      <h1>Search for a post </h1>
         <div style={{ maxWidth: "1000px" }}>
           <Form onSubmit={this.handleSubmit}>
             <InputGroup className="mb-3">
@@ -81,9 +82,10 @@ class Search extends Component {
           </Form>
         </div>
         <br />
+        {this.state.showResults && 
         <div className="boxed">
           {this.state.showResults && <QuestionTableV2 questions={this.state.results} title={resultTitle}/>}
-        </div>
+        </div>}
       </>
     );
   }

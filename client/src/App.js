@@ -70,9 +70,9 @@ class App extends Component {
     const { showHideSidebar } = this.state;
     const loggedIn = this.state.userId !== null;
     const redirectUserPath = '/user/' + this.state.username;
-    console.log("App: userId: " + this.state.userId); // Debug
-    console.log("App: username: " + this.state.username); // Debug
-    console.log('App: loggedIn: ' + loggedIn);
+    // console.log("App: userId: " + this.state.userId); // Debug
+    // console.log("App: username: " + this.state.username); // Debug
+    // console.log('App: loggedIn: ' + loggedIn);
     const main_classname = showHideSidebar ? 'main-body-w-bar' : 'main-body';
     return (
       <React.Fragment>
@@ -111,7 +111,7 @@ class App extends Component {
                     children={<route.main />}
                     />
                 ))}
-                <Route path="/questionAPI" children={<Question userId={this.state.userId}/>}/>
+                <Route path="/posts" children={<Question userId={this.state.userId}/>}/>
                 <Route Route path="/q/:id" component={Qna} />
                 <Route Route path="/user/:name" children={<User setCourses={this.setCourses} courses={this.state.courses}/>} />
               </Switch>

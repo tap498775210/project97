@@ -8,6 +8,7 @@ th {
     display: block;
     max-width: 980px; /* 1000px minus 10px padding on each side */
     min-height: 200px;
-    height: calc(100vh - 485px);
+    /* height: calc(100vh - 485px); */
+    height: calc(100vh - 465px);
     font-weight: 400;
 }
